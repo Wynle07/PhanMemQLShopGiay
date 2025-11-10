@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pnSilebar = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.btnDangXuat = new System.Windows.Forms.Button();
@@ -44,6 +45,7 @@
             this.lblDateTime = new System.Windows.Forms.Label();
             this.lblChucVu = new System.Windows.Forms.Label();
             this.pnContent = new System.Windows.Forms.Panel();
+            this.TimerDongHo = new System.Windows.Forms.Timer(this.components);
             this.pnSilebar.SuspendLayout();
             this.pnHeader.SuspendLayout();
             this.SuspendLayout();
@@ -291,6 +293,10 @@
             this.pnContent.TabIndex = 1;
             this.pnContent.Paint += new System.Windows.Forms.PaintEventHandler(this.pnContent_Paint);
             // 
+            // TimerDongHo
+            // 
+            this.TimerDongHo.Tick += new System.EventHandler(this.TimerDongHo_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -331,5 +337,6 @@
         private System.Windows.Forms.Button btnKhuyenMai;
         private System.Windows.Forms.Button btnDangXuat;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer TimerDongHo;
     }
 }

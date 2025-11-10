@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace QuanLiBanGiay
 {
@@ -14,7 +15,19 @@ namespace QuanLiBanGiay
     {
         public MainForm()
         {
+            TimerDongHo = new Timer();
+            TimerDongHo.Interval = 1000;
+            TimerDongHo.Tick += TimerDongHo_Tick;
+            TimerDongHo.Start();
             InitializeComponent();
+            CapNhatDongHo();
+        }
+        private void CapNhatDongHo()
+        {
+            DateTime now = DateTime.Now;
+            string thu = now.ToString("dddd", new System.Globalization.CultureInfo("vi-VN"));
+            thu = char.ToUpper(thu[0]) + thu.Substring(1);
+            lblDateTime.Text = $"{thu}, {now:dd/MM/yyyy HH:mm:ss}";
         }
         private Form activeForm = null;
 
@@ -31,7 +44,7 @@ namespace QuanLiBanGiay
 
         private void btnTrangChu_Click(object sender, EventArgs e)
         {
-            
+            pnContent.Controls.Clear();
         }
 
         
@@ -105,6 +118,11 @@ namespace QuanLiBanGiay
         private void pnContent_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void TimerDongHo_Tick(object sender, EventArgs e)
+        {
+            CapNhatDongHo();
         }
     }
 }

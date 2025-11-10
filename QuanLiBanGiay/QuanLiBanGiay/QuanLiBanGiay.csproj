@@ -84,6 +84,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBConnection.cs" />
     <Compile Include="Form_NhapHang.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,30 +270,63 @@
   <ItemGroup>
     <None Include="Resources\icons8-promotion-302.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Images\airforce1.jpg" />
-    <Content Include="Images\authentic.jpg" />
-    <Content Include="Images\blazermid77.jpg" />
-    <Content Include="Images\calidream.jpg" />
-    <Content Include="Images\duramosl.jpg" />
-    <Content Include="Images\futurerider.jpg" />
-    <Content Include="Images\huntercore.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\hunterstreet.jpg" />
-    <Content Include="Images\hunterx.jpg" />
-    <Content Include="Images\oldskool.jpg" />
-    <Content Include="Images\pegasus39.jpg" />
-    <Content Include="Images\revolution6.jpg" />
-    <Content Include="Images\rsx3.jpg" />
-    <Content Include="Images\sandalm.jpg" />
-    <Content Include="Images\sk8hi.jpg" />
-    <Content Include="Images\slipon.jpg" />
-    <Content Include="Images\stansmith.jpg" />
-    <Content Include="Images\suedeclassic.jpg" />
-    <Content Include="Images\superstar.jpg" />
-    <Content Include="Images\ultraboost22.jpg" />
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\SanPham\adilette.jpg" />
+    <Content Include="Images\SanPham\airforce1.jpg" />
+    <Content Include="Images\SanPham\authentic.jpg" />
+    <Content Include="Images\SanPham\blazermid77.jpg" />
+    <Content Include="Images\SanPham\calidream.jpg" />
+    <Content Include="Images\SanPham\canyonsandal.jpg" />
+    <Content Include="Images\SanPham\duramosl.jpg" />
+    <Content Include="Images\SanPham\futurerider.jpg" />
+    <Content Include="Images\SanPham\hunterboot.jpg" />
+    <Content Include="Images\SanPham\huntercore.jpg" />
+    <Content Include="Images\SanPham\hunterstreet.jpg" />
+    <Content Include="Images\SanPham\hunterx.jpg" />
+    <Content Include="Images\SanPham\jordan4.jpg" />
+    <Content Include="Images\SanPham\oldskool.jpg" />
+    <Content Include="Images\SanPham\pegasus39.jpg" />
+    <Content Include="Images\SanPham\pumaboot.jpg" />
+    <Content Include="Images\SanPham\revolution6.jpg" />
+    <Content Include="Images\SanPham\rsx3.jpg" />
+    <Content Include="Images\SanPham\sandalfemale.jpg" />
+    <Content Include="Images\SanPham\sandalm.jpg" />
+    <Content Include="Images\SanPham\sk8hi.jpg" />
+    <Content Include="Images\SanPham\slipon.jpg" />
+    <Content Include="Images\SanPham\stansmith.jpg" />
+    <Content Include="Images\SanPham\suedeclassic.jpg" />
+    <Content Include="Images\SanPham\superstar.jpg" />
+    <Content Include="Images\SanPham\ultraboost22.jpg" />
+    <Content Include="Images\SanPham\vansboot.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

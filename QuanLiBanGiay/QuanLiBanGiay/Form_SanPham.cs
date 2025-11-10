@@ -15,7 +15,7 @@ namespace QuanLiBanGiay
         string selectedImagePath = "";
         public Form_SanPham()
         {
-            conn = new SqlConnection("Data Source=.;Initial Catalog=QL_BANGIAY;Integrated Security=True;TrustServerCertificate=True");
+            conn = DBConnection.GetConnection();
             InitializeComponent();
         }
 
@@ -99,10 +99,10 @@ namespace QuanLiBanGiay
                 cbMaLoai.Text = drv["TENLOAI"]?.ToString() ?? "";
                 txtGiaBan.Text = drv["GIABAN"]?.ToString() ?? "";
                 txtMaNCC.Text = drv["TENNCC"]?.ToString() ?? "";
-                txtKichCo.Text = drv["KICHCO"]?.ToString()??"";
-                txtMauSac.Text = drv["TENMAU"]?.ToString()??"";
-                txtSoLuongTon.Text = drv["SOLUONGTON"]?.ToString()??"";
-                txtTH.Text = drv["TENTH"]?.ToString()??"";
+                txtKichCo.Text = drv["KICHCO"]?.ToString() ?? "";
+                txtMauSac.Text = drv["TENMAU"]?.ToString() ?? "";
+                txtSoLuongTon.Text = drv["SOLUONGTON"]?.ToString() ?? "";
+                txtTH.Text = drv["TENTH"]?.ToString() ?? "";
 
                 // --- Xử lý ảnh ---
                 string fileAnh = drv["HINHANHSP"]?.ToString();
@@ -209,7 +209,7 @@ namespace QuanLiBanGiay
                     dataGridView1.DataSource = null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Lỗi tìm kiếm: " + ex.Message);
             }
@@ -236,7 +236,7 @@ namespace QuanLiBanGiay
                 string kichCo = txtKichCo.Text.Trim();
                 string soLuongText = txtSoLuongTon.Text.Trim();
                 string giaText = txtGiaBan.Text.Trim();
-                string tenTH = txtTH.Text.Trim(); 
+                string tenTH = txtTH.Text.Trim();
 
                 if (string.IsNullOrEmpty(maGiay) || string.IsNullOrEmpty(tenGiay) ||
                     string.IsNullOrEmpty(tenLoai) || string.IsNullOrEmpty(tenNCC) ||
@@ -289,7 +289,7 @@ namespace QuanLiBanGiay
 
                 // --- 4️⃣ Xử lý ảnh ---
                 string fileAnh = "no_image.jpg";
-                string imageFolder = @"C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\ảnh\ảnh giày";
+                string imageFolder = Path.Combine(Application.StartupPath, "Images", "SanPham");
                 Directory.CreateDirectory(imageFolder);
 
                 if (!string.IsNullOrEmpty(selectedImagePath) && File.Exists(selectedImagePath))
@@ -434,7 +434,7 @@ namespace QuanLiBanGiay
                 }
 
                 // --- 3️⃣ Xử lý ảnh ---
-                string imageFolder = @"C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\ảnh\ảnh giày";
+                string imageFolder = Path.Combine(Application.StartupPath, "Images", "SanPham");
                 Directory.CreateDirectory(imageFolder);
                 string fileAnh = "no_image.jpg";
 
@@ -555,7 +555,7 @@ namespace QuanLiBanGiay
                 loadSP();
 
                 // --- 4️⃣ Xóa ảnh trong thư mục (nếu có) ---
-                string imageFolder = @"C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\ảnh\ảnh giày";
+                string imageFolder = Path.Combine(Application.StartupPath, "Images", "SanPham");
                 string oldImg = Path.Combine(imageFolder, maGiay + ".jpg");
                 if (File.Exists(oldImg))
                 {

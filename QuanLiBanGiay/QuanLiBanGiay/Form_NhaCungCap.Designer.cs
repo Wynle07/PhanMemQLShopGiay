@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.grpDanhSach = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.data_ncc = new System.Windows.Forms.DataGridView();
+            this.btn_TimKiem = new System.Windows.Forms.Button();
+            this.txt_TimKiem = new System.Windows.Forms.TextBox();
+            this.btn_reset = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
@@ -51,12 +51,12 @@
             this.cboTrangThai = new System.Windows.Forms.ComboBox();
             this.lblTrangThai = new System.Windows.Forms.Label();
             this.grpDanhSach.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data_ncc)).BeginInit();
             this.SuspendLayout();
             // 
             // grpDanhSach
             // 
-            this.grpDanhSach.Controls.Add(this.dataGridView1);
+            this.grpDanhSach.Controls.Add(this.data_ncc);
             this.grpDanhSach.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.grpDanhSach.Location = new System.Drawing.Point(0, 362);
             this.grpDanhSach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -67,51 +67,54 @@
             this.grpDanhSach.TabStop = false;
             this.grpDanhSach.Text = "Danh sách nhà cung cấp";
             // 
-            // dataGridView1
+            // data_ncc
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 44);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1270, 360);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.data_ncc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.data_ncc.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.data_ncc.Location = new System.Drawing.Point(3, 44);
+            this.data_ncc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.data_ncc.Name = "data_ncc";
+            this.data_ncc.RowHeadersWidth = 51;
+            this.data_ncc.RowTemplate.Height = 24;
+            this.data_ncc.Size = new System.Drawing.Size(1270, 360);
+            this.data_ncc.TabIndex = 0;
+            this.data_ncc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // button2
+            // btn_TimKiem
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(408, 269);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(109, 39);
-            this.button2.TabIndex = 52;
-            this.button2.Text = "Tìm Kiếm";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btn_TimKiem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_TimKiem.Location = new System.Drawing.Point(408, 269);
+            this.btn_TimKiem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btn_TimKiem.Name = "btn_TimKiem";
+            this.btn_TimKiem.Size = new System.Drawing.Size(109, 39);
+            this.btn_TimKiem.TabIndex = 52;
+            this.btn_TimKiem.Text = "Tìm Kiếm";
+            this.btn_TimKiem.UseVisualStyleBackColor = true;
+            this.btn_TimKiem.Click += new System.EventHandler(this.btn_TimKiem_Click);
             // 
-            // textBox3
+            // txt_TimKiem
             // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(30, 269);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(339, 31);
-            this.textBox3.TabIndex = 51;
+            this.txt_TimKiem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_TimKiem.Location = new System.Drawing.Point(30, 269);
+            this.txt_TimKiem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txt_TimKiem.Name = "txt_TimKiem";
+            this.txt_TimKiem.Size = new System.Drawing.Size(339, 31);
+            this.txt_TimKiem.TabIndex = 51;
+            this.txt_TimKiem.TextChanged += new System.EventHandler(this.txt_TimKiem_TextChanged);
             // 
-            // button1
+            // btn_reset
             // 
-            this.button1.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(608, 310);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(105, 45);
-            this.button1.TabIndex = 50;
-            this.button1.Text = "Reset";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btn_reset.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btn_reset.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_reset.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btn_reset.Location = new System.Drawing.Point(608, 310);
+            this.btn_reset.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btn_reset.Name = "btn_reset";
+            this.btn_reset.Size = new System.Drawing.Size(105, 45);
+            this.btn_reset.TabIndex = 50;
+            this.btn_reset.Text = "Reset";
+            this.btn_reset.UseVisualStyleBackColor = false;
+            this.btn_reset.Click += new System.EventHandler(this.btn_reset_Click);
             // 
             // btnSua
             // 
@@ -125,6 +128,7 @@
             this.btnSua.TabIndex = 49;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -138,6 +142,7 @@
             this.btnXoa.TabIndex = 48;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // btnThem
             // 
@@ -151,6 +156,7 @@
             this.btnThem.TabIndex = 47;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = false;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // txtEmail
             // 
@@ -247,6 +253,7 @@
             this.btnXuatExcel.TabIndex = 55;
             this.btnXuatExcel.Text = "Xuất Excel";
             this.btnXuatExcel.UseVisualStyleBackColor = false;
+            this.btnXuatExcel.Click += new System.EventHandler(this.btnXuatExcel_Click);
             // 
             // txtDiaChi
             // 
@@ -297,9 +304,9 @@
             this.Controls.Add(this.btnXuatExcel);
             this.Controls.Add(this.txtHotline);
             this.Controls.Add(this.grpDanhSach);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_TimKiem);
+            this.Controls.Add(this.txt_TimKiem);
+            this.Controls.Add(this.btn_reset);
             this.Controls.Add(this.btnSua);
             this.Controls.Add(this.btnXoa);
             this.Controls.Add(this.btnThem);
@@ -316,7 +323,7 @@
             this.Text = "Form_NhaCungCap";
             this.Load += new System.EventHandler(this.Form_NhaCungCap_Load);
             this.grpDanhSach.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data_ncc)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,10 +332,10 @@
         #endregion
 
         private System.Windows.Forms.GroupBox grpDanhSach;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView data_ncc;
+        private System.Windows.Forms.Button btn_TimKiem;
+        private System.Windows.Forms.TextBox txt_TimKiem;
+        private System.Windows.Forms.Button btn_reset;
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnThem;
