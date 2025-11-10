@@ -1,0 +1,194 @@
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.AssemblyReference.cache
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form__NhapHang.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form1.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_HoaDon.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhoHang.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhuyenMai.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhaCungCap.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhanVien.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_SanPham.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_ThongKe.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.MainForm.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Properties.Resources.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.GenerateResource.cache
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.CoreCompileInputs.cache
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.exe.config
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.exe
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.pdb
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_TaoHoaDon.resources
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.pdb
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.SuggestedBindingRedirects.cache
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe.config
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.Parser.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.Framework.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ExcelNumberFormat.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Microsoft.Bcl.HashCode.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\RBush.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\SixLabors.Fonts.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Buffers.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Memory.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.pdb
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.Parser.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.Framework.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ExcelNumberFormat.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Microsoft.Bcl.HashCode.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\RBush.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\SixLabors.Fonts.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Buffers.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Memory.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\MSI\Documents\Nguyễn Phạm Duy Luân\CongNghe .Net\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBa.E89BC873.Up2Date
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.exe.config
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.exe
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.pdb
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.Parser.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.Framework.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ExcelNumberFormat.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Microsoft.Bcl.HashCode.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\RBush.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\SixLabors.Fonts.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Buffers.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Memory.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Numerics.Vectors.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.pdb
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.Parser.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.Framework.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ExcelNumberFormat.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Microsoft.Bcl.HashCode.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\RBush.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\SixLabors.Fonts.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Buffers.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Memory.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Numerics.Vectors.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.AssemblyReference.cache
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.SuggestedBindingRedirects.cache
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe.config
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form__NhapHang.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form1.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_HoaDon.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhoHang.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhuyenMai.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhaCungCap.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhanVien.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_SanPham.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_ThongKe.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.MainForm.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Properties.Resources.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_TaoHoaDon.resources
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.GenerateResource.cache
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.CoreCompileInputs.cache
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBa.E89BC873.Up2Date
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe
+E:\LuuDuLieuSinhVien\2001230863_Tuan\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.pdb
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.exe.config
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.exe
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.pdb
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.Parser.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.Framework.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ExcelNumberFormat.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Microsoft.Bcl.HashCode.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\RBush.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\SixLabors.Fonts.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Buffers.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Memory.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.pdb
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.Parser.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.Framework.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ExcelNumberFormat.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Microsoft.Bcl.HashCode.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\RBush.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\SixLabors.Fonts.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Buffers.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Memory.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.AssemblyReference.cache
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.SuggestedBindingRedirects.cache
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe.config
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form__NhapHang.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form1.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_HoaDon.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhoHang.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhuyenMai.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhaCungCap.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhanVien.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_SanPham.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_ThongKe.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.MainForm.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Properties.Resources.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_TaoHoaDon.resources
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.GenerateResource.cache
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.CoreCompileInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBa.E89BC873.Up2Date
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.pdb
+C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Images\huntercore.jpg
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Images\huntercore.jpg
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.exe.config
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.exe
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\QuanLiBanGiay.pdb
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.Parser.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.Framework.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ExcelNumberFormat.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Microsoft.Bcl.HashCode.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\RBush.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\SixLabors.Fonts.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Buffers.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Memory.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Numerics.Vectors.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.pdb
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ClosedXML.Parser.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\DocumentFormat.OpenXml.Framework.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\ExcelNumberFormat.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\Microsoft.Bcl.HashCode.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\RBush.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\SixLabors.Fonts.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Buffers.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Memory.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Numerics.Vectors.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.AssemblyReference.cache
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.SuggestedBindingRedirects.cache
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe.config
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form__NhapHang.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form1.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_HoaDon.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhoHang.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhuyenMai.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhaCungCap.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhanVien.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_SanPham.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_ThongKe.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.MainForm.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Properties.Resources.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_TaoHoaDon.resources
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.GenerateResource.cache
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.CoreCompileInputs.cache
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBa.E89BC873.Up2Date
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\ĐỒ ÁN\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.pdb
