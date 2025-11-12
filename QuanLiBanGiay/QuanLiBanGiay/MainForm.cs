@@ -20,7 +20,55 @@ namespace QuanLiBanGiay
             TimerDongHo.Tick += TimerDongHo_Tick;
             TimerDongHo.Start();
             InitializeComponent();
+            PhanQuyen();
             CapNhatDongHo();
+        }
+        private void PhanQuyen()
+        {
+            string vaiTro = global::QuanLiBanGiay.SessionContext.VaiTro;
+
+            //Mặc định vô hiệu hóa tất cả các nút quản lý (Trang chủ và Đăng xuất luôn được bật)
+            btnSanPham.Enabled = false;
+            btnNhaCungCap.Enabled = false;
+            btnTaoDonHang.Enabled = false;
+            btnNhanVien.Enabled = false;
+            btnThongKe.Enabled = false;
+            btnKhuyenMai.Enabled = false;
+            btnNhapHang.Enabled = false;
+
+            //Bật lại các nút dựa trên vai trò
+            switch (vaiTro)
+            {
+                case "Admin":
+                    // Tất cả
+                    btnSanPham.Enabled = true;
+                    btnNhaCungCap.Enabled = true;
+                    btnTaoDonHang.Enabled = true;
+                    btnNhanVien.Enabled = true;
+                    btnThongKe.Enabled = true;
+                    btnKhuyenMai.Enabled = true;
+                    btnNhapHang.Enabled = true;
+                    break;
+
+                case "Thu ngân":
+                    // Thu ngân chỉ bật các chức năng bán hàng
+                    btnSanPham.Enabled = true;   
+                    btnTaoDonHang.Enabled = true;
+                    btnKhuyenMai.Enabled = true; 
+                    break;
+
+                case "Quản lý kho":
+                    // Quản lý kho chỉ bật các chức năng kho
+                    btnSanPham.Enabled = true;    
+                    btnNhaCungCap.Enabled = true;  
+                    btnNhapHang.Enabled = true;    
+                    break;
+
+                default:
+                    // Nếu vai trò không xác định, vô hiệu hóa tất cả
+                    MessageBox.Show("Vai trò không hợp lệ. Vui lòng đăng nhập lại.", "Lỗi phân quyền", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+            }
         }
         private void CapNhatDongHo()
         {
@@ -50,7 +98,7 @@ namespace QuanLiBanGiay
         
         private void Form_Menu_Load(object sender, EventArgs e)
         {
-
+            lblChucVu.Text = global::QuanLiBanGiay.SessionContext.VaiTro.ToString();
         }
 
         private void btnSanPham_Click(object sender, EventArgs e)
@@ -68,7 +116,6 @@ namespace QuanLiBanGiay
         {
             OpenChildForm(new Form_TaoHoaDon());
         }
-
 
         private void btnNhanVien_Click(object sender, EventArgs e)
         {

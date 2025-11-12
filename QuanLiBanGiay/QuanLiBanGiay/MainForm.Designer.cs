@@ -43,9 +43,10 @@
             this.btnTrangChu = new System.Windows.Forms.Button();
             this.pnHeader = new System.Windows.Forms.Panel();
             this.lblDateTime = new System.Windows.Forms.Label();
-            this.lblChucVu = new System.Windows.Forms.Label();
+            this.lblCV = new System.Windows.Forms.Label();
             this.pnContent = new System.Windows.Forms.Panel();
             this.TimerDongHo = new System.Windows.Forms.Timer(this.components);
+            this.lblChucVu = new System.Windows.Forms.Label();
             this.pnSilebar.SuspendLayout();
             this.pnHeader.SuspendLayout();
             this.SuspendLayout();
@@ -250,8 +251,9 @@
             // pnHeader
             // 
             this.pnHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.pnHeader.Controls.Add(this.lblDateTime);
             this.pnHeader.Controls.Add(this.lblChucVu);
+            this.pnHeader.Controls.Add(this.lblDateTime);
+            this.pnHeader.Controls.Add(this.lblCV);
             this.pnHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnHeader.Location = new System.Drawing.Point(260, 0);
             this.pnHeader.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -270,16 +272,16 @@
             this.lblDateTime.TabIndex = 3;
             this.lblDateTime.Text = "DateTime";
             // 
-            // lblChucVu
+            // lblCV
             // 
-            this.lblChucVu.AutoSize = true;
-            this.lblChucVu.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblChucVu.ForeColor = System.Drawing.Color.White;
-            this.lblChucVu.Location = new System.Drawing.Point(235, 60);
-            this.lblChucVu.Name = "lblChucVu";
-            this.lblChucVu.Size = new System.Drawing.Size(170, 27);
-            this.lblChucVu.TabIndex = 2;
-            this.lblChucVu.Text = "Chức vụ: Admin";
+            this.lblCV.AutoSize = true;
+            this.lblCV.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCV.ForeColor = System.Drawing.Color.White;
+            this.lblCV.Location = new System.Drawing.Point(235, 60);
+            this.lblCV.Name = "lblCV";
+            this.lblCV.Size = new System.Drawing.Size(100, 27);
+            this.lblCV.TabIndex = 2;
+            this.lblCV.Text = "Chức vụ:";
             // 
             // pnContent
             // 
@@ -296,6 +298,16 @@
             // TimerDongHo
             // 
             this.TimerDongHo.Tick += new System.EventHandler(this.TimerDongHo_Tick);
+            // 
+            // lblChucVu
+            // 
+            this.lblChucVu.AutoSize = true;
+            this.lblChucVu.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChucVu.ForeColor = System.Drawing.Color.White;
+            this.lblChucVu.Location = new System.Drawing.Point(341, 59);
+            this.lblChucVu.Name = "lblChucVu";
+            this.lblChucVu.Size = new System.Drawing.Size(0, 27);
+            this.lblChucVu.TabIndex = 4;
             // 
             // MainForm
             // 
@@ -330,7 +342,7 @@
         private System.Windows.Forms.Button btnNhaCungCap;
         private System.Windows.Forms.Button btnTaoDonHang;
         private System.Windows.Forms.Button btnSanPham;
-        private System.Windows.Forms.Label lblChucVu;
+        private System.Windows.Forms.Label lblCV;
         private System.Windows.Forms.Label lblDateTime;
         private System.Windows.Forms.Panel pnContent;
         private System.Windows.Forms.Button btnKhuyenMai;
@@ -338,5 +350,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer TimerDongHo;
         private System.Windows.Forms.Button btnNhapHang;
+        private System.Windows.Forms.Label lblChucVu;
     }
 }

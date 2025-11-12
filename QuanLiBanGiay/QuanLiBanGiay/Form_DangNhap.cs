@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,11 @@ namespace QuanLiBanGiay
 {
     public partial class Form_DangNhap : Form
     {
+        SqlConnection conn;
         public Form_DangNhap()
         {
             InitializeComponent();
+            conn = DBConnection.GetConnection();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -31,28 +34,56 @@ namespace QuanLiBanGiay
         {
             txtMatKhau.UseSystemPasswordChar = true;
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            if (txtDangNhap.Text == "admin" && txtMatKhau.Text == "123")
+            string tenDangNhap = txtDangNhap.Text.Trim();
+            string matKhau = txtMatKhau.Text;
+
+            string query = "SELECT MANV, VAITRO FROM TAIKHOAN " +
+                           "WHERE TENDANGNHAP = @User AND MATKHAU = @Pass AND TRANGTHAI = N'Hoạt động'";
+            try
             {
-                global::QuanLiBanGiay.SessionContext.MaNhanVien = txtDangNhap.Text.Trim();
-                // Ẩn form login
-                this.Hide();
+                using (conn)
+                {
+                    DBConnection.OpenConnection(conn);
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@User", tenDangNhap);
+                        cmd.Parameters.AddWithValue("@Pass", matKhau);
 
-                // Mở form chính (Form_Menu)
-                MainForm mainForm = new MainForm();
-                mainForm.ShowDialog();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read()) // Nếu tìm thấy một dòng (đăng nhập thành công)
+                            {
+                                string maNhanVien = reader["MANV"].ToString();
+                                string vaiTro = reader["VAITRO"].ToString();
 
-                // Khi form chính đóng, thì thoát luôn
-                this.Close();
+                                global::QuanLiBanGiay.SessionContext.MaNhanVien = maNhanVien;
+                                global::QuanLiBanGiay.SessionContext.VaiTro = vaiTro;
+
+                                //Mở MainForm
+                                this.Hide();
+                                MainForm mainForm = new MainForm();
+                                mainForm.ShowDialog();
+                                this.Close();
+                            }
+                            else // Nếu không tìm thấy dòng nào 
+                            {
+                                MessageBox.Show("Sai tài khoản, mật khẩu hoặc tài khoản đã bị vô hiệu hóa!",
+                                                "Thông báo",
+                                                MessageBoxButtons.OK,
+                                                MessageBoxIcon.Warning);
+                            }
+                        }
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Sai tài khoản hoặc mật khẩu!",
-                                "Thông báo",
+                MessageBox.Show("Lỗi kết nối cơ sở dữ liệu: " + ex.Message,
+                                "Lỗi nghiêm trọng",
                                 MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
+                                MessageBoxIcon.Error);
             }
         }
 
@@ -62,7 +93,15 @@ namespace QuanLiBanGiay
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
+            DialogResult result = MessageBox.Show(
+               "Bạn có chắc chắn muốn thoát không?",
+               "Xác nhận thoát",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                 Close();
+            }
         }
 
         private void txtMatKhau_TextChanged(object sender, EventArgs e)
