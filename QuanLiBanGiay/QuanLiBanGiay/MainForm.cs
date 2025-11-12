@@ -181,5 +181,10 @@ namespace QuanLiBanGiay
         {
             OpenChildForm(new Form__NhapHang());
         }
+
+        private void btnKhachHang_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new Form_KhachHang());
+        }
     }
 }

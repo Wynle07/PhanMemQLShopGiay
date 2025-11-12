@@ -233,6 +233,16 @@ namespace QuanLiBanGiay.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_you__plural__32 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-you-(plural)-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logo_shop_giay_11_768x463 {
             get {
                 object obj = ResourceManager.GetObject("logo-shop-giay-11-768x463", resourceCulture);
