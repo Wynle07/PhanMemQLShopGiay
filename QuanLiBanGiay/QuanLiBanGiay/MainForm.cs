@@ -108,6 +108,7 @@ namespace QuanLiBanGiay
                 
                 this.Hide();
              
+                global::QuanLiBanGiay.SessionContext.MaNhanVien = null;
                 Form1 frmLogin = new Form1();
                 frmLogin.ShowDialog();
 
@@ -123,6 +124,11 @@ namespace QuanLiBanGiay
         private void TimerDongHo_Tick(object sender, EventArgs e)
         {
             CapNhatDongHo();
+        }
+
+        private void btnNhapHang_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new Form__NhapHang());
         }
     }
 }

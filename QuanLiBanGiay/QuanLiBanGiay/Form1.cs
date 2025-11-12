@@ -36,6 +36,7 @@ namespace QuanLiBanGiay
         {
             if (txtDangNhap.Text == "admin" && txtMatKhau.Text == "123")
             {
+                global::QuanLiBanGiay.SessionContext.MaNhanVien = txtDangNhap.Text.Trim();
                 // Ẩn form login
                 this.Hide();
 
