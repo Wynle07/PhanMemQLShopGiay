@@ -69,10 +69,6 @@ namespace QuanLiBanGiay
             OpenChildForm(new Form_TaoHoaDon());
         }
 
-        private void btnKhoHang_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Form_KhoHang());
-        }
 
         private void btnNhanVien_Click(object sender, EventArgs e)
         {
@@ -91,7 +87,15 @@ namespace QuanLiBanGiay
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+            DialogResult result = MessageBox.Show(
+               "Bạn có chắc chắn muốn thoát không?",
+               "Xác nhận thoát",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void btnDangXuat_Click(object sender, EventArgs e)
@@ -109,7 +113,7 @@ namespace QuanLiBanGiay
                 this.Hide();
              
                 global::QuanLiBanGiay.SessionContext.MaNhanVien = null;
-                Form1 frmLogin = new Form1();
+                Form_DangNhap frmLogin = new Form_DangNhap();
                 frmLogin.ShowDialog();
 
                 

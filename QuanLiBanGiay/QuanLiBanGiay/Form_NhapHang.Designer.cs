@@ -76,7 +76,7 @@
             this.grpPhieuNhap.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpPhieuNhap.Location = new System.Drawing.Point(38, 24);
             this.grpPhieuNhap.Name = "grpPhieuNhap";
-            this.grpPhieuNhap.Size = new System.Drawing.Size(1098, 203);
+            this.grpPhieuNhap.Size = new System.Drawing.Size(1243, 203);
             this.grpPhieuNhap.TabIndex = 0;
             this.grpPhieuNhap.TabStop = false;
             this.grpPhieuNhap.Text = "Phiếu nhập";
@@ -230,7 +230,7 @@
             this.grpCTPhieuNhap.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpCTPhieuNhap.Location = new System.Drawing.Point(38, 233);
             this.grpCTPhieuNhap.Name = "grpCTPhieuNhap";
-            this.grpCTPhieuNhap.Size = new System.Drawing.Size(1098, 509);
+            this.grpCTPhieuNhap.Size = new System.Drawing.Size(1243, 509);
             this.grpCTPhieuNhap.TabIndex = 1;
             this.grpCTPhieuNhap.TabStop = false;
             this.grpCTPhieuNhap.Text = "Chi tiết phiếu nhập";
@@ -291,11 +291,11 @@
             // 
             this.dgvCTPN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCTPN.Enabled = false;
-            this.dgvCTPN.Location = new System.Drawing.Point(57, 142);
+            this.dgvCTPN.Location = new System.Drawing.Point(52, 142);
             this.dgvCTPN.Name = "dgvCTPN";
             this.dgvCTPN.RowHeadersWidth = 62;
             this.dgvCTPN.RowTemplate.Height = 28;
-            this.dgvCTPN.Size = new System.Drawing.Size(960, 289);
+            this.dgvCTPN.Size = new System.Drawing.Size(1114, 289);
             this.dgvCTPN.TabIndex = 103;
             // 
             // txtSoLuong
@@ -358,7 +358,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1163, 754);
+            this.ClientSize = new System.Drawing.Size(1310, 754);
             this.Controls.Add(this.grpCTPhieuNhap);
             this.Controls.Add(this.grpPhieuNhap);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

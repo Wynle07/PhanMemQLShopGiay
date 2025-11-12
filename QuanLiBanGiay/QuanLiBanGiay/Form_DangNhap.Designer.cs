@@ -1,6 +1,6 @@
 ﻿namespace QuanLiBanGiay
 {
-    partial class Form1
+    partial class Form_DangNhap
     {
         /// <summary>
         /// Required designer variable.
@@ -58,7 +58,7 @@
             this.grbDangNhap.Controls.Add(this.label2);
             this.grbDangNhap.Location = new System.Drawing.Point(717, 131);
             this.grbDangNhap.Name = "grbDangNhap";
-            this.grbDangNhap.Size = new System.Drawing.Size(536, 497);
+            this.grbDangNhap.Size = new System.Drawing.Size(536, 418);
             this.grbDangNhap.TabIndex = 11;
             this.grbDangNhap.TabStop = false;
             // 
@@ -67,13 +67,13 @@
             this.lblTieuDe.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblTieuDe.AutoSize = true;
             this.lblTieuDe.BackColor = System.Drawing.Color.Transparent;
-            this.lblTieuDe.Font = new System.Drawing.Font("Monotype Corsiva", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTieuDe.Font = new System.Drawing.Font("Times New Roman", 20F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTieuDe.ForeColor = System.Drawing.Color.Red;
-            this.lblTieuDe.Location = new System.Drawing.Point(196, 23);
+            this.lblTieuDe.Location = new System.Drawing.Point(180, 22);
             this.lblTieuDe.Name = "lblTieuDe";
-            this.lblTieuDe.Size = new System.Drawing.Size(142, 49);
+            this.lblTieuDe.Size = new System.Drawing.Size(205, 46);
             this.lblTieuDe.TabIndex = 11;
-            this.lblTieuDe.Text = "LOGIN";
+            this.lblTieuDe.Text = "Đăng nhập";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtMatKhau
@@ -87,15 +87,16 @@
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.LightSteelBlue;
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(327, 398);
+            this.button2.Location = new System.Drawing.Point(385, 328);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(183, 43);
+            this.button2.Size = new System.Drawing.Size(105, 53);
             this.button2.TabIndex = 4;
             this.button2.Text = "Thoát";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // txtDangNhap
@@ -108,14 +109,15 @@
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(69, 398);
+            this.button1.Location = new System.Drawing.Point(177, 328);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(183, 43);
+            this.button1.Size = new System.Drawing.Size(183, 53);
             this.button1.TabIndex = 3;
             this.button1.Text = "Đăng nhập";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
@@ -124,11 +126,11 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(24, 112);
+            this.label1.Location = new System.Drawing.Point(24, 106);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(141, 32);
+            this.label1.Size = new System.Drawing.Size(132, 32);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Tài khoản:";
+            this.label1.Text = "Tài khoản";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // checkBox1
@@ -137,7 +139,7 @@
             this.checkBox1.BackColor = System.Drawing.Color.Transparent;
             this.checkBox1.Font = new System.Drawing.Font("Times New Roman", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox1.ForeColor = System.Drawing.Color.Black;
-            this.checkBox1.Location = new System.Drawing.Point(232, 295);
+            this.checkBox1.Location = new System.Drawing.Point(177, 268);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(197, 28);
             this.checkBox1.TabIndex = 2;
@@ -152,11 +154,11 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Times New Roman", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(24, 211);
+            this.label2.Location = new System.Drawing.Point(30, 205);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(135, 32);
+            this.label2.Size = new System.Drawing.Size(126, 32);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Mật khẩu:";
+            this.label2.Text = "Mật khẩu";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // errUser
@@ -167,7 +169,7 @@
             // 
             this.errPassword.ContainerControl = this;
             // 
-            // Form1
+            // Form_DangNhap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -175,7 +177,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1329, 754);
             this.Controls.Add(this.grbDangNhap);
-            this.Name = "Form1";
+            this.Name = "Form_DangNhap";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.grbDangNhap.ResumeLayout(false);

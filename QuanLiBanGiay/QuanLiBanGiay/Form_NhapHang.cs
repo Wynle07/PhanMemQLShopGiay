@@ -91,19 +91,19 @@ namespace QuanLiBanGiay
                 {
                     DataPropertyName = "MaSP",
                     HeaderText = "Mã sản phẩm",
-                    Width = 150
+                    Width = 100
                 });
                 dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     DataPropertyName = "TenSP",
                     HeaderText = "Tên sản phẩm",
-                    Width = 250
+                    Width = 200
                 });
                 dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     DataPropertyName = "SoLuong",
                     HeaderText = "Số lượng",
-                    Width = 120
+                    Width = 80
                 });
                 dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
                 {

@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pnSilebar = new System.Windows.Forms.Panel();
+            this.btnNhapHang = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnDangXuat = new System.Windows.Forms.Button();
             this.btnKhuyenMai = new System.Windows.Forms.Button();
             this.btnThongKe = new System.Windows.Forms.Button();
             this.btnNhanVien = new System.Windows.Forms.Button();
-            this.btnKhoHang = new System.Windows.Forms.Button();
             this.lblXinChao = new System.Windows.Forms.Label();
             this.btnNhaCungCap = new System.Windows.Forms.Button();
             this.btnTaoDonHang = new System.Windows.Forms.Button();
@@ -46,7 +46,6 @@
             this.lblChucVu = new System.Windows.Forms.Label();
             this.pnContent = new System.Windows.Forms.Panel();
             this.TimerDongHo = new System.Windows.Forms.Timer(this.components);
-            this.btnNhapHang = new System.Windows.Forms.Button();
             this.pnSilebar.SuspendLayout();
             this.pnHeader.SuspendLayout();
             this.SuspendLayout();
@@ -60,7 +59,6 @@
             this.pnSilebar.Controls.Add(this.btnKhuyenMai);
             this.pnSilebar.Controls.Add(this.btnThongKe);
             this.pnSilebar.Controls.Add(this.btnNhanVien);
-            this.pnSilebar.Controls.Add(this.btnKhoHang);
             this.pnSilebar.Controls.Add(this.lblXinChao);
             this.pnSilebar.Controls.Add(this.btnNhaCungCap);
             this.pnSilebar.Controls.Add(this.btnTaoDonHang);
@@ -73,12 +71,29 @@
             this.pnSilebar.Size = new System.Drawing.Size(260, 941);
             this.pnSilebar.TabIndex = 0;
             // 
+            // btnNhapHang
+            // 
+            this.btnNhapHang.FlatAppearance.BorderSize = 0;
+            this.btnNhapHang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNhapHang.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNhapHang.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnNhapHang.Image = global::QuanLiBanGiay.Properties.Resources.icons8_box_32;
+            this.btnNhapHang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNhapHang.Location = new System.Drawing.Point(28, 458);
+            this.btnNhapHang.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnNhapHang.Name = "btnNhapHang";
+            this.btnNhapHang.Size = new System.Drawing.Size(260, 46);
+            this.btnNhapHang.TabIndex = 12;
+            this.btnNhapHang.Text = "Nhập hàng";
+            this.btnNhapHang.UseVisualStyleBackColor = true;
+            this.btnNhapHang.Click += new System.EventHandler(this.btnNhapHang_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 821);
+            this.label1.Location = new System.Drawing.Point(3, 860);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(412, 27);
             this.label1.TabIndex = 11;
@@ -92,10 +107,10 @@
             this.btnDangXuat.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnDangXuat.Image = global::QuanLiBanGiay.Properties.Resources.icons8_on_32;
             this.btnDangXuat.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDangXuat.Location = new System.Drawing.Point(28, 854);
+            this.btnDangXuat.Location = new System.Drawing.Point(28, 881);
             this.btnDangXuat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnDangXuat.Name = "btnDangXuat";
-            this.btnDangXuat.Size = new System.Drawing.Size(204, 74);
+            this.btnDangXuat.Size = new System.Drawing.Size(204, 60);
             this.btnDangXuat.TabIndex = 10;
             this.btnDangXuat.Text = "Đăng Xuất";
             this.btnDangXuat.UseVisualStyleBackColor = true;
@@ -151,23 +166,6 @@
             this.btnNhanVien.Text = "Nhân viên";
             this.btnNhanVien.UseVisualStyleBackColor = true;
             this.btnNhanVien.Click += new System.EventHandler(this.btnNhanVien_Click);
-            // 
-            // btnKhoHang
-            // 
-            this.btnKhoHang.FlatAppearance.BorderSize = 0;
-            this.btnKhoHang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKhoHang.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKhoHang.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnKhoHang.Image = global::QuanLiBanGiay.Properties.Resources.icons8_shopping_cart_32;
-            this.btnKhoHang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnKhoHang.Location = new System.Drawing.Point(28, 466);
-            this.btnKhoHang.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnKhoHang.Name = "btnKhoHang";
-            this.btnKhoHang.Size = new System.Drawing.Size(260, 46);
-            this.btnKhoHang.TabIndex = 6;
-            this.btnKhoHang.Text = "Kho hàng";
-            this.btnKhoHang.UseVisualStyleBackColor = true;
-            this.btnKhoHang.Click += new System.EventHandler(this.btnKhoHang_Click);
             // 
             // lblXinChao
             // 
@@ -299,23 +297,6 @@
             // 
             this.TimerDongHo.Tick += new System.EventHandler(this.TimerDongHo_Tick);
             // 
-            // btnNhapHang
-            // 
-            this.btnNhapHang.FlatAppearance.BorderSize = 0;
-            this.btnNhapHang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNhapHang.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNhapHang.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnNhapHang.Image = global::QuanLiBanGiay.Properties.Resources.icons8_box_32;
-            this.btnNhapHang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNhapHang.Location = new System.Drawing.Point(28, 771);
-            this.btnNhapHang.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnNhapHang.Name = "btnNhapHang";
-            this.btnNhapHang.Size = new System.Drawing.Size(260, 46);
-            this.btnNhapHang.TabIndex = 12;
-            this.btnNhapHang.Text = "Nhập hàng";
-            this.btnNhapHang.UseVisualStyleBackColor = true;
-            this.btnNhapHang.Click += new System.EventHandler(this.btnNhapHang_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -346,7 +327,6 @@
         private System.Windows.Forms.Button btnTrangChu;
         private System.Windows.Forms.Button btnThongKe;
         private System.Windows.Forms.Button btnNhanVien;
-        private System.Windows.Forms.Button btnKhoHang;
         private System.Windows.Forms.Button btnNhaCungCap;
         private System.Windows.Forms.Button btnTaoDonHang;
         private System.Windows.Forms.Button btnSanPham;

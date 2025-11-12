@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace QuanLiBanGiay
 {
-    public partial class Form1 : Form
+    public partial class Form_DangNhap : Form
     {
-        public Form1()
+        public Form_DangNhap()
         {
             InitializeComponent();
         }
@@ -58,17 +58,6 @@ namespace QuanLiBanGiay
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show(
-               "Bạn có chắc chắn muốn thoát không?",
-               "Xác nhận thoát",
-               MessageBoxButtons.YesNo,
-               MessageBoxIcon.Question
-        );
-
-            if (result == DialogResult.No)
-            {
-                e.Cancel = true; // Hủy việc đóng form
-            }
         }
 
         private void button2_Click(object sender, EventArgs e)

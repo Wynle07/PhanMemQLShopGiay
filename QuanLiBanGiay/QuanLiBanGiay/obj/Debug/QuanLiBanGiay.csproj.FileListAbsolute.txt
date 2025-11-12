@@ -274,9 +274,7 @@ D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMe
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe.config
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.ResolveComReference.cache
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form__NhapHang.resources
-D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form1.resources
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_HoaDon.resources
-D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhoHang.resources
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhuyenMai.resources
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhaCungCap.resources
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_NhanVien.resources
@@ -290,3 +288,4 @@ D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMe
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBa.E89BC873.Up2Date
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.pdb
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_DangNhap.resources
