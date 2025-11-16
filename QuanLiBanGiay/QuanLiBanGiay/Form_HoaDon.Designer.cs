@@ -51,6 +51,10 @@
             this.label11 = new System.Windows.Forms.Label();
             this.lblVat = new System.Windows.Forms.Label();
             this.lblChuKy = new System.Windows.Forms.Label();
+            this.lbl = new System.Windows.Forms.Label();
+            this.lblKhuyenMai = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblSauGiam = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSachSP)).BeginInit();
@@ -230,7 +234,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(750, 598);
+            this.label3.Location = new System.Drawing.Point(750, 673);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(125, 20);
             this.label3.TabIndex = 20;
@@ -240,7 +244,7 @@
             // 
             this.lblThanhTien.AutoSize = true;
             this.lblThanhTien.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblThanhTien.Location = new System.Drawing.Point(904, 637);
+            this.lblThanhTien.Location = new System.Drawing.Point(904, 705);
             this.lblThanhTien.Name = "lblThanhTien";
             this.lblThanhTien.Size = new System.Drawing.Size(51, 20);
             this.lblThanhTien.TabIndex = 25;
@@ -270,7 +274,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(750, 637);
+            this.label11.Location = new System.Drawing.Point(750, 705);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(103, 20);
             this.label11.TabIndex = 22;
@@ -280,7 +284,7 @@
             // 
             this.lblVat.AutoSize = true;
             this.lblVat.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVat.Location = new System.Drawing.Point(904, 598);
+            this.lblVat.Location = new System.Drawing.Point(904, 673);
             this.lblVat.Name = "lblVat";
             this.lblVat.Size = new System.Drawing.Size(60, 20);
             this.lblVat.TabIndex = 23;
@@ -296,11 +300,55 @@
             this.lblChuKy.TabIndex = 18;
             this.lblChuKy.Text = "Chữ ký khách hàng";
             // 
+            // lbl
+            // 
+            this.lbl.AutoSize = true;
+            this.lbl.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl.Location = new System.Drawing.Point(750, 596);
+            this.lbl.Name = "lbl";
+            this.lbl.Size = new System.Drawing.Size(109, 20);
+            this.lbl.TabIndex = 26;
+            this.lbl.Text = "Khuyến mãi:";
+            // 
+            // lblKhuyenMai
+            // 
+            this.lblKhuyenMai.AutoSize = true;
+            this.lblKhuyenMai.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKhuyenMai.Location = new System.Drawing.Point(904, 596);
+            this.lblKhuyenMai.Name = "lblKhuyenMai";
+            this.lblKhuyenMai.Size = new System.Drawing.Size(26, 20);
+            this.lblKhuyenMai.TabIndex = 27;
+            this.lblKhuyenMai.Text = "lbl";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(750, 635);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(86, 20);
+            this.label6.TabIndex = 28;
+            this.label6.Text = "Sau giảm:";
+            // 
+            // lblSauGiam
+            // 
+            this.lblSauGiam.AutoSize = true;
+            this.lblSauGiam.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSauGiam.Location = new System.Drawing.Point(904, 635);
+            this.lblSauGiam.Name = "lblSauGiam";
+            this.lblSauGiam.Size = new System.Drawing.Size(26, 20);
+            this.lblSauGiam.TabIndex = 29;
+            this.lblSauGiam.Text = "lbl";
+            // 
             // Form_HoaDon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1178, 721);
+            this.ClientSize = new System.Drawing.Size(1178, 752);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblSauGiam);
+            this.Controls.Add(this.lbl);
+            this.Controls.Add(this.lblKhuyenMai);
             this.Controls.Add(this.lblChuKy);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblThanhTien);
@@ -350,5 +398,9 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label lblVat;
         private System.Windows.Forms.Label lblChuKy;
+        private System.Windows.Forms.Label lbl;
+        private System.Windows.Forms.Label lblKhuyenMai;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblSauGiam;
     }
 }

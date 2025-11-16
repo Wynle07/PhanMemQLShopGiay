@@ -6,8 +6,6 @@ using System.IO;
 using System.Windows.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using iText = iTextSharp.text;
-using iTextPdf = iTextSharp.text.pdf;
 
 namespace QuanLiBanGiay
 {
@@ -24,13 +22,12 @@ namespace QuanLiBanGiay
         {
             LoadKhachHang();
             LoadSanPham();
-            TaoBangSanPham();
             LoadNhanVien();
+            LoadKhuyenMai();
+            TaoBangSanPham();
         }
 
-        // ============================================================
-        // 1. Load danh sách khách hàng
-        // ============================================================
+        // ===== Load khách hàng =====
         private void LoadKhachHang()
         {
             using (SqlConnection conn = DBConnection.GetConnection())
@@ -58,9 +55,7 @@ namespace QuanLiBanGiay
             txtDiemTL.Text = r["DIEMTICHLUY"].ToString();
         }
 
-        // ============================================================
-        // 2. Load danh sách sản phẩm
-        // ============================================================
+        // ===== Load sản phẩm =====
         private void LoadSanPham()
         {
             using (SqlConnection conn = DBConnection.GetConnection())
@@ -74,13 +69,11 @@ namespace QuanLiBanGiay
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                // Load mã giày
                 cboMaSP.DataSource = dt;
                 cboMaSP.DisplayMember = "MAGIAY";
                 cboMaSP.ValueMember = "MAGIAY";
                 cboMaSP.SelectedIndex = -1;
 
-                // Load tên giày
                 cboTenSP.DataSource = dt.Copy();
                 cboTenSP.DisplayMember = "TENGIAY";
                 cboTenSP.ValueMember = "MAGIAY";
@@ -110,9 +103,45 @@ namespace QuanLiBanGiay
             cboMauSac.Text = r["MAMAU"].ToString();
         }
 
-        // ============================================================
-        // 3. Tạo bảng sản phẩm
-        // ============================================================
+        // ===== Load nhân viên =====
+        private void LoadNhanVien()
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string sql = "SELECT MANV, TENNV FROM NHANVIEN";
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                cboMaNVXL.DataSource = dt;
+                cboMaNVXL.DisplayMember = "MANV";
+                cboMaNVXL.ValueMember = "MANV";
+                cboMaNVXL.SelectedIndex = -1;
+            }
+        }
+
+        // ===== Load khuyến mãi =====
+        private void LoadKhuyenMai()
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string sql = @"
+                    SELECT MAKM, TENKM, NGAYBATDAU, NGAYKETTHUC, GIAMGIA
+                    FROM KHUYENMAI
+                    WHERE GETDATE() BETWEEN NGAYBATDAU AND NGAYKETTHUC
+                ";
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                cboKhuyenMai.DataSource = dt;
+                cboKhuyenMai.DisplayMember = "TENKM";
+                cboKhuyenMai.ValueMember = "MAKM";
+                cboKhuyenMai.SelectedIndex = -1;
+            }
+        }
+
+        // ===== Tạo bảng sản phẩm =====
         private void TaoBangSanPham()
         {
             dtSanPham.Columns.Add("MAGIAY");
@@ -134,9 +163,8 @@ namespace QuanLiBanGiay
                 return;
             }
 
-            double gia = 0;
             DataRowView r = (DataRowView)cboMaSP.SelectedItem;
-            gia = double.Parse(r["GIABAN"].ToString());
+            double gia = double.Parse(r["GIABAN"].ToString());
 
             dtSanPham.Rows.Add(
                 cboMaSP.Text,
@@ -155,248 +183,293 @@ namespace QuanLiBanGiay
                 dtSanPham.Rows.RemoveAt(dgvSanPham.CurrentRow.Index);
         }
 
-        // ============================================================
-        // 4. Lưu hóa đơn
-        // ============================================================
-        private void btnXuatHD_Click(object sender, EventArgs e)
+        // ===== Tính tổng tiền =====
+        private double TinhTongTien()
         {
-            if (!LuuHoaDon())
+            double tong = 0;
+            foreach (DataRow r in dtSanPham.Rows)
             {
-                MessageBox.Show("Lưu hóa đơn thất bại!");
-                return;
+                tong += Convert.ToInt32(r["SOLUONG"]) * Convert.ToDouble(r["GIABAN"]);
             }
-
-            MessageBox.Show("Lưu hóa đơn thành công!");
-
-            Form_HoaDon frm = new Form_HoaDon();
-            frm.MaHD = txtMaDH.Text;
-            frm.MaKH = cboMaKH.Text;
-            frm.TenKH = txtTenKH.Text;
-            frm.SDT = txtSDT.Text;
-            frm.DiaChi = txtDiaChi.Text;
-            frm.DiemTL = txtDiemTL.Text;
-            frm.MaNV = cboMaNVXL.Text;
-            frm.ThoiGian = dtpThoiGian.Text;
-            frm.DanhSachSanPham = dtSanPham;
-
-            frm.Show();
+            return tong;
         }
 
+        // ===== Lưu hóa đơn =====
         private bool LuuHoaDon()
         {
+            if (string.IsNullOrWhiteSpace(txtMaDH.Text))
+            {
+                MessageBox.Show("Mã hóa đơn không được để trống!");
+                return false;
+            }
+
+            if (cboMaKH.SelectedIndex < 0)
+            {
+                MessageBox.Show("Vui lòng chọn khách hàng!");
+                return false;
+            }
+
+            if (cboMaNVXL.SelectedIndex < 0)
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên xử lý!");
+                return false;
+            }
+
+            if (dtSanPham == null || dtSanPham.Rows.Count == 0)
+            {
+                MessageBox.Show("Danh sách sản phẩm trống!");
+                return false;
+            }
+
             using (SqlConnection conn = DBConnection.GetConnection())
             {
                 conn.Open();
                 SqlTransaction tran = conn.BeginTransaction();
-
                 try
                 {
-                    // ===== HOADON =====
-                    string sqlHD = @"INSERT INTO HOADON (MAHD, MAKH, MANV, NGAYLAP, TONGTIEN) 
-                                     VALUES (@MAHD, @MAKH, @MANV, @NGAYLAP, @TONGTIEN)";
-                    SqlCommand cmdHD = new SqlCommand(sqlHD, conn, tran);
-                    cmdHD.Parameters.AddWithValue("@MAHD", txtMaDH.Text);
-                    cmdHD.Parameters.AddWithValue("@MAKH", cboMaKH.Text);
-                    cmdHD.Parameters.AddWithValue("@MANV", cboMaNVXL.Text);
-                    cmdHD.Parameters.AddWithValue("@NGAYLAP", DateTime.Now);
+                    double tongTienGoc = TinhTongTien();
 
-                    double tong = 0;
-                    foreach (DataRow r in dtSanPham.Rows)
-                        tong += int.Parse(r["SOLUONG"].ToString()) * double.Parse(r["GIABAN"].ToString());
+                    double phanTramGiam = 0;
+                    if (cboKhuyenMai.SelectedItem is DataRowView km)
+                        phanTramGiam = Convert.ToDouble(km["GIAMGIA"]);
 
-                    cmdHD.Parameters.AddWithValue("@TONGTIEN", tong);
-                    cmdHD.ExecuteNonQuery();
+                    double tienGiam = tongTienGoc * phanTramGiam / 100.0;
+                    double tongSauGiam = tongTienGoc - tienGiam;
+                    double thue = tongSauGiam * 0.08;
+                    double tongThanhToan = tongSauGiam + thue;
 
-                    // ===== CTHOADON =====
-                    string sqlCT = @"INSERT INTO CTHOADON (MAHD, MAGIAY, SOLUONG, DONGIA, THANHTIEN)
-                                     VALUES (@MAHD, @MAGIAY, @SOLUONG, @DONGIA, @THANHTIEN)";
+                    string sqlHD = @"
+                        INSERT INTO HOADON (MAHD, MAKH, MANV, NGAYLAP, TONGTIEN)
+                        VALUES (@MAHD, @MAKH, @MANV, @NGAYLAP, @TONGTIEN)";
+                    using (SqlCommand cmd = new SqlCommand(sqlHD, conn, tran))
+                    {
+                        cmd.Parameters.AddWithValue("@MAHD", txtMaDH.Text);
+                        cmd.Parameters.AddWithValue("@MAKH", cboMaKH.SelectedValue);
+                        cmd.Parameters.AddWithValue("@MANV", cboMaNVXL.SelectedValue);
+                        cmd.Parameters.AddWithValue("@NGAYLAP", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@TONGTIEN", tongThanhToan);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    string sqlCT = @"
+                        INSERT INTO CTHOADON (MAHD, MAGIAY, SOLUONG, DONGIA, THANHTIEN)
+                        VALUES (@MAHD, @MAGIAY, @SOLUONG, @DONGIA, @THANHTIEN)";
                     foreach (DataRow r in dtSanPham.Rows)
                     {
-                        SqlCommand cmdCT = new SqlCommand(sqlCT, conn, tran);
-                        cmdCT.Parameters.AddWithValue("@MAHD", txtMaDH.Text);
-                        cmdCT.Parameters.AddWithValue("@MAGIAY", r["MAGIAY"].ToString());
-                        cmdCT.Parameters.AddWithValue("@SOLUONG", int.Parse(r["SOLUONG"].ToString()));
-                        cmdCT.Parameters.AddWithValue("@DONGIA", double.Parse(r["GIABAN"].ToString()));
-                        double thanhTien = int.Parse(r["SOLUONG"].ToString()) * double.Parse(r["GIABAN"].ToString());
-                        cmdCT.Parameters.AddWithValue("@THANHTIEN", thanhTien);
-                        cmdCT.ExecuteNonQuery();
+                        double gia = Convert.ToDouble(r["GIABAN"]);
+                        int sl = Convert.ToInt32(r["SOLUONG"]);
+                        double thanhTien = gia * sl * (1 - phanTramGiam / 100.0);
+
+                        using (SqlCommand cmd = new SqlCommand(sqlCT, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@MAHD", txtMaDH.Text);
+                            cmd.Parameters.AddWithValue("@MAGIAY", r["MAGIAY"]);
+                            cmd.Parameters.AddWithValue("@SOLUONG", sl);
+                            cmd.Parameters.AddWithValue("@DONGIA", gia);
+                            cmd.Parameters.AddWithValue("@THANHTIEN", thanhTien);
+                            cmd.ExecuteNonQuery();
+                        }
                     }
 
                     tran.Commit();
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
                     tran.Rollback();
+                    MessageBox.Show("Lỗi khi lưu hóa đơn: " + ex.Message);
                     return false;
                 }
             }
         }
 
-        // ============================================================
-        // 5. Xuất PDF hóa đơn
-        // ============================================================
+        // ===== Xuất hóa đơn sang Form_HoaDon =====
+        private void btnXuatHD_Click(object sender, EventArgs e)
+        {
+            if (!LuuHoaDon()) return;
+
+            Form_HoaDon frm = new Form_HoaDon
+            {
+                MaHD = txtMaDH.Text,
+                MaKH = cboMaKH.Text,
+                TenKH = txtTenKH.Text,
+                SDT = txtSDT.Text,
+                DiaChi = txtDiaChi.Text,
+                DiemTL = txtDiemTL.Text,
+                MaNV = cboMaNVXL.Text,
+                ThoiGian = dtpThoiGian.Text,
+                DanhSachSanPham = dtSanPham.Copy()
+            };
+
+            if (cboKhuyenMai.SelectedItem is DataRowView km)
+            {
+                frm.KhuyenMai = km["GIAMGIA"].ToString();   // % khuyến mãi
+                frm.TenKhuyenMai = km["TENKM"].ToString();
+            }
+            else
+            {
+                frm.KhuyenMai = "0";
+                frm.TenKhuyenMai = "Không KM";
+            }
+
+            frm.Show();
+        }
+
+        // ===== Refresh Form =====
+        private void btnRefesh_Click(object sender, EventArgs e)
+        {
+            cboMaKH.SelectedIndex = -1;
+            cboMaSP.SelectedIndex = -1;
+            cboTenSP.SelectedIndex = -1;
+            cboMaNVXL.SelectedIndex = -1;
+            cboKhuyenMai.SelectedIndex = -1;
+
+            txtTenKH.Clear();
+            txtSDT.Clear();
+            txtDiaChi.Clear();
+            txtDiemTL.Clear();
+            txtMaLoai.Clear();
+            txtSoLuongMua.Clear();
+            txtMaDH.Clear();
+
+            dtSanPham.Rows.Clear();
+            dgvSanPham.DataSource = null;
+
+            dtpThoiGian.Value = DateTime.Now;
+
+            LoadKhachHang();
+            LoadSanPham();
+            LoadNhanVien();
+            LoadKhuyenMai();
+        }
+
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
             try
             {
-                string path = $@"D:\DoAn\HoaDon_{txtMaDH.Text}.pdf";
+                // Lấy mã hóa đơn
+                string maHD = txtMaDH.Text;
+                if (string.IsNullOrEmpty(maHD))
+                    maHD = "HD_Default";
+
+                string path = $@"D:\DoAn\HoaDon_{maHD}.pdf";
 
                 Document doc = new Document(PageSize.A4, 30, 30, 30, 30);
                 PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
                 doc.Open();
 
-                // ===== FONT TIẾNG VIỆT =====
+                // Font tiếng Việt
                 string fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "times.ttf");
                 BaseFont bf = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-
-                iTextSharp.text.Font f20b = new iTextSharp.text.Font(bf, 20, iTextSharp.text.Font.BOLD);
-                iTextSharp.text.Font f14b = new iTextSharp.text.Font(bf, 14, iTextSharp.text.Font.BOLD);
                 iTextSharp.text.Font f12 = new iTextSharp.text.Font(bf, 12);
                 iTextSharp.text.Font f12b = new iTextSharp.text.Font(bf, 12, iTextSharp.text.Font.BOLD);
-                iTextSharp.text.Font f8b = new iTextSharp.text.Font(bf, 12, iTextSharp.text.Font.BOLD);
+                iTextSharp.text.Font f20b = new iTextSharp.text.Font(bf, 20, iTextSharp.text.Font.BOLD);
 
-                // ===== TIÊU ĐỀ =====
-                Paragraph title = new Paragraph("PHIẾU HÓA ĐƠN\n\n", f20b);
-                title.Alignment = Element.ALIGN_CENTER;
+                // ===== TITLE =====
+                Paragraph title = new Paragraph("PHIẾU HÓA ĐƠN\n\n", f20b) { Alignment = Element.ALIGN_CENTER };
                 doc.Add(title);
 
-                // ===== Mã hóa đơn & nhân viên =====
-                PdfPTable tInfoTop = new PdfPTable(2);
-                tInfoTop.WidthPercentage = 100;
+                // ===== THÔNG TIN HÓA ĐƠN =====
+                PdfPTable tblInfo = new PdfPTable(2) { WidthPercentage = 100 };
+                tblInfo.SetWidths(new float[] { 1f, 1f });
+                tblInfo.AddCell(new PdfPCell(new Phrase($"Mã hóa đơn: {maHD}", f12)) { Border = PdfPCell.NO_BORDER });
+                tblInfo.AddCell(new PdfPCell(new Phrase($"Mã NV xử lý: {cboMaNVXL.Text}", f12)) { Border = PdfPCell.NO_BORDER, HorizontalAlignment = Element.ALIGN_RIGHT });
+                tblInfo.SpacingAfter = 10;
+                doc.Add(tblInfo);
 
-                PdfPCell c1 = new PdfPCell(new Phrase($"Mã hóa đơn: {txtMaDH.Text}", f12));
-                c1.Border = iTextSharp.text.Rectangle.NO_BORDER;
-
-                PdfPCell c2 = new PdfPCell(new Phrase($"Mã NV xử lý: {cboMaNVXL.Text}", f12));
-                c2.Border = iTextSharp.text.Rectangle.NO_BORDER;
-                c2.HorizontalAlignment = Element.ALIGN_RIGHT;
-
-                tInfoTop.AddCell(c1);
-                tInfoTop.AddCell(c2);
-                doc.Add(tInfoTop);
-
-                doc.Add(new Paragraph("\n"));
-
-                // ===== BOX THÔNG TIN KHÁCH HÀNG =====
-                PdfPCell boxTitle = new PdfPCell(new Phrase("Thông tin khách hàng", f12b));
-                boxTitle.BackgroundColor = new BaseColor(230, 230, 230);
-                boxTitle.Colspan = 2;
-                boxTitle.Padding = 5;
-
-                PdfPTable tKH = new PdfPTable(2);
-                tKH.WidthPercentage = 100;
-                tKH.SetWidths(new float[] { 25f, 75f });
-                tKH.AddCell(boxTitle);
-
-                void AddRow(string t, string v)
+                // ===== THÔNG TIN KHÁCH HÀNG =====
+                PdfPTable tblKH = new PdfPTable(2) { WidthPercentage = 100 };
+                tblKH.SetWidths(new float[] { 1f, 2f });
+                void KHRow(string label, string value)
                 {
-                    PdfPCell l = new PdfPCell(new Phrase(t, f12));
-                    l.Padding = 5;
-
-                    PdfPCell r = new PdfPCell(new Phrase(v, f12));
-                    r.Padding = 5;
-
-                    tKH.AddCell(l);
-                    tKH.AddCell(r);
+                    tblKH.AddCell(new PdfPCell(new Phrase(label, f12b)));
+                    tblKH.AddCell(new PdfPCell(new Phrase(value, f12)));
                 }
-
-                AddRow("Họ và tên:", txtTenKH.Text);
-                AddRow("Điện thoại:", txtSDT.Text);
-                AddRow("Địa chỉ:", txtDiaChi.Text);
-                AddRow("Ngày mua:", dtpThoiGian.Text);
-
-                doc.Add(tKH);
-
-                doc.Add(new Paragraph("\n"));
+                KHRow("Họ và tên:", txtTenKH.Text);
+                KHRow("Điện thoại:", txtSDT.Text);
+                KHRow("Địa chỉ:", txtDiaChi.Text);
+                KHRow("Ngày mua:", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+                tblKH.SpacingAfter = 15;
+                doc.Add(tblKH);
 
                 // ===== BẢNG SẢN PHẨM =====
-                PdfPTable tSP = new PdfPTable(8);
-                tSP.WidthPercentage = 100;
-                tSP.SetWidths(new float[] { 10f, 25f, 10f, 10f, 10f, 16f, 12f, 15f });
+                PdfPTable tblSP = new PdfPTable(8) { WidthPercentage = 100 };
+                tblSP.SetWidths(new float[] { 1.2f, 3.5f, 1f, 1f, 1f, 1.2f, 1.5f, 1.5f });
+                string[] headers = { "MÃ GIÀY", "TÊN GIÀY", "LOẠI", "SIZE", "MÀU", "SỐ LƯỢNG", "GIÁ BÁN", "THÀNH TIỀN" };
+                foreach (var h in headers)
+                    tblSP.AddCell(new PdfPCell(new Phrase(h, f12b))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        BackgroundColor = BaseColor.LIGHT_GRAY
+                    });
 
-                string[] h = { "MAGIAY", "TENGIAY", "MALOAI", "MASIZE", "MAMAU", "SOLUONG", "GIABAN", "THANHTIEN" };
-                foreach (string x in h)
+                // ===== DỮ LIỆU BẢNG =====
+                foreach (DataGridViewRow row in dgvSanPham.Rows)
                 {
-                    PdfPCell cell = new PdfPCell(new Phrase(x, f8b));
-                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Padding = 5;
-                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                    cell.NoWrap = true;
-                    tSP.AddCell(cell);
+                    if (row.IsNewRow) continue;
+                    double sl = Convert.ToDouble(row.Cells["SOLUONG"].Value);
+                    double gia = Convert.ToDouble(row.Cells["GIABAN"].Value);
+                    double thanhTien = sl * gia;
+
+                    tblSP.AddCell(new PdfPCell(new Phrase(row.Cells["MAGIAY"].Value.ToString(), f12)));
+                    tblSP.AddCell(new PdfPCell(new Phrase(row.Cells["TENGIAY"].Value.ToString(), f12)));
+                    tblSP.AddCell(new PdfPCell(new Phrase(row.Cells["MALOAI"].Value.ToString(), f12)));
+                    tblSP.AddCell(new PdfPCell(new Phrase(row.Cells["MASIZE"].Value.ToString(), f12)));
+                    tblSP.AddCell(new PdfPCell(new Phrase(row.Cells["MAMAU"].Value.ToString(), f12)));
+                    tblSP.AddCell(new PdfPCell(new Phrase($"{sl:N0}", f12)) { HorizontalAlignment = Element.ALIGN_RIGHT });
+                    tblSP.AddCell(new PdfPCell(new Phrase($"{gia:N0}", f12)) { HorizontalAlignment = Element.ALIGN_RIGHT });
+                    tblSP.AddCell(new PdfPCell(new Phrase($"{thanhTien:N0}", f12)) { HorizontalAlignment = Element.ALIGN_RIGHT });
                 }
-
-                double tong = 0;
-
-                foreach (DataRow r in dtSanPham.Rows)
-                {
-                    double sl = Convert.ToDouble(r["SOLUONG"]);
-                    double gia = Convert.ToDouble(r["GIABAN"]);
-                    double tt = sl * gia;
-                    tong += tt;
-
-                    tSP.AddCell(new Phrase(r["MAGIAY"].ToString(), f12));
-                    tSP.AddCell(new Phrase(r["TENGIAY"].ToString(), f12));
-                    tSP.AddCell(new Phrase(r["MALOAI"].ToString(), f12));
-                    tSP.AddCell(new Phrase(r["MASIZE"].ToString(), f12));
-                    tSP.AddCell(new Phrase(r["MAMAU"].ToString(), f12));
-                    tSP.AddCell(new Phrase(sl.ToString(), f12));
-                    tSP.AddCell(new Phrase(gia.ToString("N0"), f12));
-                    tSP.AddCell(new Phrase(tt.ToString("N0"), f12));
-                }
-
-                doc.Add(tSP);
-
-                doc.Add(new Paragraph("\n"));
+                tblSP.SpacingAfter = 20;
+                doc.Add(tblSP);
 
                 // ===== TÍNH TIỀN =====
-                double thue = tong * 0.08;             // VAT 8%
-                double thanhTienFinal = tong + thue;
-
-                // ===========================
-                //     2 CỘT: CHỮ KÝ - TÍNH TIỀN
-                // ===========================
-                PdfPTable tBottom = new PdfPTable(2);
-                tBottom.WidthPercentage = 100;
-                tBottom.SetWidths(new float[] { 50f, 50f });
-
-                // ---- CỘT 1: Chữ ký khách hàng ----
-                PdfPTable tSign = new PdfPTable(1);
-                PdfPCell signTitle = new PdfPCell(new Phrase("Chữ ký khách hàng", f12b));
-                signTitle.Border = iTextSharp.text.Rectangle.NO_BORDER;
-                signTitle.HorizontalAlignment = Element.ALIGN_CENTER;
-                signTitle.PaddingBottom = 40;
-                tSign.AddCell(signTitle);
-
-                PdfPCell leftCell = new PdfPCell(tSign);
-                leftCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
-                tBottom.AddCell(leftCell);
-
-                // ---- CỘT 2: Tính tiền ----
-                PdfPTable tTien = new PdfPTable(2);
-
-                void AddMoney(string label, string val)
+                double tong = 0;
+                foreach (DataGridViewRow row in dgvSanPham.Rows)
                 {
-                    PdfPCell l = new PdfPCell(new Phrase(label, f12b));
-                    l.Border = iTextSharp.text.Rectangle.NO_BORDER;
-
-                    PdfPCell v = new PdfPCell(new Phrase(val, f12));
-                    v.Border = iTextSharp.text.Rectangle.NO_BORDER;
-                    v.HorizontalAlignment = Element.ALIGN_RIGHT;
-
-                    tTien.AddCell(l);
-                    tTien.AddCell(v);
+                    if (row.IsNewRow) continue;
+                    tong += Convert.ToDouble(row.Cells["SOLUONG"].Value) * Convert.ToDouble(row.Cells["GIABAN"].Value);
                 }
 
-                AddMoney("Tổng tiền:", $"{tong:N0} VNĐ");
-                AddMoney("Thuế (VAT 8%):", $"{thue:N0} VNĐ");
-                AddMoney("Thành tiền:", $"{thanhTienFinal:N0} VNĐ");
+                double phanTramGiam = 0;
+                if (cboKhuyenMai.SelectedItem is DataRowView km)
+                    phanTramGiam = Convert.ToDouble(km["GIAMGIA"]);
 
+                double giam = tong * phanTramGiam / 100.0;
+                double tongSauGiam = tong - giam;
+                double thue = tongSauGiam * 0.08;
+                double thanhTienFinal = tongSauGiam + thue;
+
+                PdfPTable tTien = new PdfPTable(2) { WidthPercentage = 100 }; // Đặt lại WidthPercentage cho phù hợp khi nhúng vào cell
+                void MoneyRow(string label, string value)
+                {
+                    tTien.AddCell(new PdfPCell(new Phrase(label, f12b)) { Border = PdfPCell.NO_BORDER });
+                    tTien.AddCell(new PdfPCell(new Phrase(value, f12)) { Border = PdfPCell.NO_BORDER, HorizontalAlignment = Element.ALIGN_RIGHT });
+                }
+                MoneyRow("Tổng tiền:", $"{tong:N0} VNĐ");
+                MoneyRow($"Khuyến mãi ({phanTramGiam}%):", $"-{giam:N0} VNĐ");
+                MoneyRow("Sau giảm:", $"{tongSauGiam:N0} VNĐ");
+                MoneyRow("Thuế VAT (8%):", $"{thue:N0} VNĐ");
+                MoneyRow("Thành tiền:", $"{thanhTienFinal:N0} VNĐ");
+
+                // ===== BẢNG CHÍNH CHO CHỮ KÝ VÀ TÍNH TIỀN =====
+                PdfPTable mainTable = new PdfPTable(2) { WidthPercentage = 100 };
+                mainTable.SetWidths(new float[] { 1f, 1f }); // Có thể điều chỉnh tỷ lệ nếu cần, ví dụ { 0.5f, 1.5f } để chữ ký nhỏ hơn
+
+                // Ô bên trái: Chữ ký khách hàng
+                PdfPCell leftCell = new PdfPCell();
+                leftCell.AddElement(new Paragraph("Chữ ký khách hàng:\n\n____________________", f12));
+                leftCell.Border = PdfPCell.NO_BORDER;
+                leftCell.VerticalAlignment = Element.ALIGN_BOTTOM; // Căn dưới nếu cần
+
+                // Ô bên phải: Bảng tính tiền
                 PdfPCell rightCell = new PdfPCell(tTien);
-                rightCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
-                tBottom.AddCell(rightCell);
+                rightCell.Border = PdfPCell.NO_BORDER;
 
-                doc.Add(tBottom);
+                mainTable.AddCell(leftCell);
+                mainTable.AddCell(rightCell);
+
+                doc.Add(mainTable);
 
                 doc.Close();
                 writer.Close();
@@ -410,51 +483,5 @@ namespace QuanLiBanGiay
         }
 
 
-
-
-        private void LoadNhanVien()
-        {
-            using (SqlConnection conn = DBConnection.GetConnection())
-            {
-                string sql = "SELECT MANV, TENNV FROM NHANVIEN";
-                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                cboMaNVXL.DataSource = dt;
-                cboMaNVXL.DisplayMember = "MANV";
-                cboMaNVXL.ValueMember = "MANV";
-                cboMaNVXL.SelectedIndex = -1;
-            }
-        }
-
-        private void btnRefesh_Click(object sender, EventArgs e)
-        {
-            // Reset các ComboBox
-            cboMaKH.SelectedIndex = -1;
-            cboMaSP.SelectedIndex = -1;
-            cboTenSP.SelectedIndex = -1;
-            cboMaNVXL.SelectedIndex = -1;
-
-            // Reset các TextBox
-            txtTenKH.Clear();
-            txtSDT.Clear();
-            txtDiaChi.Clear();
-            txtDiemTL.Clear();
-            txtMaLoai.Clear();
-            txtSoLuongMua.Clear();
-            txtMaDH.Clear();
-
-            // Xóa DataGridView
-            dtSanPham.Rows.Clear();
-
-            // Tải lại dữ liệu từ database
-            LoadKhachHang();
-            LoadSanPham();
-            LoadNhanVien();
-
-            MessageBox.Show("Form đã được làm mới!");
-        }
     }
-
 }

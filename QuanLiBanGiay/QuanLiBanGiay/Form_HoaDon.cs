@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Data;
-using System.Net.NetworkInformation;
-using System.Windows.Forms;
 using System.Drawing;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using System.IO;
+using System.Windows.Forms;
+
 namespace QuanLiBanGiay
 {
     public partial class Form_HoaDon : Form
     {
-        // =============================================
-        // Thuộc tính nhận dữ liệu từ Form_TaoHoaDon
-        // =============================================
         public string MaHD { get; set; }
         public string MaKH { get; set; }
         public string TenKH { get; set; }
@@ -21,7 +15,8 @@ namespace QuanLiBanGiay
         public string DiemTL { get; set; }
         public string MaNV { get; set; }
         public string ThoiGian { get; set; }
-
+        public string KhuyenMai { get; set; }     // % khuyến mãi
+        public string TenKhuyenMai { get; set; }  // Tên KM
         public DataTable DanhSachSanPham { get; set; }
 
         public Form_HoaDon()
@@ -29,30 +24,25 @@ namespace QuanLiBanGiay
             InitializeComponent();
         }
 
-        // =============================================
-        // Khi form load → Gán dữ liệu lên giao diện
-        // =============================================
         private void Form_HoaDon_Load(object sender, EventArgs e)
         {
-            // Kiểm tra DataTable
             if (DanhSachSanPham == null)
             {
                 MessageBox.Show("Nhấn Ok để xem Hóa đơn!!");
                 return;
             }
 
-            // Gán thông tin hóa đơn lên label
+            // Thông tin chung
             lblMaHD.Text = MaHD ?? "";
             lblTenKH.Text = TenKH ?? "";
             lblSDT.Text = SDT ?? "";
             lblDiaChi.Text = DiaChi ?? "";
             lblMaNVXL.Text = MaNV ?? "";
             lblThoiGian.Text = ThoiGian ?? "";
+            lblKhuyenMai.Text = TenKhuyenMai ?? "0%";
 
-            // Sao chép bảng sản phẩm để tính thành tiền
+            // Chuẩn bị bảng sản phẩm
             DataTable dt = DanhSachSanPham.Copy();
-
-            // Thêm cột THANHTIEN nếu chưa có
             if (!dt.Columns.Contains("THANHTIEN"))
                 dt.Columns.Add("THANHTIEN", typeof(double));
 
@@ -64,37 +54,59 @@ namespace QuanLiBanGiay
                 tongTien += thanhTien;
             }
 
-            // Thiết lập DataGridView
             dgvDanhSachSP.AutoGenerateColumns = true;
             dgvDanhSachSP.Columns.Clear();
             dgvDanhSachSP.DataSource = dt;
 
-            // Tính VAT và tổng thanh toán
-            double vat = tongTien * 0.08;
-            double thanhToan = tongTien + vat;
+            // Đặt tên cột hiển thị thành tiếng Việt
+            if (dgvDanhSachSP.Columns.Contains("MAGIAY"))
+                dgvDanhSachSP.Columns["MAGIAY"].HeaderText = "Mã giày";
+            if (dgvDanhSachSP.Columns.Contains("TENGIAY"))
+                dgvDanhSachSP.Columns["TENGIAY"].HeaderText = "Tên giày";
+            if (dgvDanhSachSP.Columns.Contains("MALOAI"))
+                dgvDanhSachSP.Columns["MALOAI"].HeaderText = "Loại";
+            if (dgvDanhSachSP.Columns.Contains("MASIZE"))
+                dgvDanhSachSP.Columns["MASIZE"].HeaderText = "Size";
+            if (dgvDanhSachSP.Columns.Contains("MAMAU"))
+                dgvDanhSachSP.Columns["MAMAU"].HeaderText = "Màu";
+            if (dgvDanhSachSP.Columns.Contains("SOLUONG"))
+                dgvDanhSachSP.Columns["SOLUONG"].HeaderText = "Số lượng";
+            if (dgvDanhSachSP.Columns.Contains("GIABAN"))
+                dgvDanhSachSP.Columns["GIABAN"].HeaderText = "Giá bán";
+            if (dgvDanhSachSP.Columns.Contains("THANHTIEN"))
+                dgvDanhSachSP.Columns["THANHTIEN"].HeaderText = "Thành tiền";
 
+            // Tính khuyến mãi
+            double kmPercent = 0;
+            double.TryParse(KhuyenMai, out kmPercent);
+            double tienKhuyenMai = tongTien * kmPercent / 100.0;
+            double sauGiam = tongTien - tienKhuyenMai;
+            double vat = sauGiam * 0.08;
+            double thanhToan = sauGiam + vat;
+
+            // Gán lên label
             lblTongTien.Text = tongTien.ToString("N0") + " VNĐ";
+            lblKhuyenMai.Text = "-" + tienKhuyenMai.ToString("N0") + " VNĐ";
+            lblSauGiam.Text = sauGiam.ToString("N0") + " VNĐ";
             lblVat.Text = vat.ToString("N0") + " VNĐ";
             lblThanhTien.Text = thanhToan.ToString("N0") + " VNĐ";
 
-            // Format DataGridView
             FormatGrid();
         }
-
-        // =============================================
-        // Căn chỉnh bảng hóa đơn cho đẹp
-        // =============================================
 
         private void FormatGrid()
         {
             dgvDanhSachSP.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvDanhSachSP.RowHeadersVisible = false;
-
-            dgvDanhSachSP.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10);
-            dgvDanhSachSP.ColumnHeadersDefaultCellStyle.Font =
-                new System.Drawing.Font("Segoe UI", 10, FontStyle.Bold);
-
+            dgvDanhSachSP.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            dgvDanhSachSP.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
         }
-       
+
+        // ===== Nút Refresh nội bộ Form_HoaDon =====
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            Form_HoaDon_Load(sender, e);
+            MessageBox.Show("Hóa đơn đã được làm mới!");
+        }
     }
 }
