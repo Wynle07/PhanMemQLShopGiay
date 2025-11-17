@@ -37,15 +37,15 @@ namespace QuanLiBanGiay
                 ds_KM.Clear();
                 da_KM.Fill(ds_KM, "KhuyenMai");
                 data_KM.DataSource = ds_KM.Tables["KhuyenMai"];
+                
+
+
+                if (data_KM.Columns["NGAYBATDAU"] != null)
+                    data_KM.Columns["NGAYBATDAU"].DefaultCellStyle.Format = "dd/MM/yyyy";
+                if (data_KM.Columns["NGAYKETTHUC"] != null)
+                    data_KM.Columns["NGAYKETTHUC"].DefaultCellStyle.Format = "dd/MM/yyyy";
+
                 DataBindings_KhuyenMai();
-
-                // SỬA LỖI: Truy cập cột bằng Index thay vì tên cột Designer
-                // Giả định cột "Ngày bắt đầu" là Index 2 và "Ngày kết thúc" là Index 3
-                // (Mã KM (0), Tên KM (1), Ngày bắt đầu (2), Ngày kết thúc (3), Giảm giá (4))
-                // Bạn cần kiểm tra thứ tự cột chính xác trong DataGridView của mình.
-                data_KM.Columns[2].DefaultCellStyle.Format = "dd/MM/yyyy";
-                data_KM.Columns[3].DefaultCellStyle.Format = "dd/MM/yyyy";
-
             }
             catch (Exception ex)
             {
@@ -116,14 +116,7 @@ namespace QuanLiBanGiay
 
         private void btnReset_Click_1(object sender, EventArgs e)
         {
-            
-            txtMaKM.DataBindings.Clear();
-            txtTenKM.DataBindings.Clear();
-            txtNgayBatDau.DataBindings.Clear();
-            txtNgayKetThuc.DataBindings.Clear();
-            txtGiamGia.DataBindings.Clear();
 
-            
             txtMaKM.Clear();
             txtTenKM.Clear();
             txtNgayBatDau.Clear();
@@ -131,8 +124,8 @@ namespace QuanLiBanGiay
             txtGiamGia.Clear();
             txtTimKiem.Clear();
 
-           
-            LoadDataKhuyenMai();
+            data_KM.ClearSelection(); 
+            LoadDataKhuyenMai();    
         }
 
         private void btnThem_Click_1(object sender, EventArgs e)
@@ -164,33 +157,44 @@ namespace QuanLiBanGiay
 
         private void btnSua_Click_1(object sender, EventArgs e)
         {
-            if (!KiemTraDuLieu()) return;
             if (data_KM.CurrentRow == null)
             {
                 MessageBox.Show("Vui lòng chọn khuyến mãi cần sửa.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            if (!KiemTraDuLieu()) return;
+
             try
             {
-                // Cập nhật giá trị trực tiếp vào DataRow được bind
+                // 1. Lấy DataRowView
                 DataRowView drv = (DataRowView)data_KM.CurrentRow.DataBoundItem;
+
+                // 2. Bắt đầu chỉnh sửa (rất quan trọng)
+                drv.BeginEdit();
+
+                // 3. Gán giá trị mới
                 drv["MAKM"] = txtMaKM.Text;
                 drv["TENKM"] = txtTenKM.Text;
                 drv["NGAYBATDAU"] = DateTime.Parse(txtNgayBatDau.Text);
                 drv["NGAYKETTHUC"] = DateTime.Parse(txtNgayKetThuc.Text);
                 drv["GIAMGIA"] = decimal.Parse(txtGiamGia.Text);
 
+                // 4. KẾT THÚC CHỈNH SỬA → COMMIT VÀO DataTable
+                drv.EndEdit();
+
+                // 5. Cập nhật CSDL
                 da_KM.Update(ds_KM, "KhuyenMai");
+
                 MessageBox.Show("Cập nhật khuyến mãi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi sửa khuyến mãi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi sửa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                LoadDataKhuyenMai();
+                LoadDataKhuyenMai(); // Tải lại dữ liệu
             }
         }
 
@@ -264,6 +268,12 @@ namespace QuanLiBanGiay
         private void Form_KhuyenMai_Load_1(object sender, EventArgs e)
         {
             LoadDataKhuyenMai();
+            data_KM.SelectionChanged += data_KM_SelectionChanged;
+        }
+
+        private void data_KM_SelectionChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
