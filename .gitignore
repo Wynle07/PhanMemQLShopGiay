@@ -1,6 +1,12 @@
 # Bỏ qua thư mục build
 bin/
 obj/
+.vs/
+*.exe
+*.pdb
+*.cache
+packages/
+
 
 # Bỏ qua file do Visual Studio tạo ra
 *.suo
