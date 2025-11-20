@@ -29,6 +29,7 @@ namespace QuanLiBanGiay
             cboTrangThai.Items.Clear();
             cboTrangThai.Items.Add("Đang hợp tác");
             cboTrangThai.Items.Add("Ngừng hợp tác");
+            LoadTeNCCC();
         }
         private void LoadNhaCungCap(string search = "")
         {
@@ -72,7 +73,25 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Lỗi tìm kiếm: " + ex.Message);
             }
         }
+       private void LoadTeNCCC()
+        {
+            try
+            {
+                string querry = "SELECT MANCC, TENNCC FROM NHACUNGCAP ORDER BY TENNCC";
+                SqlDataAdapter da = new SqlDataAdapter(querry, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
 
+                cbTenNCC.ValueMember = "MANCC";
+                cbTenNCC.DisplayMember = "TENNCC";
+                cbTenNCC.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi load tên nhà cung cấp: " + ex.Message);
+            }
+        }
+        
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
