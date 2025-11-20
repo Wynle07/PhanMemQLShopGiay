@@ -22,6 +22,7 @@ namespace QuanLiBanGiay
         private void Form_SanPham_Load(object sender, EventArgs e)
         {
             loadSP();
+            LoadLoaiGiayVaoComboBox();
         }
 
         public void loadSP()
@@ -148,6 +149,27 @@ namespace QuanLiBanGiay
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi hiển thị thông tin sản phẩm: " + ex.Message);
+            }
+        }
+        private void LoadLoaiGiayVaoComboBox()
+        {
+            try
+            {
+                string query = "SELECT MALOAI, TENLOAI FROM LOAIGIAY ORDER BY TENLOAI";
+                SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+              
+                cbMaLoai.DisplayMember = "TENLOAI";  
+                cbMaLoai.ValueMember = "MALOAI";     
+                cbMaLoai.DataSource = dt;
+
+               
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi load loại giày: " + ex.Message);
             }
         }
 

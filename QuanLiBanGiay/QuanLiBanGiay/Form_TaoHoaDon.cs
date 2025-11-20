@@ -123,21 +123,38 @@ namespace QuanLiBanGiay
         // ===== Load khuyến mãi =====
         private void LoadKhuyenMai()
         {
-            using (SqlConnection conn = DBConnection.GetConnection())
+            try
             {
-                string sql = @"
-                    SELECT MAKM, TENKM, NGAYBATDAU, NGAYKETTHUC, GIAMGIA
-                    FROM KHUYENMAI
-                    WHERE GETDATE() BETWEEN NGAYBATDAU AND NGAYKETTHUC
-                ";
-                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                using (SqlConnection conn = DBConnection.GetConnection())
+                {
+                    string sql = @"
+                SELECT MAKM, TENKM, NGAYBATDAU, NGAYKETTHUC, GIAMGIA
+                FROM KHUYENMAI
+                ORDER BY TENKM";
 
-                cboKhuyenMai.DataSource = dt;
-                cboKhuyenMai.DisplayMember = "TENKM";
-                cboKhuyenMai.ValueMember = "MAKM";
-                cboKhuyenMai.SelectedIndex = -1;
+                    SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    // Thêm dòng "Không áp dụng" ở đầu
+                    DataRow rowKhongKM = dt.NewRow();
+                    rowKhongKM["MAKM"] = "";
+                    rowKhongKM["TENKM"] = "-- Không áp dụng khuyến mãi --";
+                    rowKhongKM["GIAMGIA"] = 0;
+                    rowKhongKM["NGAYBATDAU"] = DBNull.Value;
+                    rowKhongKM["NGAYKETTHUC"] = DBNull.Value;
+                    dt.Rows.InsertAt(rowKhongKM, 0);
+
+                    cboKhuyenMai.DisplayMember = "TENKM";
+                    cboKhuyenMai.ValueMember = "MAKM";
+                    cboKhuyenMai.DataSource = dt;
+
+                    cboKhuyenMai.SelectedIndex = 0; // Mặc định không áp dụng
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi load khuyến mãi: " + ex.Message);
             }
         }
 
@@ -193,7 +210,48 @@ namespace QuanLiBanGiay
             }
             return tong;
         }
+        //======Kiểm tra khuyến mãi hợp lệ======//
+        private bool KiemTraKhuyenMaiHopLeVoiNgay(string maKM, DateTime ngayLap)
+        {
+            if (string.IsNullOrEmpty(maKM)) return true; // Không chọn KM → luôn hợp lệ
 
+            try
+            {
+                using (SqlConnection conn = DBConnection.GetConnection())
+                {
+                    conn.Open();
+                    string sql = @"
+                SELECT NGAYBATDAU, NGAYKETTHUC 
+                FROM KHUYENMAI 
+                WHERE MAKM = @MAKM";
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MAKM", maKM);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                DateTime ngayBD = reader.GetDateTime(0);
+                                DateTime ngayKT = reader.GetDateTime(1);
+
+                                // So sánh chỉ lấy phần ngày (không tính giờ phút giây)
+                                if (ngayLap.Date >= ngayBD.Date && ngayLap.Date <= ngayKT.Date)
+                                    return true;
+                                else
+                                    return false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kiểm tra khuyến mãi: " + ex.Message);
+                return false;
+            }
+            return false;
+        }
         // ===== Lưu hóa đơn =====
         private bool LuuHoaDon()
         {
@@ -219,6 +277,16 @@ namespace QuanLiBanGiay
             {
                 MessageBox.Show("Danh sách sản phẩm trống!");
                 return false;
+            }
+            if (cboKhuyenMai.SelectedValue != null && !string.IsNullOrEmpty(cboKhuyenMai.SelectedValue.ToString()))
+            {
+                string maKM = cboKhuyenMai.SelectedValue.ToString();
+                if (!KiemTraKhuyenMaiHopLeVoiNgay(maKM, dtpThoiGian.Value))
+                {
+                    MessageBox.Show("Không thể lưu hóa đơn!\nKhuyến mãi đã chọn không hợp lệ với ngày lập hóa đơn.",
+                                    "Lỗi khuyến mãi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
             }
 
             using (SqlConnection conn = DBConnection.GetConnection())
@@ -481,7 +549,189 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Lỗi PDF: " + ex.Message);
             }
         }
+        private void KiemTraVaCanhBaoKhuyenMai()
+        {
+            if (cboKhuyenMai.SelectedValue == null) return;
 
+            string maKM = cboKhuyenMai.SelectedValue.ToString();
+            if (string.IsNullOrEmpty(maKM)) return; // Không chọn KM → bỏ qua
 
+            DateTime ngayLap = dtpThoiGian.Value;
+
+            if (!KiemTraKhuyenMaiHopLeVoiNgay(maKM, ngayLap))
+            {
+                MessageBox.Show(
+                    $"Khuyến mãi \"{cboKhuyenMai.Text}\" không áp dụng vào ngày {ngayLap:dd/MM/yyyy}!\n" +
+                    $"Chỉ áp dụng từ ngày có hiệu lực của chương trình.",
+                    "Khuyến mãi không hợp lệ",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                // Tự động quay về "Không áp dụng"
+                cboKhuyenMai.SelectedIndex = 0;
+            }
+        }
+        private void dtpThoiGian_ValueChanged(object sender, EventArgs e)
+        {
+            KiemTraVaCanhBaoKhuyenMai();
+        }
+
+        private void cboKhuyenMai_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            KiemTraVaCanhBaoKhuyenMai();
+        }
+
+        private void LoadKichCoVaMauSac(string maGiay)
+        {
+            if (string.IsNullOrEmpty(maGiay)) return;
+
+            try
+            {
+                using (SqlConnection conn = DBConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    // Load Size còn hàng
+                    string sqlSize = @"
+                SELECT DISTINCT MASIZE 
+                FROM CHITIETGIAY 
+                WHERE MAGIAY = @MAGIAY AND SOLUONGTON > 0
+                ORDER BY MASIZE";
+
+                    using (SqlCommand cmd = new SqlCommand(sqlSize, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MAGIAY", maGiay);
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        cboKichCo.Items.Clear();
+                        while (reader.Read())
+                        {
+                            cboKichCo.Items.Add(reader["MASIZE"].ToString());
+                        }
+                    }
+
+                    conn.Close();
+                    conn.Open();
+
+                    // Load Màu còn hàng
+                    string sqlMau = @"
+                SELECT DISTINCT MAMAU 
+                FROM CHITIETGIAY 
+                WHERE MAGIAY = @MAGIAY AND SOLUONGTON > 0
+                ORDER BY MAMAU";
+
+                    using (SqlCommand cmd = new SqlCommand(sqlMau, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MAGIAY", maGiay);
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        cboMauSac.Items.Clear();
+                        while (reader.Read())
+                        {
+                            cboMauSac.Items.Add(reader["MAMAU"].ToString());
+                        }
+                    }
+                }
+
+                // Reset chọn
+                cboKichCo.Text = "";
+                cboMauSac.Text = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi load size/màu: " + ex.Message);
+            }
+        }
+
+        private void cboKichCo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            KiemTraTonKho();
+        }
+
+        private void cboMauSac_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            KiemTraTonKho();
+        }
+
+        private void cboMaSP_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (cboMaSP.SelectedIndex == -1) return;
+
+            DataRowView r = (DataRowView)cboMaSP.SelectedItem;
+            string maGiay = r["MAGIAY"].ToString();
+
+            cboTenSP.Text = r["TENGIAY"].ToString();
+            txtMaLoai.Text = r["MALOAI"].ToString();
+
+            // Load size và màu theo mã giày
+            LoadKichCoVaMauSac(maGiay);
+        }
+
+        private void cboTenSP_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (cboTenSP.SelectedIndex == -1) return;
+
+            DataRowView r = (DataRowView)cboTenSP.SelectedItem;
+            string maGiay = r["MAGIAY"].ToString();
+
+            cboMaSP.Text = maGiay;
+            txtMaLoai.Text = r["MALOAI"].ToString();
+
+            // Load size và màu theo mã giày
+            LoadKichCoVaMauSac(maGiay);
+        }
+        private void KiemTraTonKho()
+        {
+            if (string.IsNullOrEmpty(cboMaSP.Text)) return;
+            if (string.IsNullOrEmpty(cboKichCo.Text) && string.IsNullOrEmpty(cboMauSac.Text)) return;
+
+            string maGiay = cboMaSP.Text.Trim();
+            string size = cboKichCo.Text.Trim();
+            string mau = cboMauSac.Text.Trim();
+
+            try
+            {
+                using (SqlConnection conn = DBConnection.GetConnection())
+                {
+                    conn.Open();
+                    string sql = @"
+                SELECT SOLUONGTON 
+                FROM CHITIETGIAY 
+                WHERE MAGIAY = @MAGIAY 
+                  AND (@MASIZE = '' OR MASIZE = @MASIZE)
+                  AND (@MAMAU = '' OR MAMAU = @MAMAU)";
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MAGIAY", maGiay);
+                        cmd.Parameters.AddWithValue("@MASIZE", size);
+                        cmd.Parameters.AddWithValue("@MAMAU", mau);
+
+                        object result = cmd.ExecuteScalar();
+
+                        if (result == null || Convert.ToInt32(result) <= 0)
+                        {
+                            string loi = "";
+                            if (!string.IsNullOrEmpty(size) && !string.IsNullOrEmpty(mau))
+                                loi = $"Đã hết hàng size {size} - màu {mau}!";
+                            else if (!string.IsNullOrEmpty(size))
+                                loi = $"Đã hết size {size}!";
+                            else if (!string.IsNullOrEmpty(mau))
+                                loi = $"Đã hết màu {mau}!";
+
+                            MessageBox.Show(loi, "Hết hàng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            // Tự động xóa chọn sai
+                            if (!string.IsNullOrEmpty(size) && string.IsNullOrEmpty(mau))
+                                cboKichCo.Text = "";
+                            else if (!string.IsNullOrEmpty(mau))
+                                cboMauSac.Text = "";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kiểm tra tồn kho: " + ex.Message);
+            }
+        }
     }
 }
