@@ -334,6 +334,7 @@
     <Content Include="Images\SanPham\superstar.jpg" />
     <Content Include="Images\SanPham\ultraboost22.jpg" />
     <Content Include="Images\SanPham\vansboot.jpg" />
+    <None Include="Resources\icons8-repair-16.png" />
     <None Include="Resources\icons8-refresh-16.png" />
     <None Include="Resources\icons8-delete-16.png" />
     <None Include="Resources\icons8-add-16.png" />

@@ -637,5 +637,30 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Lỗi khi reset form: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void thêmSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void xóaSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sửaSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void inHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void refeshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

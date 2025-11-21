@@ -386,12 +386,14 @@ namespace QuanLiBanGiay
         // ===== Refresh Form =====
         private void btnRefesh_Click(object sender, EventArgs e)
         {
+            // Reset combobox lựa chọn
             cboMaKH.SelectedIndex = -1;
             cboMaSP.SelectedIndex = -1;
             cboTenSP.SelectedIndex = -1;
             cboMaNVXL.SelectedIndex = -1;
             cboKhuyenMai.SelectedIndex = -1;
 
+            // Xóa thông tin text
             txtTenKH.Clear();
             txtSDT.Clear();
             txtDiaChi.Clear();
@@ -400,16 +402,20 @@ namespace QuanLiBanGiay
             txtSoLuongMua.Clear();
             txtMaDH.Clear();
 
+            // Reset bảng sản phẩm nhưng GIỮ BINDING
             dtSanPham.Rows.Clear();
-            dgvSanPham.DataSource = null;
+            dgvSanPham.DataSource = dtSanPham;
 
+            // Reset thời gian
             dtpThoiGian.Value = DateTime.Now;
 
+            // Load lại dữ liệu gốc
             LoadKhachHang();
             LoadSanPham();
             LoadNhanVien();
             LoadKhuyenMai();
         }
+
 
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
@@ -733,5 +739,62 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Lỗi kiểm tra tồn kho: " + ex.Message);
             }
         }
+
+        // === CLICK CHUỘT PHẢI CHỌN DÒNG CHÍNH XÁC ===
+        private void dgvSanPham_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+            {
+                dgvSanPham.ClearSelection();
+                dgvSanPham.Rows[e.RowIndex].Selected = true;
+                dgvSanPham.CurrentCell = dgvSanPham.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            }
+        }
+
+        // === THÊM SẢN PHẨM ===
+        private void thêmSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cboMaSP.SelectedIndex = -1;
+            cboTenSP.SelectedIndex = -1;
+            txtMaLoai.Clear();
+            txtSoLuongMua.Clear();
+            cboMauSac.SelectedIndex = -1;
+            cboKichCo.SelectedIndex = -1;
+            
+            btnThemSP.PerformClick();
+        }
+
+        // === XÓA SẢN PHẨM ===
+        private void xóaSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvSanPham.SelectedRows.Count == 0) return;
+
+            int index = dgvSanPham.SelectedRows[0].Index;
+
+            if (index >= 0 && index < dtSanPham.Rows.Count)
+            {
+                dtSanPham.Rows.RemoveAt(index);
+                dgvSanPham.DataSource = dtSanPham;
+            }
+        }
+
+        // === XUẤT HÓA ĐƠN ===
+        private void xuấtHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnXuatHD_Click(sender, e);
+        }
+
+        // === IN HÓA ĐƠN ===
+        private void inHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnInHoaDon_Click(sender, e);
+        }
+
+        // === LÀM MỚI ===
+        private void refeshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnRefesh.PerformClick();
+        }
+
     }
 }

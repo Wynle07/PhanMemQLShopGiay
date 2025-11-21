@@ -21,6 +21,7 @@ namespace QuanLiBanGiay
         private void Form_KhachHang_Load(object sender, EventArgs e)
         {
             LoadKH();
+         
         }
 
         private void LoadKH()
@@ -155,65 +156,28 @@ namespace QuanLiBanGiay
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            try
+            if (dgvKhachHang.SelectedRows.Count == 0)
             {
-                string makh = txtMaKH.Text.Trim();
-                string tenkh = txtTenKH.Text.Trim();
-                string sdt = txtSDT.Text.Trim();
-                string email = txtEmail.Text.Trim();
-                string diachi = txtDiaChi.Text.Trim();
-                string diemText = txtDiemTL.Text.Trim();
-
-                if (string.IsNullOrEmpty(makh))
-                {
-                    MessageBox.Show("Vui lòng chọn khách hàng để sửa!");
-                    return;
-                }
-
-                if (!int.TryParse(diemText, out int diemTL) || diemTL < 0)
-                {
-                    MessageBox.Show("Điểm tích lũy không hợp lệ!");
-                    return;
-                }
-
-                string sql = @"UPDATE KHACHHANG SET TENKH=@TENKH, SDT=@SDT, EMAIL=@EMAIL, DIACHI=@DIACHI,
-                               DIEMTICHLUY=@DIEMTICHLUY, NGAYTAO=@NGAYTAO WHERE MAKH=@MAKH";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@MAKH", makh);
-                    cmd.Parameters.AddWithValue("@TENKH", tenkh);
-                    cmd.Parameters.AddWithValue("@SDT", sdt);
-                    cmd.Parameters.AddWithValue("@EMAIL", email);
-                    cmd.Parameters.AddWithValue("@DIACHI", diachi);
-                    cmd.Parameters.AddWithValue("@DIEMTICHLUY", diemTL);
-                    cmd.Parameters.AddWithValue("@NGAYTAO", dtpNgayTao.Value);
-
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                }
-
-                LoadKH();
-
-                // Giữ nguyên dòng sau khi sửa
-                foreach (DataGridViewRow row in dgvKhachHang.Rows)
-                {
-                    if (row.Cells["MAKH"].Value.ToString() == makh)
-                    {
-                        row.Selected = true;
-                        ShowCurrentRowToTextbox(row.Index);
-                        break;
-                    }
-                }
-
-                MessageBox.Show("✅ Cập nhật thành công!");
+                MessageBox.Show("Vui lòng chọn khách hàng để sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            catch (Exception ex)
-            {
-                if (conn.State == ConnectionState.Open) conn.Close();
-                MessageBox.Show("❌ Lỗi khi sửa: " + ex.Message);
-            }
+
+            // Cho phép sửa các textbox
+            txtTenKH.ReadOnly = false;
+            txtSDT.ReadOnly = false;
+            txtEmail.ReadOnly = false;
+            txtDiaChi.ReadOnly = false;
+            txtDiemTL.ReadOnly = false;
+            dtpNgayTao.Enabled = true;
+
+            // Hiện nút Lưu
+            btnLuu.Visible = true;
+            btnLuu.Enabled = true;
+
+            // Ẩn nút Sửa để tránh nhấn lại
+            btnSua.Enabled = false;
         }
+
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
@@ -356,5 +320,122 @@ namespace QuanLiBanGiay
                 MessageBox.Show("❌ Lỗi khi xuất Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void xóaKháchHàngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnXoa.PerformClick();
+
+        }
+
+        private void inToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnXemIn.PerformClick();
+
+        }
+
+        private void sửaKháchHàngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Vui vòng điền thông tin cần sửa!!!", "Thông báo", MessageBoxButtons.OK);
+            txtTenKH.Focus();
+            btnSua.PerformClick();
+        }
+
+        private void thêmKháchHàngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtMaKH.Clear();
+            txtTenKH.Clear();
+            txtSDT.Clear();
+            txtEmail.Clear();
+            txtDiaChi.Clear();
+            txtDiemTL.Clear();
+            dtpNgayTao.Value = DateTime.Now;
+
+            txtMaKH.Focus();
+        }
+
+
+        private void dgvKhachHang_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+            {
+                dgvKhachHang.ClearSelection();
+                dgvKhachHang.Rows[e.RowIndex].Selected = true;
+                ShowCurrentRowToTextbox(e.RowIndex);
+            }
+        }
+
+        private void refeshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnRefesh.PerformClick();
+        }
+
+        private void btnLuu_Click(object sender, EventArgs e)
+        {
+            
+            try
+            {
+                string makh = txtMaKH.Text.Trim();
+                string tenkh = txtTenKH.Text.Trim();
+                string sdt = txtSDT.Text.Trim();
+                string email = txtEmail.Text.Trim();
+                string diachi = txtDiaChi.Text.Trim();
+                string diemText = txtDiemTL.Text.Trim();
+
+                if (string.IsNullOrEmpty(tenkh) || string.IsNullOrEmpty(sdt) || string.IsNullOrEmpty(email))
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!int.TryParse(diemText, out int diemTL) || diemTL < 0)
+                {
+                    MessageBox.Show("Điểm tích lũy không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string sql = @"UPDATE KHACHHANG 
+                       SET TENKH=@TENKH, SDT=@SDT, EMAIL=@EMAIL, DIACHI=@DIACHI,
+                           DIEMTICHLUY=@DIEMTICHLUY, NGAYTAO=@NGAYTAO 
+                       WHERE MAKH=@MAKH";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MAKH", makh);
+                    cmd.Parameters.AddWithValue("@TENKH", tenkh);
+                    cmd.Parameters.AddWithValue("@SDT", sdt);
+                    cmd.Parameters.AddWithValue("@EMAIL", email);
+                    cmd.Parameters.AddWithValue("@DIACHI", diachi);
+                    cmd.Parameters.AddWithValue("@DIEMTICHLUY", diemTL);
+                    cmd.Parameters.AddWithValue("@NGAYTAO", dtpNgayTao.Value);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+
+                MessageBox.Show("✅ Cập nhật thành công!");
+
+                // Load lại dữ liệu
+                LoadKH();
+
+                // Reset giao diện
+                txtTenKH.ReadOnly = true;
+                txtSDT.ReadOnly = true;
+                txtEmail.ReadOnly = true;
+                txtDiaChi.ReadOnly = true;
+                txtDiemTL.ReadOnly = true;
+                dtpNgayTao.Enabled = false;
+
+                btnLuu.Visible = false;
+                btnSua.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+                MessageBox.Show("❌ Lỗi khi lưu: " + ex.Message);
+            }
+        }
+
+        
     }
 }
