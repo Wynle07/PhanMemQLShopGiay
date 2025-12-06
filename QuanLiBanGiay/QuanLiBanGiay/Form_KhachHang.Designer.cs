@@ -50,21 +50,23 @@
             this.txtDiemTL = new System.Windows.Forms.TextBox();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.panelButtons = new System.Windows.Forms.Panel();
             this.btnXemIn = new System.Windows.Forms.Button();
             this.btnRefesh = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
+            this.btnLuu = new System.Windows.Forms.Button();
             this.thêmKháchHàngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xóaSảnPhẩmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sửaKháchHàngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inHóaĐơnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refeshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnLuu = new System.Windows.Forms.Button();
             this.grpDanhSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhachHang)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.panelButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtDiaChi
@@ -196,7 +198,7 @@
             this.groupBox1.Controls.Add(this.lblSDT);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Location = new System.Drawing.Point(0, 70);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1443, 366);
             this.groupBox1.TabIndex = 83;
@@ -278,6 +280,19 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(199, 134);
             // 
+            // panelButtons
+            // 
+            this.panelButtons.Controls.Add(this.btnThem);
+            this.panelButtons.Controls.Add(this.btnXoa);
+            this.panelButtons.Controls.Add(this.btnSua);
+            this.panelButtons.Controls.Add(this.btnLuu);
+            this.panelButtons.Controls.Add(this.btnXemIn);
+            this.panelButtons.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelButtons.Location = new System.Drawing.Point(0, 0);
+            this.panelButtons.Name = "panelButtons";
+            this.panelButtons.Size = new System.Drawing.Size(1443, 70);
+            this.panelButtons.TabIndex = 109;
+            // 
             // btnXemIn
             // 
             this.btnXemIn.BackColor = System.Drawing.Color.DeepSkyBlue;
@@ -285,9 +300,9 @@
             this.btnXemIn.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnXemIn.Image = ((System.Drawing.Image)(resources.GetObject("btnXemIn.Image")));
             this.btnXemIn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnXemIn.Location = new System.Drawing.Point(740, 273);
+            this.btnXemIn.Location = new System.Drawing.Point(435, 9);
             this.btnXemIn.Name = "btnXemIn";
-            this.btnXemIn.Size = new System.Drawing.Size(108, 42);
+            this.btnXemIn.Size = new System.Drawing.Size(121, 52);
             this.btnXemIn.TabIndex = 107;
             this.btnXemIn.Text = "Xem In";
             this.btnXemIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -317,9 +332,9 @@
             this.btnXoa.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnXoa.Image = ((System.Drawing.Image)(resources.GetObject("btnXoa.Image")));
             this.btnXoa.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnXoa.Location = new System.Drawing.Point(183, 273);
+            this.btnXoa.Location = new System.Drawing.Point(141, 9);
             this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(82, 42);
+            this.btnXoa.Size = new System.Drawing.Size(92, 52);
             this.btnXoa.TabIndex = 104;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -333,9 +348,9 @@
             this.btnSua.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnSua.Image = ((System.Drawing.Image)(resources.GetObject("btnSua.Image")));
             this.btnSua.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSua.Location = new System.Drawing.Point(331, 273);
+            this.btnSua.Location = new System.Drawing.Point(239, 9);
             this.btnSua.Name = "btnSua";
-            this.btnSua.Size = new System.Drawing.Size(82, 42);
+            this.btnSua.Size = new System.Drawing.Size(92, 52);
             this.btnSua.TabIndex = 105;
             this.btnSua.Text = "Sửa";
             this.btnSua.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -349,9 +364,9 @@
             this.btnThem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnThem.Image = ((System.Drawing.Image)(resources.GetObject("btnThem.Image")));
             this.btnThem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnThem.Location = new System.Drawing.Point(31, 273);
+            this.btnThem.Location = new System.Drawing.Point(28, 9);
             this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(90, 42);
+            this.btnThem.Size = new System.Drawing.Size(107, 52);
             this.btnThem.TabIndex = 103;
             this.btnThem.Text = "Thêm";
             this.btnThem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -405,9 +420,9 @@
             this.btnLuu.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnLuu.Image = ((System.Drawing.Image)(resources.GetObject("btnLuu.Image")));
             this.btnLuu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLuu.Location = new System.Drawing.Point(449, 275);
+            this.btnLuu.Location = new System.Drawing.Point(337, 9);
             this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(89, 40);
+            this.btnLuu.Size = new System.Drawing.Size(92, 52);
             this.btnLuu.TabIndex = 108;
             this.btnLuu.Text = "Lưu";
             this.btnLuu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -425,6 +440,7 @@
             this.Controls.Add(this.lblTenKH);
             this.Controls.Add(this.lblMaKH);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.panelButtons);
             this.Name = "Form_KhachHang";
             this.Text = "Form_KhachHang";
             this.Load += new System.EventHandler(this.Form_KhachHang_Load);
@@ -433,6 +449,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.panelButtons.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -471,5 +488,6 @@
         private System.Windows.Forms.ToolStripMenuItem refeshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sửaKháchHàngToolStripMenuItem;
         private System.Windows.Forms.Button btnLuu;
+        private System.Windows.Forms.Panel panelButtons;
     }
 }

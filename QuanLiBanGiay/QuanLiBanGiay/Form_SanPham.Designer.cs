@@ -70,6 +70,7 @@
             this.lblTH = new System.Windows.Forms.Label();
             this.txtTH = new System.Windows.Forms.TextBox();
             this.grbThongtin = new System.Windows.Forms.GroupBox();
+            this.panelButtons = new System.Windows.Forms.Panel();
             this.btnThem = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
@@ -79,6 +80,7 @@
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.grbThongtin.SuspendLayout();
+            this.panelButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -182,7 +184,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpDanhSach.Controls.Add(this.dataGridView1);
-            this.grpDanhSach.Location = new System.Drawing.Point(0, 338);
+            this.grpDanhSach.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grpDanhSach.Location = new System.Drawing.Point(0, 360);
             this.grpDanhSach.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grpDanhSach.Name = "grpDanhSach";
             this.grpDanhSach.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -489,7 +492,7 @@
             this.grbThongtin.Controls.Add(this.lblTenKM);
             this.grbThongtin.Dock = System.Windows.Forms.DockStyle.Top;
             this.grbThongtin.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbThongtin.Location = new System.Drawing.Point(0, 0);
+            this.grbThongtin.Location = new System.Drawing.Point(0, 70);
             this.grbThongtin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grbThongtin.Name = "grbThongtin";
             this.grbThongtin.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -499,15 +502,27 @@
             this.grbThongtin.Text = "Thông tin sản phẩm";
             this.grbThongtin.Enter += new System.EventHandler(this.grbThongtin_Enter);
             // 
+            // panelButtons
+            // 
+            this.panelButtons.Controls.Add(this.btnThem);
+            this.panelButtons.Controls.Add(this.btnXoa);
+            this.panelButtons.Controls.Add(this.btnSua);
+            this.panelButtons.Controls.Add(this.button1);
+            this.panelButtons.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelButtons.Location = new System.Drawing.Point(0, 0);
+            this.panelButtons.Name = "panelButtons";
+            this.panelButtons.Size = new System.Drawing.Size(1320, 70);
+            this.panelButtons.TabIndex = 27;
+            // 
             // btnThem
             // 
             this.btnThem.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnThem.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThem.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnThem.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnThem.Location = new System.Drawing.Point(168, 295);
+            this.btnThem.Location = new System.Drawing.Point(28, 9);
             this.btnThem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(93, 36);
+            this.btnThem.Size = new System.Drawing.Size(107, 52);
             this.btnThem.TabIndex = 23;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = false;
@@ -516,12 +531,12 @@
             // btnSua
             // 
             this.btnSua.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnSua.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSua.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSua.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSua.Location = new System.Drawing.Point(310, 295);
+            this.btnSua.Location = new System.Drawing.Point(239, 9);
             this.btnSua.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSua.Name = "btnSua";
-            this.btnSua.Size = new System.Drawing.Size(93, 36);
+            this.btnSua.Size = new System.Drawing.Size(92, 52);
             this.btnSua.TabIndex = 25;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
@@ -530,12 +545,12 @@
             // btnXoa
             // 
             this.btnXoa.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnXoa.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXoa.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXoa.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnXoa.Location = new System.Drawing.Point(443, 295);
+            this.btnXoa.Location = new System.Drawing.Point(141, 9);
             this.btnXoa.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(93, 36);
+            this.btnXoa.Size = new System.Drawing.Size(92, 52);
             this.btnXoa.TabIndex = 24;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
@@ -544,12 +559,12 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(573, 298);
+            this.button1.Location = new System.Drawing.Point(337, 9);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 36);
+            this.button1.Size = new System.Drawing.Size(92, 52);
             this.button1.TabIndex = 26;
             this.button1.Text = "Reset";
             this.button1.UseVisualStyleBackColor = false;
@@ -560,12 +575,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1320, 615);
-            this.Controls.Add(this.grbThongtin);
             this.Controls.Add(this.grpDanhSach);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnSua);
-            this.Controls.Add(this.btnXoa);
-            this.Controls.Add(this.btnThem);
+            this.Controls.Add(this.grbThongtin);
+            this.Controls.Add(this.panelButtons);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form_SanPham";
             this.Text = "Form_SanPham";
@@ -576,6 +588,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.grbThongtin.ResumeLayout(false);
             this.grbThongtin.PerformLayout();
+            this.panelButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -622,6 +635,7 @@
         private System.Windows.Forms.Label lblTH;
         private System.Windows.Forms.TextBox txtTH;
         private System.Windows.Forms.GroupBox grbThongtin;
+        private System.Windows.Forms.Panel panelButtons;
         private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnXoa;
