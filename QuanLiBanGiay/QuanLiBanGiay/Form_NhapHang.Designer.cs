@@ -73,7 +73,7 @@
             this.grpPhieuNhap.Controls.Add(this.label3);
             this.grpPhieuNhap.Controls.Add(this.label2);
             this.grpPhieuNhap.Controls.Add(this.label1);
-            this.grpPhieuNhap.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpPhieuNhap.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpPhieuNhap.Location = new System.Drawing.Point(38, 24);
             this.grpPhieuNhap.Name = "grpPhieuNhap";
             this.grpPhieuNhap.Size = new System.Drawing.Size(1243, 203);
@@ -87,7 +87,7 @@
             this.txtMaNV.Location = new System.Drawing.Point(179, 91);
             this.txtMaNV.Name = "txtMaNV";
             this.txtMaNV.ReadOnly = true;
-            this.txtMaNV.Size = new System.Drawing.Size(205, 30);
+            this.txtMaNV.Size = new System.Drawing.Size(205, 33);
             this.txtMaNV.TabIndex = 96;
             // 
             // label9
@@ -141,7 +141,7 @@
             this.cboNCC.FormattingEnabled = true;
             this.cboNCC.Location = new System.Drawing.Point(529, 37);
             this.cboNCC.Name = "cboNCC";
-            this.cboNCC.Size = new System.Drawing.Size(262, 30);
+            this.cboNCC.Size = new System.Drawing.Size(262, 33);
             this.cboNCC.TabIndex = 7;
             // 
             // txtTongTien
@@ -149,7 +149,7 @@
             this.txtTongTien.Location = new System.Drawing.Point(518, 93);
             this.txtTongTien.Name = "txtTongTien";
             this.txtTongTien.ReadOnly = true;
-            this.txtTongTien.Size = new System.Drawing.Size(262, 30);
+            this.txtTongTien.Size = new System.Drawing.Size(262, 33);
             this.txtTongTien.TabIndex = 6;
             this.txtTongTien.Text = "0";
             // 
@@ -158,7 +158,7 @@
             this.txtNgayNhap.Location = new System.Drawing.Point(914, 37);
             this.txtNgayNhap.Name = "txtNgayNhap";
             this.txtNgayNhap.ReadOnly = true;
-            this.txtNgayNhap.Size = new System.Drawing.Size(167, 30);
+            this.txtNgayNhap.Size = new System.Drawing.Size(167, 33);
             this.txtNgayNhap.TabIndex = 5;
             this.txtNgayNhap.TextChanged += new System.EventHandler(this.txtNgayNhap_TextChanged);
             // 
@@ -167,7 +167,7 @@
             this.txtMaPhieuNhap.Location = new System.Drawing.Point(179, 37);
             this.txtMaPhieuNhap.Name = "txtMaPhieuNhap";
             this.txtMaPhieuNhap.ReadOnly = true;
-            this.txtMaPhieuNhap.Size = new System.Drawing.Size(205, 30);
+            this.txtMaPhieuNhap.Size = new System.Drawing.Size(205, 33);
             this.txtMaPhieuNhap.TabIndex = 4;
             this.txtMaPhieuNhap.TextChanged += new System.EventHandler(this.txtMaPhieuNhap_TextChanged);
             // 
@@ -227,7 +227,7 @@
             this.grpCTPhieuNhap.Controls.Add(this.cboMaSP);
             this.grpCTPhieuNhap.Controls.Add(this.label6);
             this.grpCTPhieuNhap.Enabled = false;
-            this.grpCTPhieuNhap.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpCTPhieuNhap.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpCTPhieuNhap.Location = new System.Drawing.Point(38, 233);
             this.grpCTPhieuNhap.Name = "grpCTPhieuNhap";
             this.grpCTPhieuNhap.Size = new System.Drawing.Size(1243, 509);
@@ -240,7 +240,7 @@
             this.txtThanhTien.Location = new System.Drawing.Point(700, 90);
             this.txtThanhTien.Name = "txtThanhTien";
             this.txtThanhTien.ReadOnly = true;
-            this.txtThanhTien.Size = new System.Drawing.Size(221, 30);
+            this.txtThanhTien.Size = new System.Drawing.Size(221, 33);
             this.txtThanhTien.TabIndex = 106;
             this.txtThanhTien.Text = "0";
             // 
@@ -302,7 +302,7 @@
             // 
             this.txtSoLuong.Location = new System.Drawing.Point(284, 90);
             this.txtSoLuong.Name = "txtSoLuong";
-            this.txtSoLuong.Size = new System.Drawing.Size(221, 30);
+            this.txtSoLuong.Size = new System.Drawing.Size(221, 33);
             this.txtSoLuong.TabIndex = 102;
             this.txtSoLuong.TextChanged += new System.EventHandler(this.txtSoLuong_TextChanged);
             // 
@@ -310,7 +310,7 @@
             // 
             this.txtDonGia.Location = new System.Drawing.Point(700, 42);
             this.txtDonGia.Name = "txtDonGia";
-            this.txtDonGia.Size = new System.Drawing.Size(221, 30);
+            this.txtDonGia.Size = new System.Drawing.Size(221, 33);
             this.txtDonGia.TabIndex = 101;
             this.txtDonGia.TextChanged += new System.EventHandler(this.txtDonGia_TextChanged);
             // 
@@ -340,7 +340,7 @@
             this.cboMaSP.FormattingEnabled = true;
             this.cboMaSP.Location = new System.Drawing.Point(284, 40);
             this.cboMaSP.Name = "cboMaSP";
-            this.cboMaSP.Size = new System.Drawing.Size(221, 30);
+            this.cboMaSP.Size = new System.Drawing.Size(221, 33);
             this.cboMaSP.TabIndex = 98;
             this.cboMaSP.SelectedIndexChanged += new System.EventHandler(this.cboMaSP_SelectedIndexChanged);
             // 

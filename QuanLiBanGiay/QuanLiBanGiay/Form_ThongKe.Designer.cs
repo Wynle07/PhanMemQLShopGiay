@@ -46,17 +46,19 @@
             // lblTongDT
             // 
             lblTongDT.AutoSize = true;
-            lblTongDT.Font = new System.Drawing.Font("MV Boli", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblTongDT.Location = new System.Drawing.Point(27, 609);
+            lblTongDT.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            lblTongDT.Location = new System.Drawing.Point(22, 602);
             lblTongDT.Name = "lblTongDT";
-            lblTongDT.Size = new System.Drawing.Size(350, 46);
+            lblTongDT.Size = new System.Drawing.Size(268, 36);
             lblTongDT.TabIndex = 96;
             lblTongDT.Text = "Tổng Doanh Thu :";
             lblTongDT.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            lblTongDT.Click += new System.EventHandler(this.lblTongDT_Click);
             // 
             // grpDanhSach
             // 
             this.grpDanhSach.Controls.Add(this.dgvSanPham);
+            this.grpDanhSach.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpDanhSach.Location = new System.Drawing.Point(14, 29);
             this.grpDanhSach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpDanhSach.Name = "grpDanhSach";
@@ -80,11 +82,11 @@
             // 
             // btnTimKiem
             // 
-            this.btnTimKiem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTimKiem.Location = new System.Drawing.Point(421, 505);
+            this.btnTimKiem.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTimKiem.Location = new System.Drawing.Point(394, 516);
             this.btnTimKiem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnTimKiem.Name = "btnTimKiem";
-            this.btnTimKiem.Size = new System.Drawing.Size(108, 45);
+            this.btnTimKiem.Size = new System.Drawing.Size(108, 31);
             this.btnTimKiem.TabIndex = 80;
             this.btnTimKiem.Text = "Tìm Kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = true;
@@ -93,7 +95,7 @@
             // txtTimkiem
             // 
             this.txtTimkiem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTimkiem.Location = new System.Drawing.Point(28, 516);
+            this.txtTimkiem.Location = new System.Drawing.Point(17, 516);
             this.txtTimkiem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtTimkiem.Name = "txtTimkiem";
             this.txtTimkiem.Size = new System.Drawing.Size(355, 31);
@@ -105,7 +107,7 @@
             this.btnXuatExcel.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.btnXuatExcel.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXuatExcel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnXuatExcel.Location = new System.Drawing.Point(28, 455);
+            this.btnXuatExcel.Location = new System.Drawing.Point(17, 455);
             this.btnXuatExcel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnXuatExcel.Name = "btnXuatExcel";
             this.btnXuatExcel.Size = new System.Drawing.Size(130, 45);
@@ -117,12 +119,13 @@
             // lblTongTien
             // 
             this.lblTongTien.AutoSize = true;
-            this.lblTongTien.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTongTien.Location = new System.Drawing.Point(383, 623);
+            this.lblTongTien.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTongTien.Location = new System.Drawing.Point(296, 602);
             this.lblTongTien.Name = "lblTongTien";
-            this.lblTongTien.Size = new System.Drawing.Size(79, 29);
+            this.lblTongTien.Size = new System.Drawing.Size(97, 36);
             this.lblTongTien.TabIndex = 97;
             this.lblTongTien.Text = "label1";
+            this.lblTongTien.Click += new System.EventHandler(this.lblTongTien_Click);
             // 
             // data_top5sp
             // 
@@ -137,10 +140,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe Print", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(608, 448);
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(611, 455);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(494, 50);
+            this.label1.Size = new System.Drawing.Size(434, 36);
             this.label1.TabIndex = 99;
             this.label1.Text = "Top 5 sản phẩm bán chạy nhất";
             // 

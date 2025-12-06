@@ -111,29 +111,55 @@ namespace QuanLiBanGiay
                 if (!string.IsNullOrEmpty(fileAnh))
                 {
                     // --- Đường dẫn tuyệt đối tới thư mục chứa ảnh ---
-                    //string imageFolder = @"\Images\SanPham";
-                    string imageFolder = @"D:\CN.NEt\ảnh\ảnh giày";
+                    string imageFolder = GetImageFolderPath();
                     string duongDan = Path.Combine(imageFolder, fileAnh);
-
 
                     if (File.Exists(duongDan))
                     {
-                        using (FileStream fs = new FileStream(duongDan, FileMode.Open, FileAccess.Read))
+                        try
                         {
-                            pictureBox1.Image = Image.FromStream(fs);
+                            // Giải phóng ảnh cũ trước khi load ảnh mới
+                            if (pictureBox1.Image != null)
+                            {
+                                pictureBox1.Image.Dispose();
+                                pictureBox1.Image = null;
+                            }
+                            
+                            using (FileStream fs = new FileStream(duongDan, FileMode.Open, FileAccess.Read))
+                            {
+                                pictureBox1.Image = Image.FromStream(fs);
+                            }
+                            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                         }
-                        pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                        catch (Exception imgEx)
+                        {
+                            MessageBox.Show($"Lỗi khi load ảnh: {imgEx.Message}\nĐường dẫn: {duongDan}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            pictureBox1.Image = null;
+                        }
                     }
                     else
                     {
                         string defaultImg = Path.Combine(imageFolder, "no_image.jpg");
                         if (File.Exists(defaultImg))
                         {
-                            using (FileStream fs = new FileStream(defaultImg, FileMode.Open, FileAccess.Read))
+                            try
                             {
-                                pictureBox1.Image = Image.FromStream(fs);
+                                if (pictureBox1.Image != null)
+                                {
+                                    pictureBox1.Image.Dispose();
+                                    pictureBox1.Image = null;
+                                }
+                                
+                                using (FileStream fs = new FileStream(defaultImg, FileMode.Open, FileAccess.Read))
+                                {
+                                    pictureBox1.Image = Image.FromStream(fs);
+                                }
+                                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                             }
-                            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                            catch
+                            {
+                                pictureBox1.Image = null;
+                            }
                         }
                         else
                         {
@@ -143,7 +169,11 @@ namespace QuanLiBanGiay
                 }
                 else
                 {
-                    pictureBox1.Image = null;
+                    if (pictureBox1.Image != null)
+                    {
+                        pictureBox1.Image.Dispose();
+                        pictureBox1.Image = null;
+                    }
                 }
             }
             catch (Exception ex)
@@ -387,6 +417,35 @@ namespace QuanLiBanGiay
                 if (conn.State == ConnectionState.Open) conn.Close();
                 return "";
             }
+        }
+
+        // Helper method để tìm thư mục Images
+        private string GetImageFolderPath()
+        {
+            // Thử nhiều cách để tìm thư mục Images
+            string[] possiblePaths = new string[]
+            {
+                // Cách 1: Từ thư mục gốc project (nếu chạy từ bin/Debug)
+                Path.Combine(Directory.GetParent(Directory.GetParent(Application.StartupPath).FullName).FullName, "Images", "SanPham"),
+                // Cách 2: Từ Application.StartupPath trực tiếp
+                Path.Combine(Application.StartupPath, "Images", "SanPham"),
+                // Cách 3: Từ thư mục hiện tại của executable
+                Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Images", "SanPham"),
+                // Cách 4: Từ thư mục gốc của solution (nếu cần)
+                Path.Combine(Application.StartupPath, "..", "..", "Images", "SanPham")
+            };
+
+            foreach (string path in possiblePaths)
+            {
+                string normalizedPath = Path.GetFullPath(path);
+                if (Directory.Exists(normalizedPath))
+                {
+                    return normalizedPath;
+                }
+            }
+
+            // Nếu không tìm thấy, trả về đường dẫn mặc định
+            return Path.Combine(Application.StartupPath, "Images", "SanPham");
         }
 
         private void btnChonAnh_Click(object sender, EventArgs e)

@@ -270,8 +270,6 @@ D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMe
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Numerics.Vectors.xml
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.AssemblyReference.cache
-D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.SuggestedBindingRedirects.cache
-D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe.config
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.ResolveComReference.cache
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form__NhapHang.resources
 D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_HoaDon.resources
@@ -488,3 +486,8 @@ D:\CN.NEt\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.csproj.CoreCompile
 D:\CN.NEt\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBa.E89BC873.Up2Date
 D:\CN.NEt\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.exe
 D:\CN.NEt\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.pdb
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\BouncyCastle.Cryptography.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\itextsharp.dll
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\BouncyCastle.Cryptography.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\bin\Debug\itextsharp.xml
+D:\3. NĂM 3 ĐH\HK1 (2025)\CÔNG NGHỆ .NET\DoAn_PhanMemQLShopGiay\DoAn_PhanMemQLShopGiay\QuanLiBanGiay\QuanLiBanGiay\obj\Debug\QuanLiBanGiay.Form_KhachHang.resources
