@@ -269,6 +269,15 @@ namespace QuanLiBanGiay
             catch { obj = null; }
             finally { GC.Collect(); }
         }
-        
+
+        private void lblTongTien_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblTongDT_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

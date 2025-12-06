@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|d:\\3. n\u0103m 3 \u0111h\\hk1 (2025)\\c\u00F4ng ngh\u1EC7 .net\\doan_phanmemqlshopgiay\\doan_phanmemqlshopgiay\\quanlibangiay\\quanlibangiay\\form_sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|d:\\3. n\u0103m 3 \u0111h\\hk1 (2025)\\c\u00F4ng ngh\u1EC7 .net\\doan_phanmemqlshopgiay\\doan_phanmemqlshopgiay\\quanlibangiay\\quanlibangiay\\form_sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\quanlibangiay\\form_khuyenmai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|d:\\3. n\u0103m 3 \u0111h\\hk1 (2025)\\c\u00F4ng ngh\u1EC7 .net\\doan_phanmemqlshopgiay\\doan_phanmemqlshopgiay\\quanlibangiay\\quanlibangiay\\form_khuyenmai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_khuyenmai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|d:\\3. n\u0103m 3 \u0111h\\hk1 (2025)\\c\u00F4ng ngh\u1EC7 .net\\doan_phanmemqlshopgiay\\doan_phanmemqlshopgiay\\quanlibangiay\\quanlibangiay\\form_khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|d:\\3. n\u0103m 3 \u0111h\\hk1 (2025)\\c\u00F4ng ngh\u1EC7 .net\\doan_phanmemqlshopgiay\\doan_phanmemqlshopgiay\\quanlibangiay\\quanlibangiay\\form_hoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_hoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|d:\\3. n\u0103m 3 \u0111h\\hk1 (2025)\\c\u00F4ng ngh\u1EC7 .net\\doan_phanmemqlshopgiay\\doan_phanmemqlshopgiay\\quanlibangiay\\quanlibangiay\\form_nhanvien.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_nhanvien.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\quanlibangiay\\dbconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\dbconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|d:\\3. n\u0103m 3 \u0111h\\hk1 (2025)\\c\u00F4ng ngh\u1EC7 .net\\doan_phanmemqlshopgiay\\doan_phanmemqlshopgiay\\quanlibangiay\\quanlibangiay\\form_nhaphang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_nhaphang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\quanlibangiay\\form_khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|d:\\3. n\u0103m 3 \u0111h\\hk1 (2025)\\c\u00F4ng ngh\u1EC7 .net\\doan_phanmemqlshopgiay\\doan_phanmemqlshopgiay\\quanlibangiay\\quanlibangiay\\form_sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\quanlibangiay\\form_taohoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_taohoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|d:\\3. n\u0103m 3 \u0111h\\hk1 (2025)\\c\u00F4ng ngh\u1EC7 .net\\doan_phanmemqlshopgiay\\doan_phanmemqlshopgiay\\quanlibangiay\\quanlibangiay\\form_taohoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{85AAA9D0-0466-4B60-B33C-532E2DD02732}|QuanLiBanGiay\\QuanLiBanGiay.csproj|solutionrelative:quanlibangiay\\form_taohoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
@@ -54,82 +54,80 @@
               "EditorCaption": " [Design]"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Form_SanPham.cs",
-              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_SanPham.cs",
-              "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_SanPham.cs",
-              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_SanPham.cs",
-              "RelativeToolTip": "QuanLiBanGiay\\Form_SanPham.cs",
-              "ViewState": "AQIAAHYBAAAAAAAAAAArwIIBAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T04:13:54.688Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Form_SanPham.cs [Design]",
-              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_SanPham.cs",
-              "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_SanPham.cs",
-              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_SanPham.cs [Design]",
-              "RelativeToolTip": "QuanLiBanGiay\\Form_SanPham.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T04:13:52.43Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "Form_KhuyenMai.cs [Design]",
               "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_KhuyenMai.cs",
               "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_KhuyenMai.cs",
               "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_KhuyenMai.cs [Design]",
               "RelativeToolTip": "QuanLiBanGiay\\Form_KhuyenMai.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T05:04:28.673Z",
+              "WhenOpened": "2025-12-06T06:02:13.618Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form_KhachHang.cs [Design]",
+              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_KhachHang.cs",
+              "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_KhachHang.cs",
+              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_KhachHang.cs [Design]*",
+              "RelativeToolTip": "QuanLiBanGiay\\Form_KhachHang.cs [Design]*",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T06:02:09.464Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Form_NhapHang.cs [Design]",
+              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_NhapHang.cs",
+              "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_NhapHang.cs",
+              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_NhapHang.cs [Design]",
+              "RelativeToolTip": "QuanLiBanGiay\\Form_NhapHang.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T06:02:04.6Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Form_TaoHoaDon.cs [Design]",
+              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_TaoHoaDon.cs",
+              "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_TaoHoaDon.cs",
+              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_TaoHoaDon.cs [Design]",
+              "RelativeToolTip": "QuanLiBanGiay\\Form_TaoHoaDon.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T06:01:02.236Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form_HoaDon.cs [Design]",
+              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_HoaDon.cs",
+              "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_HoaDon.cs",
+              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_HoaDon.cs [Design]",
+              "RelativeToolTip": "QuanLiBanGiay\\Form_HoaDon.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T05:49:52.208Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Form_KhachHang.cs",
-              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_KhachHang.cs",
-              "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_KhachHang.cs",
-              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_KhachHang.cs",
-              "RelativeToolTip": "QuanLiBanGiay\\Form_KhachHang.cs",
-              "ViewState": "AQIAAKMBAAAAAAAAAAApwLYBAAAIAAAA",
+              "Title": "Form_SanPham.cs [Design]",
+              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_SanPham.cs",
+              "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_SanPham.cs",
+              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_SanPham.cs [Design]",
+              "RelativeToolTip": "QuanLiBanGiay\\Form_SanPham.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T14:07:00.92Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Form_TaoHoaDon.cs",
-              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_TaoHoaDon.cs",
-              "RelativeDocumentMoniker": "QuanLiBanGiay\\Form_TaoHoaDon.cs",
-              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\Form_TaoHoaDon.cs",
-              "RelativeToolTip": "QuanLiBanGiay\\Form_TaoHoaDon.cs",
-              "ViewState": "AQIAAO4CAAAAAAAAAAAcwPkCAAApAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T15:23:50.086Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DBConnection.cs",
-              "DocumentMoniker": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\DBConnection.cs",
-              "RelativeDocumentMoniker": "QuanLiBanGiay\\DBConnection.cs",
-              "ToolTip": "D:\\3. N\u0102M 3 \u0110H\\HK1 (2025)\\C\u00D4NG NGH\u1EC6 .NET\\DoAn_PhanMemQLShopGiay\\DoAn_PhanMemQLShopGiay\\QuanLiBanGiay\\QuanLiBanGiay\\DBConnection.cs",
-              "RelativeToolTip": "QuanLiBanGiay\\DBConnection.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T04:41:21.769Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-06T05:47:46.126Z",
+              "EditorCaption": " [Design]"
             }
           ]
         }
