@@ -23,6 +23,8 @@ namespace QuanLiBanGiay
         {
             loadSP();
             LoadLoaiGiayVaoComboBox();
+            txtMaSP.Enabled = false;
+            txtMaSP.Text = TaoMaTuDong();
         }
 
         public void loadSP()
@@ -52,7 +54,7 @@ namespace QuanLiBanGiay
 
 
                 da_sp = new SqlDataAdapter(strsel, conn);
-                ds_QLSP.Clear(); // tránh nhân bản dữ liệu
+                ds_QLSP.Clear(); 
                 da_sp.Fill(ds_QLSP, "GIAY");
                 dataGridView1.AutoGenerateColumns = true;
                 dataGridView1.DataSource = ds_QLSP.Tables["GIAY"];
@@ -64,22 +66,22 @@ namespace QuanLiBanGiay
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // không cần làm gì
+           
         }
 
         private void cbMaLoai_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // không cần làm gì
+           
         }
 
         private void grbThongtin_Enter(object sender, EventArgs e)
         {
-            // không cần làm gì
+            
         }
 
         private void label4_Click(object sender, EventArgs e)
         {
-            // không cần làm gì
+            
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -88,13 +90,13 @@ namespace QuanLiBanGiay
 
             try
             {
-                // Cách an toàn nhất: lấy dữ liệu trực tiếp từ DataTable qua DataRowView
+                
                 DataRowView drv = dataGridView1.Rows[e.RowIndex].DataBoundItem as DataRowView;
 
                 if (drv == null)
                     return;
 
-                // --- Gán dữ liệu lên các textbox ---
+               
                 txtMaSP.Text = drv["MAGIAY"]?.ToString() ?? "";
                 txtTenSP.Text = drv["TENGIAY"]?.ToString() ?? "";
                 cbMaLoai.Text = drv["TENLOAI"]?.ToString() ?? "";
@@ -105,75 +107,53 @@ namespace QuanLiBanGiay
                 txtSoLuongTon.Text = drv["SOLUONGTON"]?.ToString() ?? "";
                 txtTH.Text = drv["TENTH"]?.ToString() ?? "";
 
-                // --- Xử lý ảnh ---
+                
                 string fileAnh = drv["HINHANHSP"]?.ToString();
 
+                
+                string imageFolder = GetImageFolderPath();
+
+                
+                if (pictureBox1.Image != null)
+                {
+                    pictureBox1.Image.Dispose();
+                    pictureBox1.Image = null;
+                }
+
+                string pathHienThi = "";
+
+                
                 if (!string.IsNullOrEmpty(fileAnh))
                 {
-                    // --- Đường dẫn tuyệt đối tới thư mục chứa ảnh ---
-                    string imageFolder = GetImageFolderPath();
-                    string duongDan = Path.Combine(imageFolder, fileAnh);
+                    string checkPath = Path.Combine(imageFolder, fileAnh);
+                    if (File.Exists(checkPath))
+                    {
+                        pathHienThi = checkPath;
+                    }
+                }
 
-                    if (File.Exists(duongDan))
+                
+                if (string.IsNullOrEmpty(pathHienThi))
+                {
+                    string noImgPath = Path.Combine(imageFolder, "no_image.jpg");
+                    if (File.Exists(noImgPath))
                     {
-                        try
-                        {
-                            // Giải phóng ảnh cũ trước khi load ảnh mới
-                            if (pictureBox1.Image != null)
-                            {
-                                pictureBox1.Image.Dispose();
-                                pictureBox1.Image = null;
-                            }
-                            
-                            using (FileStream fs = new FileStream(duongDan, FileMode.Open, FileAccess.Read))
-                            {
-                                pictureBox1.Image = Image.FromStream(fs);
-                            }
-                            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                        }
-                        catch (Exception imgEx)
-                        {
-                            MessageBox.Show($"Lỗi khi load ảnh: {imgEx.Message}\nĐường dẫn: {duongDan}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            pictureBox1.Image = null;
-                        }
+                        pathHienThi = noImgPath;
                     }
-                    else
+                }
+
+                
+                if (!string.IsNullOrEmpty(pathHienThi))
+                {
+                    using (FileStream fs = new FileStream(pathHienThi, FileMode.Open, FileAccess.Read))
                     {
-                        string defaultImg = Path.Combine(imageFolder, "no_image.jpg");
-                        if (File.Exists(defaultImg))
-                        {
-                            try
-                            {
-                                if (pictureBox1.Image != null)
-                                {
-                                    pictureBox1.Image.Dispose();
-                                    pictureBox1.Image = null;
-                                }
-                                
-                                using (FileStream fs = new FileStream(defaultImg, FileMode.Open, FileAccess.Read))
-                                {
-                                    pictureBox1.Image = Image.FromStream(fs);
-                                }
-                                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                            }
-                            catch
-                            {
-                                pictureBox1.Image = null;
-                            }
-                        }
-                        else
-                        {
-                            pictureBox1.Image = null;
-                        }
+                        pictureBox1.Image = Image.FromStream(fs);
                     }
+                    pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
                 else
                 {
-                    if (pictureBox1.Image != null)
-                    {
-                        pictureBox1.Image.Dispose();
-                        pictureBox1.Image = null;
-                    }
+                    pictureBox1.Image = null;
                 }
             }
             catch (Exception ex)
@@ -181,6 +161,7 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Lỗi khi hiển thị thông tin sản phẩm: " + ex.Message);
             }
         }
+
         private void LoadLoaiGiayVaoComboBox()
         {
             try
@@ -220,7 +201,7 @@ namespace QuanLiBanGiay
                 string keyword = txtTimKiem.Text.Trim();
                 if (string.IsNullOrEmpty(keyword))
                 {
-                    // Nếu ô tìm kiếm trống, load lại toàn bộ dữ liệu
+                    
                     loadSP();
                     return;
                 }
@@ -275,13 +256,42 @@ namespace QuanLiBanGiay
                 btnTimKiem.PerformClick();
             }
         }
+        private string TaoMaTuDong()
+        {
+            string maMoi = "G001"; 
+            try
+            {
+                
+                string query = "SELECT TOP 1 MAGIAY FROM GIAY WHERE MAGIAY LIKE 'G%' ORDER BY LEN(MAGIAY) DESC, MAGIAY DESC";
 
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (conn.State == ConnectionState.Open) conn.Close();
+
+                    if (result != null)
+                    {
+                        string maCu = result.ToString(); 
+                        string phanSo = maCu.Substring(1);
+                        int soThuTu = int.Parse(phanSo);
+                        soThuTu++;
+                        maMoi = "G" + soThuTu.ToString("D3");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tạo mã tự động: " + ex.Message);
+            }
+            return maMoi;
+        }
         private void btnThem_Click(object sender, EventArgs e)
         {
             try
             {
-                // --- 1️⃣ Lấy dữ liệu từ form ---
-                string maGiay = txtMaSP.Text.Trim();
+                
+                string maGiay = TaoMaTuDong();
                 string tenGiay = txtTenSP.Text.Trim();
                 string tenLoai = cbMaLoai.Text.Trim();
                 string tenNCC = txtMaNCC.Text.Trim();
@@ -291,7 +301,7 @@ namespace QuanLiBanGiay
                 string giaText = txtGiaBan.Text.Trim();
                 string tenTH = txtTH.Text.Trim();
 
-                if (string.IsNullOrEmpty(maGiay) || string.IsNullOrEmpty(tenGiay) ||
+                if (string.IsNullOrEmpty(tenGiay) ||
                     string.IsNullOrEmpty(tenLoai) || string.IsNullOrEmpty(tenNCC) ||
                     string.IsNullOrEmpty(tenTH))
                 {
@@ -311,7 +321,7 @@ namespace QuanLiBanGiay
                     return;
                 }
 
-                // --- 2️⃣ Lấy mã loại, mã NCC, mã màu, mã size, mã thương hiệu ---
+                
                 string maLoai = GetValueFromDB("SELECT MALOAI FROM LOAIGIAY WHERE TENLOAI = @val", tenLoai);
                 string maNCC = GetValueFromDB("SELECT MANCC FROM NHACUNGCAP WHERE TENNCC = @val", tenNCC);
                 string maMau = GetValueFromDB("SELECT MAMAU FROM MAUSAC WHERE TENMAU = @val", tenMau);
@@ -324,7 +334,7 @@ namespace QuanLiBanGiay
                     return;
                 }
 
-                // --- 3️⃣ Kiểm tra trùng mã giày ---
+                
                 string checkQuery = "SELECT COUNT(*) FROM GIAY WHERE MAGIAY = @ma";
                 using (SqlCommand cmd = new SqlCommand(checkQuery, conn))
                 {
@@ -340,19 +350,30 @@ namespace QuanLiBanGiay
                     }
                 }
 
-                // --- 4️⃣ Xử lý ảnh ---
+
                 string fileAnh = "no_image.jpg";
-                string imageFolder = Path.Combine(Application.StartupPath, "Images", "SanPham");
-                Directory.CreateDirectory(imageFolder);
+
+                
+                string imageFolder = GetImageFolderPath();
 
                 if (!string.IsNullOrEmpty(selectedImagePath) && File.Exists(selectedImagePath))
                 {
                     fileAnh = maGiay + Path.GetExtension(selectedImagePath);
                     string savePath = Path.Combine(imageFolder, fileAnh);
-                    File.Copy(selectedImagePath, savePath, true);
+
+                    
+                    try
+                    {
+                        File.Copy(selectedImagePath, savePath, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi lưu ảnh: " + ex.Message);
+                        
+                    }
                 }
 
-                // --- 5️⃣ Thêm vào bảng GIAY ---
+
                 string insertGiay = @"INSERT INTO GIAY (MAGIAY, TENGIAY, MALOAI, MATH, MANCC, GIABAN, HINHANHSP)
                               VALUES (@MAGIAY, @TENGIAY, @MALOAI, @MATH, @MANCC, @GIABAN, @HINHANHSP)";
                 using (SqlCommand cmd = new SqlCommand(insertGiay, conn))
@@ -360,7 +381,7 @@ namespace QuanLiBanGiay
                     cmd.Parameters.AddWithValue("@MAGIAY", maGiay);
                     cmd.Parameters.AddWithValue("@TENGIAY", tenGiay);
                     cmd.Parameters.AddWithValue("@MALOAI", maLoai);
-                    cmd.Parameters.AddWithValue("@MATH", maTH); // ✅ gán mã thương hiệu
+                    cmd.Parameters.AddWithValue("@MATH", maTH); 
                     cmd.Parameters.AddWithValue("@MANCC", maNCC);
                     cmd.Parameters.AddWithValue("@GIABAN", giaBan);
                     cmd.Parameters.AddWithValue("@HINHANHSP", fileAnh);
@@ -370,7 +391,6 @@ namespace QuanLiBanGiay
                     conn.Close();
                 }
 
-                // --- 6️⃣ Thêm chi tiết giày ---
                 string insertCT = @"INSERT INTO CHITIETGIAY (MAGIAY, MAMAU, MASIZE, SOLUONGTON)
                             VALUES (@MAGIAY, @MAMAU, @MASIZE, @SOLUONGTON)";
                 using (SqlCommand cmd = new SqlCommand(insertCT, conn))
@@ -419,33 +439,44 @@ namespace QuanLiBanGiay
             }
         }
 
-        // Helper method để tìm thư mục Images
         private string GetImageFolderPath()
         {
-            // Thử nhiều cách để tìm thư mục Images
-            string[] possiblePaths = new string[]
-            {
-                // Cách 1: Từ thư mục gốc project (nếu chạy từ bin/Debug)
-                Path.Combine(Directory.GetParent(Directory.GetParent(Application.StartupPath).FullName).FullName, "Images", "SanPham"),
-                // Cách 2: Từ Application.StartupPath trực tiếp
-                Path.Combine(Application.StartupPath, "Images", "SanPham"),
-                // Cách 3: Từ thư mục hiện tại của executable
-                Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Images", "SanPham"),
-                // Cách 4: Từ thư mục gốc của solution (nếu cần)
-                Path.Combine(Application.StartupPath, "..", "..", "Images", "SanPham")
-            };
+            //// Thử nhiều cách để tìm thư mục Images
+            //string[] possiblePaths = new string[]
+            //{
+            //    // Cách 1: Từ thư mục gốc project (nếu chạy từ bin/Debug)
+            //    Path.Combine(Directory.GetParent(Directory.GetParent(Application.StartupPath).FullName).FullName, "Images", "SanPham"),
+            //    // Cách 2: Từ Application.StartupPath trực tiếp
+            //    Path.Combine(Application.StartupPath, "Images", "SanPham"),
+            //    // Cách 3: Từ thư mục hiện tại của executable
+            //    Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Images", "SanPham"),
+            //    // Cách 4: Từ thư mục gốc của solution (nếu cần)
+            //    Path.Combine(Application.StartupPath, "..", "..", "Images", "SanPham")
+            //};
 
-            foreach (string path in possiblePaths)
+            //foreach (string path in possiblePaths)
+            //{
+            //    string normalizedPath = Path.GetFullPath(path);
+            //    if (Directory.Exists(normalizedPath))
+            //    {
+            //        return normalizedPath;
+            //    }
+            //}
+
+
+            
+            string projectFolder = Directory.GetParent(Directory.GetParent(Application.StartupPath).FullName).FullName;
+
+            
+            string imageFolder = Path.Combine(projectFolder, "Images", "SanPham");
+
+            
+            if (!Directory.Exists(imageFolder))
             {
-                string normalizedPath = Path.GetFullPath(path);
-                if (Directory.Exists(normalizedPath))
-                {
-                    return normalizedPath;
-                }
+                Directory.CreateDirectory(imageFolder);
             }
 
-            // Nếu không tìm thấy, trả về đường dẫn mặc định
-            return Path.Combine(Application.StartupPath, "Images", "SanPham");
+            return imageFolder;
         }
 
         private void btnChonAnh_Click(object sender, EventArgs e)
@@ -466,7 +497,7 @@ namespace QuanLiBanGiay
         {
             try
             {
-                // --- 1️⃣ Lấy dữ liệu từ form ---
+                
                 string maGiay = txtMaSP.Text.Trim();
                 string tenGiay = txtTenSP.Text.Trim();
                 string tenLoai = cbMaLoai.Text.Trim();
@@ -502,7 +533,7 @@ namespace QuanLiBanGiay
                     return;
                 }
 
-                // --- 2️⃣ Lấy mã các khóa ngoại ---
+                
                 string maLoai = GetValueFromDB("SELECT MALOAI FROM LOAIGIAY WHERE TENLOAI = @val", tenLoai);
                 string maNCC = GetValueFromDB("SELECT MANCC FROM NHACUNGCAP WHERE TENNCC = @val", tenNCC);
                 string maMau = GetValueFromDB("SELECT MAMAU FROM MAUSAC WHERE TENMAU = @val", tenMau);
@@ -515,8 +546,7 @@ namespace QuanLiBanGiay
                     return;
                 }
 
-                // --- 3️⃣ Xử lý ảnh ---
-                string imageFolder = Path.Combine(Application.StartupPath, "Images", "SanPham");
+                string imageFolder = GetImageFolderPath();
                 Directory.CreateDirectory(imageFolder);
                 string fileAnh = "no_image.jpg";
 
@@ -528,7 +558,7 @@ namespace QuanLiBanGiay
                 }
                 else
                 {
-                    // Giữ nguyên ảnh cũ nếu không chọn ảnh mới
+                    
                     string oldImgQuery = "SELECT HINHANHSP FROM GIAY WHERE MAGIAY = @ma";
                     using (SqlCommand cmd = new SqlCommand(oldImgQuery, conn))
                     {
@@ -541,7 +571,7 @@ namespace QuanLiBanGiay
                     }
                 }
 
-                // --- 4️⃣ Cập nhật bảng GIAY ---
+                
                 string updateGiay = @"UPDATE GIAY 
                               SET TENGIAY = @TENGIAY, MALOAI = @MALOAI, MATH = @MATH, MANCC = @MANCC,
                                   GIABAN = @GIABAN, HINHANHSP = @HINHANHSP
@@ -562,7 +592,7 @@ namespace QuanLiBanGiay
                     conn.Close();
                 }
 
-                // --- 5️⃣ Cập nhật bảng CHITIETGIAY ---
+               
                 string updateCT = @"UPDATE CHITIETGIAY 
                             SET MAMAU = @MAMAU, MASIZE = @MASIZE, SOLUONGTON = @SOLUONGTON
                             WHERE MAGIAY = @MAGIAY";
@@ -579,7 +609,7 @@ namespace QuanLiBanGiay
                     conn.Close();
                 }
 
-                // --- 6️⃣ Refresh lại dữ liệu ---
+                
                 loadSP();
                 MessageBox.Show("✅ Cập nhật sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -602,7 +632,7 @@ namespace QuanLiBanGiay
                     return;
                 }
 
-                // Xác nhận xóa
+                
                 DialogResult result = MessageBox.Show(
                     $"Bạn có chắc chắn muốn xóa sản phẩm [{maGiay}] không?",
                     "Xác nhận xóa",
@@ -615,7 +645,7 @@ namespace QuanLiBanGiay
 
                 conn.Open();
 
-                // --- 1️⃣ Xóa chi tiết giày trước (vì có ràng buộc khóa ngoại) ---
+                
                 string deleteCT = "DELETE FROM CHITIETGIAY WHERE MAGIAY = @ma";
                 using (SqlCommand cmdCT = new SqlCommand(deleteCT, conn))
                 {
@@ -623,7 +653,7 @@ namespace QuanLiBanGiay
                     cmdCT.ExecuteNonQuery();
                 }
 
-                // --- 2️⃣ Xóa sản phẩm trong bảng GIAY ---
+                
                 string deleteGiay = "DELETE FROM GIAY WHERE MAGIAY = @ma";
                 using (SqlCommand cmdG = new SqlCommand(deleteGiay, conn))
                 {
@@ -633,10 +663,10 @@ namespace QuanLiBanGiay
 
                 conn.Close();
 
-                // --- 3️⃣ Làm mới dữ liệu ---
+                
                 loadSP();
 
-                // --- 4️⃣ Xóa ảnh trong thư mục (nếu có) ---
+                
                 string imageFolder = Path.Combine(Application.StartupPath, "Images", "SanPham");
                 string oldImg = Path.Combine(imageFolder, maGiay + ".jpg");
                 if (File.Exists(oldImg))
@@ -645,7 +675,7 @@ namespace QuanLiBanGiay
                     {
                         File.Delete(oldImg);
                     }
-                    catch { /* bỏ qua nếu file đang được dùng */ }
+                    catch {  }
                 }
 
                 pictureBox1.Image = null;
@@ -666,7 +696,7 @@ namespace QuanLiBanGiay
         {
             try
             {
-                // Xóa toàn bộ nội dung trong các TextBox
+                
                 txtMaSP.Clear();
                 txtTenSP.Clear();
                 txtGiaBan.Clear();
@@ -677,18 +707,18 @@ namespace QuanLiBanGiay
                 txtTH.Clear();
                 txtTimKiem.Clear();
 
-                // Reset combobox về rỗng
+                
                 cbMaLoai.SelectedIndex = -1;
                 cbMaLoai.Text = "";
 
-                // Xóa ảnh hiển thị
+                
                 pictureBox1.Image = null;
                 selectedImagePath = "";
 
-                // Làm mới lại DataGridView
+               
                 loadSP();
 
-                // Thông báo hoặc focus lại ô đầu tiên
+                
                 txtMaSP.Focus();
             }
             catch (Exception ex)
@@ -699,27 +729,27 @@ namespace QuanLiBanGiay
 
         private void thêmSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            btnThem.PerformClick();
         }
 
         private void xóaSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            btnXoa.PerformClick();
         }
 
         private void sửaSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            btnSua.PerformClick();
         }
 
         private void inHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void refeshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            button1.PerformClick();
         }
     }
 }

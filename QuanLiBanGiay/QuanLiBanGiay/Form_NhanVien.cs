@@ -21,8 +21,8 @@ namespace QuanLiBanGiay
         SqlConnection conn;
         DataSet ds_NhanVien = new DataSet();
         SqlDataAdapter da_nv;
-        bool isEditing = false; // true nếu đang Sửa
-        bool isAdding = false;  // true nếu đang Thêm 
+        bool isEditing = false; 
+        bool isAdding = false;  
 
         public Form_NhanVien()
         {
@@ -39,7 +39,7 @@ namespace QuanLiBanGiay
         {
             LoadNhanVien();
             InitializeComboBoxes();
-            SetInitialState(); // Thiết lập trạng thái ban đầu 
+            SetInitialState(); 
         }
 
         private void InitializeComboBoxes()
@@ -60,7 +60,7 @@ namespace QuanLiBanGiay
 
         private void SetInitialState()
         {
-            // Vô hiệu hóa tất cả textbox và các button Sửa, Xóa, Lưu
+            
             SetInputsEnabled(false);
             btnSua.Enabled = false;
             btnXoa.Enabled = false;
@@ -71,7 +71,7 @@ namespace QuanLiBanGiay
 
         private void SetInputsEnabled(bool enabled)
         {
-            // Bật/tắt các control input
+            
             txtMaNV.Enabled = enabled;
             txtTenNV.Enabled = enabled;
             cbGioiTinh.Enabled = enabled;
@@ -89,7 +89,7 @@ namespace QuanLiBanGiay
         {
             try
             {
-                // JOIN 2 bảng NHANVIEN và TAIKHOAN
+                
                 string query = @"SELECT NV.MANV, NV.TENNV, NV.GIOITINH, NV.NGAYSINH, NV.SDT, NV.DIACHI, NV.NGAYVAOLAM,
                                  TK.TENDANGNHAP AS TAIKHOAN, TK.MATKHAU, TK.VAITRO, TK.TRANGTHAI
                                  FROM NHANVIEN NV, TAIKHOAN TK
@@ -98,8 +98,6 @@ namespace QuanLiBanGiay
                 ds_NhanVien.Clear();
                 da_nv.Fill(ds_NhanVien, "NHANVIEN");
                 dgvNhanVien.DataSource = ds_NhanVien.Tables["NHANVIEN"];
-
-                // Đặt tiêu đề cột
                 if (dgvNhanVien.Columns.Count > 0)
                 {
                     dgvNhanVien.Columns["MANV"].HeaderText = "Mã NV";
@@ -147,8 +145,6 @@ namespace QuanLiBanGiay
                 txtMatKhau.Text = row.Cells["MATKHAU"].Value?.ToString();
                 cboVaiTro.Text = row.Cells["VAITRO"].Value?.ToString();
                 cboTrangThai.Text = row.Cells["TRANGTHAI"].Value?.ToString();
-
-                // Xử lý ngày sinh
                 if (row.Cells["NGAYSINH"].Value != null && row.Cells["NGAYSINH"].Value != DBNull.Value)
                 {
                     if (DateTime.TryParse(row.Cells["NGAYSINH"].Value.ToString(), out DateTime ngaySinh))
@@ -167,8 +163,6 @@ namespace QuanLiBanGiay
 
                 txtSDT.Text = row.Cells["SDT"].Value?.ToString();
                 txtDiaChi.Text = row.Cells["DIACHI"].Value?.ToString();
-
-                // Xử lý ngày vào làm
                 if (row.Cells["NGAYVAOLAM"].Value != null && row.Cells["NGAYVAOLAM"].Value != DBNull.Value)
                 {
                     if (DateTime.TryParse(row.Cells["NGAYVAOLAM"].Value.ToString(), out DateTime ngayVaoLam))
@@ -184,18 +178,14 @@ namespace QuanLiBanGiay
                 {
                     txtNgayVaoLam.Text = "";
                 }
-
-                // Khi chọn 1 dòng trên datagrid: bật button Sửa và Xóa, nhưng textbox để read-only
                 SetInputsEnabled(false);
                 btnSua.Enabled = true;
                 btnXoa.Enabled = true;
                 btnLuu.Enabled = false;
-
                 isEditing = false;
                 isAdding = false;
             }
         }
-
         private void ResetForm()
         {
             txtMaNV.Clear();
@@ -218,15 +208,13 @@ namespace QuanLiBanGiay
             btnLuu.Enabled = false;
             txtMaNV.Focus();
         }
-
         private bool ValidateInput(out DateTime? parsedNgaySinh)
         {
             parsedNgaySinh = null;
-
-            if (string.IsNullOrWhiteSpace(txtMaNV.Text))
+            if (string.IsNullOrWhiteSpace(txtTenNV.Text))
             {
-                MessageBox.Show("Vui lòng nhập Mã nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtMaNV.Focus();
+                MessageBox.Show("Vui lòng nhập Tên nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenNV.Focus();
                 return false;
             }
 
@@ -244,7 +232,7 @@ namespace QuanLiBanGiay
                 return false;
             }
 
-            // Kiểm tra ngày sinh nếu có: phải đúng định dạng dd/MM/yyyy
+
             if (!string.IsNullOrWhiteSpace(textNgaySinh.Text))
             {
                 if (!DateTime.TryParseExact(textNgaySinh.Text.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))
@@ -258,21 +246,50 @@ namespace QuanLiBanGiay
 
             return true;
         }
+        private string TaoMaNVTuDong()
+        {
+            string maMoi = "NV001";
+            try
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                string query = "SELECT TOP 1 MANV FROM NHANVIEN ORDER BY LEN(MANV) DESC, MANV DESC";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    object result = cmd.ExecuteScalar();
 
-        // Nút Thêm: chỉ bật các textbox để nhập và focus vào mã, bật Lưu để hoàn tất
+                    if (result != null)
+                    {
+                        string maCu = result.ToString(); 
+                        string phanSo = maCu.Substring(2);
+                        if (int.TryParse(phanSo, out int soThuTu))
+                        {
+                            soThuTu++;
+                            maMoi = "NV" + soThuTu.ToString("D3");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tạo mã tự động: " + ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+            }
+            return maMoi;
+        }
         private void btnThem_Click(object sender, EventArgs e)
         {
             isAdding = true;
             isEditing = false;
             SetInputsEnabled(true);
-            txtMaNV.Focus();
-
-            // Không cho sửa các thông tin liên quan đến ngày vào làm (có thể tự động là ngày hiện tại) nhưng để user có thể chỉnh nếu cần
-            // Bật button Lưu, tắt Sửa/Xóa
+            txtMaNV.Text = TaoMaNVTuDong(); 
+            txtMaNV.Enabled = false;
+            txtTenNV.Focus();         
             btnLuu.Enabled = true;
             btnSua.Enabled = false;
             btnXoa.Enabled = false;
-
             txtMaNV.Clear();
             txtTenNV.Clear();
             cbGioiTinh.SelectedIndex = -1;
@@ -285,8 +302,6 @@ namespace QuanLiBanGiay
             cboVaiTro.SelectedIndex = -1;
             cboTrangThai.SelectedIndex = -1;
         }
-
-        // Nút Sửa: bật cho phép sửa (nhưng mã không được sửa)
         private void btnSua_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtMaNV.Text))
@@ -294,11 +309,8 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Vui lòng chọn nhân viên cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             isEditing = true;
             isAdding = false;
-
-            // Cho phép sửa các textbox trừ mã
             SetInputsEnabled(true);
             txtMaNV.Enabled = false; 
             btnLuu.Enabled = true;
@@ -320,37 +332,28 @@ namespace QuanLiBanGiay
 
             try
             {
-                // Kiểm tra ràng buộc khóa ngoại (nếu nhân viên đang có trong hóa đơn thì không cho xóa)
                 string check = "SELECT COUNT(*) FROM HOADON WHERE MANV = @manv";
                 SqlCommand cmdCheck = new SqlCommand(check, conn);
                 cmdCheck.Parameters.AddWithValue("@manv", txtMaNV.Text.Trim());
                 DBConnection.OpenConnection(conn);
                 int count = (int)cmdCheck.ExecuteScalar();
                 DBConnection.CloseConnection(conn);
-
                 if (count > 0)
                 {
                     MessageBox.Show("Không thể xóa nhân viên này vì đang có hóa đơn liên quan!",
                                     "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
-
                 DBConnection.OpenConnection(conn);
-
-                // Xóa tài khoản trước
                 string sqlTK = "DELETE FROM TAIKHOAN WHERE MANV = @manv";
                 SqlCommand cmdTK = new SqlCommand(sqlTK, conn);
                 cmdTK.Parameters.AddWithValue("@manv", txtMaNV.Text.Trim());
                 cmdTK.ExecuteNonQuery();
-
-                // Sau đó xóa nhân viên
                 string sql = "DELETE FROM NHANVIEN WHERE MANV = @manv";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@manv", txtMaNV.Text.Trim());
                 cmd.ExecuteNonQuery();
-
                 DBConnection.CloseConnection(conn);
-
                 MessageBox.Show("Xóa thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadNhanVien();
                 ResetForm();
@@ -361,19 +364,17 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Lỗi khi xóa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        // Nút Lưu: nếu đang isAdding thì thực hiện insert, nếu isEditing thì thực hiện update
         private void btnLuu_Click(object sender, EventArgs e)
         {
             if (isAdding)
             {
-                // Thêm mới
-                if (!ValidateInput(out DateTime? parsedNgaySinh))
-                    return;
+                if (string.IsNullOrEmpty(txtMaNV.Text))
+                    txtMaNV.Text = TaoMaNVTuDong();
+
+                if (!ValidateInput(out DateTime? parsedNgaySinh)) return;
 
                 try
                 {
-                    // Kiểm tra trùng mã
                     string checkSql = "SELECT COUNT(*) FROM NHANVIEN WHERE MANV = @manv";
                     SqlCommand cmdCheck = new SqlCommand(checkSql, conn);
                     cmdCheck.Parameters.AddWithValue("@manv", txtMaNV.Text.Trim());
@@ -387,8 +388,6 @@ namespace QuanLiBanGiay
                         txtMaNV.Focus();
                         return;
                     }
-
-                    // Ngày vào làm mặc định là ngày hiện tại (có thể ghi từ txtNgàyVaoLam nếu user chỉnh)
                     DateTime ngayVaoLam = DateTime.Now;
                     if (!string.IsNullOrWhiteSpace(txtNgayVaoLam.Text))
                     {
@@ -398,8 +397,6 @@ namespace QuanLiBanGiay
                         }
                         ngayVaoLam = tmpNgayVao;
                     }
-
-                    // INSERT vào bảng NHANVIEN
                     string sqlNV = @"INSERT INTO NHANVIEN (MANV, TENNV, GIOITINH, NGAYSINH, SDT, DIACHI, NGAYVAOLAM)
                                     VALUES (@manv, @tennv, @gioitinh, @ngaysinh, @sdt, @diachi, @ngayvaolam)";
 
@@ -416,10 +413,7 @@ namespace QuanLiBanGiay
                     cmdNV.Parameters.AddWithValue("@sdt", string.IsNullOrWhiteSpace(txtSDT.Text) ? (object)DBNull.Value : txtSDT.Text.Trim());
                     cmdNV.Parameters.AddWithValue("@diachi", string.IsNullOrWhiteSpace(txtDiaChi.Text) ? (object)DBNull.Value : txtDiaChi.Text.Trim());
                     cmdNV.Parameters.AddWithValue("@ngayvaolam", ngayVaoLam);
-
                     cmdNV.ExecuteNonQuery();
-
-                    // INSERT vào bảng TAIKHOAN
                     string taiKhoan = txtTaiKhoan.Text.Trim();
                     if (string.IsNullOrWhiteSpace(taiKhoan))
                         taiKhoan = txtMaNV.Text.Trim().ToLower();
@@ -427,8 +421,6 @@ namespace QuanLiBanGiay
                     string matKhau = txtMatKhau.Text.Trim();
                     string vaiTro = cboVaiTro.Text.Trim();
                     string trangThai = cboTrangThai.Text.Trim();
-
-                    // Kiểm tra xem tài khoản đã tồn tại chưa
                     string checkTKSql = "SELECT COUNT(*) FROM TAIKHOAN WHERE TENDANGNHAP = @tendangnhap";
                     SqlCommand cmdCheckTK = new SqlCommand(checkTKSql, conn);
                     cmdCheckTK.Parameters.AddWithValue("@tendangnhap", taiKhoan);
@@ -470,7 +462,7 @@ namespace QuanLiBanGiay
 
                 try
                 {
-                    // UPDATE bảng NHANVIEN 
+
                     string sql = @"UPDATE NHANVIEN 
                                    SET TENNV = @tennv, 
                                        GIOITINH = @gioitinh, 

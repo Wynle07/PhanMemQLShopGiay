@@ -27,57 +27,49 @@ namespace QuanLiBanGiay
         {
             try
             {
-                if (conn.State == ConnectionState.Closed)
-                    conn.Open();
-
+                if (conn.State == ConnectionState.Closed) conn.Open();
                 string sql = "SELECT * FROM KHUYENMAI";
                 da_KM = new SqlDataAdapter(sql, conn);
-                cb = new SqlCommandBuilder(da_KM);
+                cb = new SqlCommandBuilder(da_KM); 
 
                 ds_KM.Clear();
                 da_KM.Fill(ds_KM, "KhuyenMai");
                 data_KM.DataSource = ds_KM.Tables["KhuyenMai"];
+
                 
-
-
                 if (data_KM.Columns["NGAYBATDAU"] != null)
                     data_KM.Columns["NGAYBATDAU"].DefaultCellStyle.Format = "dd/MM/yyyy";
                 if (data_KM.Columns["NGAYKETTHUC"] != null)
                     data_KM.Columns["NGAYKETTHUC"].DefaultCellStyle.Format = "dd/MM/yyyy";
 
-                DataBindings_KhuyenMai();
+                AddDataBindings(); 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message);
             }
-            finally
-            {
-                if (conn.State == ConnectionState.Open)
-                    conn.Close();
-            }
+            finally { if (conn.State == ConnectionState.Open) conn.Close(); }
         }
-        private void DataBindings_KhuyenMai()
-        {
+        //private void DataBindings_KhuyenMai()
+        //{
 
-            txtMaKM.DataBindings.Clear();
-            txtTenKM.DataBindings.Clear();
-            txtNgayBatDau.DataBindings.Clear();
-            txtNgayKetThuc.DataBindings.Clear();
-            txtGiamGia.DataBindings.Clear();
+        //    txtMaKM.DataBindings.Clear();
+        //    txtTenKM.DataBindings.Clear();
+        //    txtNgayBatDau.DataBindings.Clear();
+        //    txtNgayKetThuc.DataBindings.Clear();
+        //    txtGiamGia.DataBindings.Clear();
 
-            // Gán DataBindings mới
-            txtMaKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "MAKM");
-            txtTenKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "TENKM");
-            // Lưu ý: Nếu dùng DateTimePicker, cần binding thuộc tính 'Value'
-            txtNgayBatDau.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYBATDAU");
-            txtNgayKetThuc.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYKETTHUC");
-            txtGiamGia.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "GIAMGIA");
-        }
+            
+        //    txtMaKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "MAKM");
+        //    txtTenKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "TENKM");
+        //    txtNgayBatDau.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYBATDAU");
+        //    txtNgayKetThuc.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYKETTHUC");
+        //    txtGiamGia.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "GIAMGIA");
+        //}
 
         private bool KiemTraDuLieu()
         {
-            if (string.IsNullOrWhiteSpace(txtMaKM.Text) || string.IsNullOrWhiteSpace(txtTenKM.Text) ||
+            if  (string.IsNullOrWhiteSpace(txtTenKM.Text) ||
                 string.IsNullOrWhiteSpace(txtNgayBatDau.Text) || string.IsNullOrWhiteSpace(txtNgayKetThuc.Text) ||
                 string.IsNullOrWhiteSpace(txtGiamGia.Text))
             {
@@ -112,42 +104,74 @@ namespace QuanLiBanGiay
 
         }
 
-        
-
+     
         private void btnReset_Click_1(object sender, EventArgs e)
         {
 
-            txtMaKM.Clear();
+            ClearDataBindings(); 
+            txtMaKM.Text = TaoMaTuDong();
             txtTenKM.Clear();
             txtNgayBatDau.Clear();
             txtNgayKetThuc.Clear();
             txtGiamGia.Clear();
             txtTimKiem.Clear();
 
-            data_KM.ClearSelection(); 
-            LoadDataKhuyenMai();    
+            txtTenKM.Focus();
         }
-
-        private void btnThem_Click_1(object sender, EventArgs e)
+        private string TaoMaTuDong()
         {
-            if (!KiemTraDuLieu()) return;
-
+            string maMoi = "KM01"; 
             try
             {
-                DataRow newRow = ds_KM.Tables["KhuyenMai"].NewRow();
-                newRow["MAKM"] = txtMaKM.Text;
-                newRow["TENKM"] = txtTenKM.Text;
-                newRow["NGAYBATDAU"] = DateTime.Parse(txtNgayBatDau.Text);
-                newRow["NGAYKETTHUC"] = DateTime.Parse(txtNgayKetThuc.Text);
-                newRow["GIAMGIA"] = decimal.Parse(txtGiamGia.Text);
-
-                ds_KM.Tables["KhuyenMai"].Rows.Add(newRow);
-                da_KM.Update(ds_KM, "KhuyenMai");
-                MessageBox.Show("Thêm khuyến mãi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string query = "SELECT TOP 1 MAKM FROM KHUYENMAI ORDER BY LEN(MAKM) DESC, MAKM DESC";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (conn.State == ConnectionState.Open) conn.Close();
+                    if (result != null)
+                    {
+                        string maCu = result.ToString(); 
+                        string phanSo = "0";
+                        if (maCu.Length > 2)
+                            phanSo = maCu.Substring(2);
+                        if (int.TryParse(phanSo, out int soThuTu))
+                        {
+                            soThuTu++;
+                            maMoi = "KM" + soThuTu.ToString("D2");
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi thêm khuyến mãi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi tạo mã: " + ex.Message);
+            }
+            return maMoi;
+        }
+        private void btnThem_Click_1(object sender, EventArgs e)
+        {
+            if (!KiemTraDuLieu()) return;
+            try
+            {
+                ClearDataBindings();
+                string maMoi = TaoMaTuDong();
+                txtMaKM.Text = maMoi;
+                DataRow newRow = ds_KM.Tables["KhuyenMai"].NewRow();
+                newRow["MAKM"] = maMoi;
+                newRow["TENKM"] = txtTenKM.Text;
+                if (DateTime.TryParse(txtNgayBatDau.Text, out DateTime bd)) newRow["NGAYBATDAU"] = bd;
+                if (DateTime.TryParse(txtNgayKetThuc.Text, out DateTime kt)) newRow["NGAYKETTHUC"] = kt;
+                if (decimal.TryParse(txtGiamGia.Text, out decimal gg)) newRow["GIAMGIA"] = gg;
+                ds_KM.Tables["KhuyenMai"].Rows.Add(newRow);
+                if (cb == null) cb = new SqlCommandBuilder(da_KM);
+                da_KM.Update(ds_KM, "KhuyenMai");
+
+                MessageBox.Show($"Thêm thành công mã {maMoi}!", "Thông báo");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm: " + ex.Message);
             }
             finally
             {
@@ -162,39 +186,29 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Vui lòng chọn khuyến mãi cần sửa.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (!KiemTraDuLieu()) return;
-
             try
             {
-                // 1. Lấy DataRowView
                 DataRowView drv = (DataRowView)data_KM.CurrentRow.DataBoundItem;
-
-                // 2. Bắt đầu chỉnh sửa (rất quan trọng)
                 drv.BeginEdit();
-
-                // 3. Gán giá trị mới
-                drv["MAKM"] = txtMaKM.Text;
                 drv["TENKM"] = txtTenKM.Text;
-                drv["NGAYBATDAU"] = DateTime.Parse(txtNgayBatDau.Text);
-                drv["NGAYKETTHUC"] = DateTime.Parse(txtNgayKetThuc.Text);
-                drv["GIAMGIA"] = decimal.Parse(txtGiamGia.Text);
-
-                // 4. KẾT THÚC CHỈNH SỬA → COMMIT VÀO DataTable
+                if (DateTime.TryParse(txtNgayBatDau.Text, out DateTime bd)) drv["NGAYBATDAU"] = bd;
+                if (DateTime.TryParse(txtNgayKetThuc.Text, out DateTime kt)) drv["NGAYKETTHUC"] = kt;
+                if (decimal.TryParse(txtGiamGia.Text, out decimal gg)) drv["GIAMGIA"] = gg;
                 drv.EndEdit();
-
-                // 5. Cập nhật CSDL
-                da_KM.Update(ds_KM, "KhuyenMai");
-
-                MessageBox.Show("Cập nhật khuyến mãi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (ds_KM.HasChanges())
+                {
+                    da_KM.Update(ds_KM, "KhuyenMai");
+                    MessageBox.Show("Cập nhật khuyến mãi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Không có thông tin nào thay đổi.", "Thông báo");
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi sửa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                LoadDataKhuyenMai(); // Tải lại dữ liệu
             }
         }
 
@@ -204,19 +218,14 @@ namespace QuanLiBanGiay
             if (string.IsNullOrEmpty(keyword))
             {
                 MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                LoadDataKhuyenMai(); // Nếu không có từ khóa, tải lại toàn bộ
+                LoadDataKhuyenMai(); 
                 return;
             }
 
             try
-            {
-                // Sử dụng RowFilter để lọc dữ liệu trực tiếp trên DataTable
+            {               
                 DataTable dt = ds_KM.Tables["KhuyenMai"];
-
-                // Lọc theo Mã KM hoặc Tên KM
-                string filterExpression = $"MAKM LIKE '%{keyword}%' OR TENKM LIKE '%{keyword}%'";
-
-                // Áp dụng bộ lọc
+                string filterExpression = $"MAKM LIKE '%{keyword}%' OR TENKM LIKE '%{keyword}%'";               
                 dt.DefaultView.RowFilter = filterExpression;
             }
             catch (Exception ex)
@@ -233,13 +242,9 @@ namespace QuanLiBanGiay
                 {
                     DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn xóa khuyến mãi này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dr == DialogResult.Yes)
-                    {
-                        // Lấy chỉ mục của hàng đang được chọn
-                        int row = data_KM.CurrentRow.Index;
-                        // Xóa hàng đó khỏi DataTable
+                    {                       
+                        int row = data_KM.CurrentRow.Index;                       
                         ds_KM.Tables["KhuyenMai"].Rows[row].Delete();
-
-                        // Cập nhật lên cơ sở dữ liệu
                         da_KM.Update(ds_KM, "KhuyenMai");
                         MessageBox.Show("Xóa khuyến mãi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -251,31 +256,44 @@ namespace QuanLiBanGiay
             }
             finally
             {
-                LoadDataKhuyenMai(); // Tải lại dữ liệu
+                LoadDataKhuyenMai();
             }
         }
-
+        private void ClearDataBindings()
+        {
+            txtMaKM.DataBindings.Clear();
+            txtTenKM.DataBindings.Clear();
+            txtNgayBatDau.DataBindings.Clear();
+            txtNgayKetThuc.DataBindings.Clear();
+            txtGiamGia.DataBindings.Clear();
+        }
+        private void AddDataBindings()
+        {
+            ClearDataBindings(); 
+            txtMaKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "MAKM", true, DataSourceUpdateMode.Never);
+            txtTenKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "TENKM", true, DataSourceUpdateMode.Never);
+            txtNgayBatDau.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYBATDAU", true, DataSourceUpdateMode.Never, "", "dd/MM/yyyy");
+            txtNgayKetThuc.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYKETTHUC", true, DataSourceUpdateMode.Never, "", "dd/MM/yyyy");
+            txtGiamGia.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "GIAMGIA", true, DataSourceUpdateMode.Never);
+        }
         private void data_KM_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            DataBindings_KhuyenMai();
+            
         }
-
         private void data_KM_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            DataBindings_KhuyenMai();
+            AddDataBindings();
         }
-
         private void Form_KhuyenMai_Load_1(object sender, EventArgs e)
         {
             LoadDataKhuyenMai();
             data_KM.SelectionChanged += data_KM_SelectionChanged;
+            txtMaKM.Enabled = false;
         }
-
         private void data_KM_SelectionChanged(object sender, EventArgs e)
         {
 
         }
-
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 

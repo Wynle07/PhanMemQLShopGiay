@@ -30,6 +30,7 @@ namespace QuanLiBanGiay
             cboTrangThai.Items.Add("Đang hợp tác");
             cboTrangThai.Items.Add("Ngừng hợp tác");
             LoadTeNCCC();
+            txtMaNCC.Enabled = false;
         }
         private void LoadNhaCungCap(string search = "")
         {
@@ -105,70 +106,93 @@ namespace QuanLiBanGiay
                 cboTrangThai.Text = row.Cells["TRANGTHAI"].Value?.ToString();
             }
         }
-
+        private string TaoMaTuDong()
+        {
+            string maMoi = "NCC01";
+            try
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                string query = "SELECT TOP 1 MANCC FROM NHACUNGCAP ORDER BY LEN(MANCC) DESC, MANCC DESC";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        string maCu = result.ToString(); 
+                        string phanSo = maCu.Substring(3);
+                        if (int.TryParse(phanSo, out int soThuTu))
+                        {
+                            soThuTu++;                         
+                            maMoi = "NCC" + soThuTu.ToString("D2");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tạo mã tự động: " + ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+            }
+            return maMoi;
+        }
         private void btnThem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtMaNCC.Text) ||
-                string.IsNullOrWhiteSpace(cbTenNCC.Text))
+            if (string.IsNullOrWhiteSpace(cbTenNCC.Text))
             {
-                MessageBox.Show("Vui lòng nhập Mã NCC và Tên NCC!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập Tên NCC!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
-                // Kiểm tra trùng mã
-                string checkSql = "SELECT COUNT(*) FROM NHACUNGCAP WHERE MANCC = @mancc";
-                SqlCommand cmdCheck = new SqlCommand(checkSql, conn);
-                cmdCheck.Parameters.AddWithValue("@mancc", txtMaNCC.Text);
-                conn.Open();
-                int count = (int)cmdCheck.ExecuteScalar();
-                conn.Close();
+                string maMoi = TaoMaTuDong();
+                txtMaNCC.Text = maMoi; 
+                string sql = @"INSERT INTO NHACUNGCAP (MANCC, TENNCC, SDT, EMAIL, DIACHI, TRANGTHAI)
+                       VALUES (@mancc, @tenncc, @sdt, @email, @diachi, @trangthai)";
 
-                if (count > 0)
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    MessageBox.Show("Mã NCC đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    cmd.Parameters.AddWithValue("@mancc", maMoi); 
+                    cmd.Parameters.AddWithValue("@tenncc", cbTenNCC.Text);
+                    cmd.Parameters.AddWithValue("@sdt", txtHotline.Text);
+                    cmd.Parameters.AddWithValue("@email", txtEmail.Text);
+                    cmd.Parameters.AddWithValue("@diachi", txtDiaChi.Text);
+                    string trangThai = string.IsNullOrEmpty(cboTrangThai.Text) ? "Đang hợp tác" : cboTrangThai.Text;
+                    cmd.Parameters.AddWithValue("@trangthai", trangThai);
+                    cmd.ExecuteNonQuery();
                 }
 
-                string sql = @"INSERT INTO NHACUNGCAP (MANCC, TENNCC, SDT, EMAIL, DIACHI, TRANGTHAI)
-                               VALUES (@mancc, @tenncc, @sdt, @email, @diachi, @trangthai)";
+                MessageBox.Show($"Thêm nhà cung cấp thành công! Mã: {maMoi}", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@mancc", txtMaNCC.Text);
-                cmd.Parameters.AddWithValue("@tenncc", cbTenNCC.Text);
-                cmd.Parameters.AddWithValue("@sdt", txtHotline.Text);
-                cmd.Parameters.AddWithValue("@email", txtEmail.Text);
-                cmd.Parameters.AddWithValue("@diachi", txtDiaChi.Text);
-                cmd.Parameters.AddWithValue("@trangthai", cboTrangThai.Text);
-
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-
-                MessageBox.Show("Thêm nhà cung cấp thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadNhaCungCap();
                 ResetForm();
             }
             catch (Exception ex)
             {
-                conn.Close();
                 MessageBox.Show("Lỗi khi thêm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
             }
         }
         private void ResetForm()
         {
-            txtMaNCC.Clear();
+            txtMaNCC.Clear(); 
             cbTenNCC.Text = "";
             txtHotline.Clear();
             txtEmail.Clear();
             txtDiaChi.Clear();
             cboTrangThai.SelectedIndex = -1;
             txt_TimKiem.Clear();
-            txtMaNCC.Focus();
+            cbTenNCC.Focus();
             data_ncc.ClearSelection();
         }
-
         private void btnSua_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtMaNCC.Text))
@@ -223,7 +247,6 @@ namespace QuanLiBanGiay
 
             try
             {
-                // Kiểm tra ràng buộc khóa ngoại (nếu NCC đang có trong phiếu nhập thì không cho xóa)
                 string check = "SELECT COUNT(*) FROM PHIEUNHAP WHERE MANCC = @mancc";
                 SqlCommand cmdCheck = new SqlCommand(check, conn);
                 cmdCheck.Parameters.AddWithValue("@mancc", txtMaNCC.Text);
@@ -256,12 +279,10 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Lỗi khi xóa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void btn_reset_Click(object sender, EventArgs e)
         {
             ResetForm();
         }
-
         private void btnXuatExcel_Click(object sender, EventArgs e)
         {
             if (data_ncc.Rows.Count == 0)
@@ -283,22 +304,18 @@ namespace QuanLiBanGiay
                     Excel.Workbook wb = app.Workbooks.Add();
                     Excel.Worksheet ws = (Excel.Worksheet)wb.ActiveSheet;
 
-                    // Tiêu đề
+                    
                     ws.Cells[1, 1] = "DANH SÁCH NHÀ CUNG CẤP";
                     ws.Range["A1:F1"].Merge();
                     ws.Range["A1:F1"].Font.Bold = true;
                     ws.Range["A1:F1"].Font.Size = 16;
-                    ws.Range["A1:F1"].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
-
-                    // Header
+                    ws.Range["A1:F1"].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;                    
                     for (int i = 0; i < data_ncc.Columns.Count; i++)
                     {
                         ws.Cells[3, i + 1] = data_ncc.Columns[i].HeaderText;
                         ws.Cells[3, i + 1].Font.Bold = true;
                         ws.Cells[3, i + 1].Interior.Color = Color.LightGray;
                     }
-
-                    // Dữ liệu
                     for (int i = 0; i < data_ncc.Rows.Count; i++)
                     {
                         for (int j = 0; j < data_ncc.Columns.Count; j++)
@@ -306,11 +323,7 @@ namespace QuanLiBanGiay
                             ws.Cells[i + 4, j + 1] = data_ncc.Rows[i].Cells[j].Value?.ToString();
                         }
                     }
-
-                    // Auto fit cột
                     ws.Columns.AutoFit();
-
-                    // Lưu file
                     wb.SaveAs(save.FileName);
                     wb.Close();
                     app.Quit();
@@ -323,7 +336,6 @@ namespace QuanLiBanGiay
                 }
             }
         }
-
         private void btn_TimKiem_Click(object sender, EventArgs e)
         {
             LoadNhaCungCap(txt_TimKiem.Text.Trim());

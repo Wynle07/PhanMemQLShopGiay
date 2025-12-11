@@ -21,7 +21,13 @@ namespace QuanLiBanGiay
         private void Form_KhachHang_Load(object sender, EventArgs e)
         {
             LoadKH();
-         
+            txtMaKH.Enabled = false;
+
+            
+            btnLuu.Visible = true;  
+            btnLuu.Enabled = false;  
+            btnSua.Enabled = true;   
+
         }
 
         private void LoadKH()
@@ -32,18 +38,14 @@ namespace QuanLiBanGiay
                 da_kh = new SqlDataAdapter(sql, conn);
                 dt_kh = new DataTable();
                 da_kh.Fill(dt_kh);
-                dgvKhachHang.DataSource = dt_kh;
-
-                // Thiết lập header
+                dgvKhachHang.DataSource = dt_kh;               
                 dgvKhachHang.Columns["MAKH"].HeaderText = "Mã KH";
                 dgvKhachHang.Columns["TENKH"].HeaderText = "Tên khách hàng";
                 dgvKhachHang.Columns["SDT"].HeaderText = "SĐT";
                 dgvKhachHang.Columns["EMAIL"].HeaderText = "Email";
                 dgvKhachHang.Columns["DIACHI"].HeaderText = "Địa chỉ";
                 dgvKhachHang.Columns["DIEMTICHLUY"].HeaderText = "Điểm TL";
-                dgvKhachHang.Columns["NGAYTAO"].HeaderText = "Ngày tạo";
-
-                // Nếu có dữ liệu thì hiển thị dòng đầu tiên
+                dgvKhachHang.Columns["NGAYTAO"].HeaderText = "Ngày tạo";              
                 if (dt_kh.Rows.Count > 0)
                 {
                     dgvKhachHang.ClearSelection();
@@ -61,7 +63,6 @@ namespace QuanLiBanGiay
         {
             if (index < 0 || index >= dgvKhachHang.Rows.Count)
                 return;
-
             DataGridViewRow row = dgvKhachHang.Rows[index];
             txtMaKH.Text = row.Cells["MAKH"].Value?.ToString() ?? "";
             txtTenKH.Text = row.Cells["TENKH"].Value?.ToString() ?? "";
@@ -69,7 +70,6 @@ namespace QuanLiBanGiay
             txtEmail.Text = row.Cells["EMAIL"].Value?.ToString() ?? "";
             txtDiaChi.Text = row.Cells["DIACHI"].Value?.ToString() ?? "";
             txtDiemTL.Text = row.Cells["DIEMTICHLUY"].Value?.ToString() ?? "";
-
             if (DateTime.TryParse(row.Cells["NGAYTAO"].Value?.ToString(), out DateTime ngay))
                 dtpNgayTao.Value = ngay;
             else
@@ -81,32 +81,58 @@ namespace QuanLiBanGiay
             if (e.RowIndex >= 0)
                 ShowCurrentRowToTextbox(e.RowIndex);
         }
+        private string TaoMaKHTuDong()
+        {
+            string maMoi = "KH001"; 
+            try
+            {               
+                string query = "SELECT TOP 1 MAKH FROM KHACHHANG WHERE MAKH LIKE 'KH%' ORDER BY LEN(MAKH) DESC, MAKH DESC";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (conn.State == ConnectionState.Open) conn.Close();
+                    if (result != null)
+                    {
+                        string maCu = result.ToString(); 
+                        string phanSo = maCu.Substring(2);
+                        if (int.TryParse(phanSo, out int soThuTu))
+                        {
+                            soThuTu++;                          
+                            maMoi = "KH" + soThuTu.ToString("D3");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tạo mã tự động: " + ex.Message);
+            }
+            return maMoi;
+        }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
             try
             {
-                string makh = txtMaKH.Text.Trim();
+                string makh = TaoMaKHTuDong();
+                txtMaKH.Text = makh;
                 string tenkh = txtTenKH.Text.Trim();
                 string sdt = txtSDT.Text.Trim();
                 string email = txtEmail.Text.Trim();
                 string diachi = txtDiaChi.Text.Trim();
                 string diemText = txtDiemTL.Text.Trim();
-
-                if (string.IsNullOrEmpty(makh) || string.IsNullOrEmpty(tenkh) ||
+                if (string.IsNullOrEmpty(tenkh) ||
                     string.IsNullOrEmpty(sdt) || string.IsNullOrEmpty(email))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                     return;
                 }
-
                 if (!int.TryParse(diemText, out int diemTL) || diemTL < 0)
                 {
                     MessageBox.Show("Điểm tích lũy không hợp lệ!");
                     return;
-                }
-
-                // Kiểm tra trùng mã
+                }                
                 using (SqlCommand check = new SqlCommand("SELECT COUNT(*) FROM KHACHHANG WHERE MAKH=@ma", conn))
                 {
                     check.Parameters.AddWithValue("@ma", makh);
@@ -118,9 +144,7 @@ namespace QuanLiBanGiay
                         MessageBox.Show("Mã khách hàng đã tồn tại!");
                         return;
                     }
-                }
-
-                // Thêm mới
+                }                
                 string sql = @"INSERT INTO KHACHHANG(MAKH, TENKH, SDT, EMAIL, DIACHI, DIEMTICHLUY, NGAYTAO)
                                VALUES(@MAKH, @TENKH, @SDT, @EMAIL, @DIACHI, @DIEMTICHLUY, @NGAYTAO)";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -137,14 +161,12 @@ namespace QuanLiBanGiay
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
-
-                LoadKH();
-                // Focus lại vào dòng vừa thêm
+                LoadKH();                
                 int newIndex = dgvKhachHang.Rows.Count - 1;
                 dgvKhachHang.ClearSelection();
                 dgvKhachHang.Rows[newIndex].Selected = true;
                 ShowCurrentRowToTextbox(newIndex);
-
+                
                 MessageBox.Show("✅ Thêm khách hàng thành công!");
             }
             catch (Exception ex)
@@ -156,29 +178,22 @@ namespace QuanLiBanGiay
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if (dgvKhachHang.SelectedRows.Count == 0)
+            string maKH = txtMaKH.Text.Trim();
+            if (string.IsNullOrEmpty(maKH))
             {
                 MessageBox.Show("Vui lòng chọn khách hàng để sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            }
-
-            // Cho phép sửa các textbox
+            }            
             txtTenKH.ReadOnly = false;
             txtSDT.ReadOnly = false;
             txtEmail.ReadOnly = false;
             txtDiaChi.ReadOnly = false;
             txtDiemTL.ReadOnly = false;
-            dtpNgayTao.Enabled = true;
-
-            // Hiện nút Lưu
-            btnLuu.Visible = true;
-            btnLuu.Enabled = true;
-
-            // Ẩn nút Sửa để tránh nhấn lại
-            btnSua.Enabled = false;
+            dtpNgayTao.Enabled = true;            
+            btnLuu.Enabled = true;   
+            btnSua.Enabled = false;  
+            txtTenKH.Focus();
         }
-
-
         private void btnXoa_Click(object sender, EventArgs e)
         {
             try
@@ -270,35 +285,25 @@ namespace QuanLiBanGiay
                 {
                     MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
-                }
-
-                // Mở Excel
+                }                
                 Excel.Application app = new Excel.Application();
                 app.Visible = false;
                 Excel.Workbook wb = app.Workbooks.Add(Type.Missing);
                 Excel.Worksheet ws = wb.ActiveSheet;
-                ws.Name = "Danh sách khách hàng";
-
-                // Ghi tiêu đề cột
+                ws.Name = "Danh sách khách hàng";               
                 for (int i = 0; i < dgvKhachHang.Columns.Count; i++)
                 {
                     ws.Cells[1, i + 1] = dgvKhachHang.Columns[i].HeaderText;
                     ws.Cells[1, i + 1].Font.Bold = true;
-                }
-
-                // Ghi dữ liệu
+                }               
                 for (int i = 0; i < dgvKhachHang.Rows.Count; i++)
                 {
                     for (int j = 0; j < dgvKhachHang.Columns.Count; j++)
                     {
                         ws.Cells[i + 2, j + 1] = dgvKhachHang.Rows[i].Cells[j].Value?.ToString() ?? "";
                     }
-                }
-
-                // Tự động chỉnh độ rộng
-                ws.Columns.AutoFit();
-
-                // Chọn nơi lưu
+                }               
+                ws.Columns.AutoFit();               
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.Filter = "Excel File (*.xlsx)|*.xlsx";
                 sfd.FileName = "DanhSachKhachHang.xlsx";
@@ -352,8 +357,6 @@ namespace QuanLiBanGiay
 
             txtMaKH.Focus();
         }
-
-
         private void dgvKhachHang_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
@@ -413,21 +416,16 @@ namespace QuanLiBanGiay
                     conn.Close();
                 }
 
-                MessageBox.Show("✅ Cập nhật thành công!");
-
-                // Load lại dữ liệu
-                LoadKH();
-
-                // Reset giao diện
-                txtTenKH.ReadOnly = true;
-                txtSDT.ReadOnly = true;
-                txtEmail.ReadOnly = true;
-                txtDiaChi.ReadOnly = true;
-                txtDiemTL.ReadOnly = true;
-                dtpNgayTao.Enabled = false;
-
-                btnLuu.Visible = false;
-                btnSua.Enabled = true;
+                MessageBox.Show("✅ Cập nhật thành công!");               
+                LoadKH();                
+                txtTenKH.ReadOnly =false;
+                txtSDT.ReadOnly = false;
+                txtEmail.ReadOnly = false;
+                txtDiaChi.ReadOnly = false;
+                txtDiemTL.Enabled = true;
+                dtpNgayTao.Enabled = true;             
+                btnLuu.Enabled = false; 
+                btnSua.Enabled = true;  
             }
             catch (Exception ex)
             {
