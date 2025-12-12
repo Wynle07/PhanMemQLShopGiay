@@ -26,42 +26,80 @@ namespace QuanLiBanGiay
         private void LoadHoaDon()
         {
             string maHD = txtTimkiem.Text.Trim();
-
             string query = @"
-                SELECT 
-                    hd.MAHD,
-                    hd.NGAYLAP,
-                    nv.TENNV AS NhanVien,
-                    kh.TENKH AS KhachHang,
-                    hd.TONGTIEN
-                FROM HOADON hd
-                LEFT JOIN NHANVIEN nv ON hd.MANV = nv.MANV
-                LEFT JOIN KHACHHANG kh ON hd.MAKH = kh.MAKH
-                WHERE (@MaHD IS NULL OR @MaHD = '' OR hd.MAHD LIKE '%' + @MaHD + '%')
-                ORDER BY hd.NGAYLAP DESC";
-
+        SELECT 
+            hd.MAHD,
+            hd.NGAYLAP,
+            nv.TENNV AS NhanVien,
+            kh.TENKH AS KhachHang,
+            hd.TONGTIEN
+        FROM HOADON hd
+        LEFT JOIN NHANVIEN nv ON hd.MANV = nv.MANV
+        LEFT JOIN KHACHHANG kh ON hd.MAKH = kh.MAKH
+        WHERE 1=1 ";
+            if (string.IsNullOrEmpty(maHD))
+            {
+                if (rdoTheoNgay.Checked)
+                {
+                    query += " AND DAY(hd.NGAYLAP) = @Day AND MONTH(hd.NGAYLAP) = @Month AND YEAR(hd.NGAYLAP) = @Year";
+                }
+                else if (rdoTheoThang.Checked)
+                {
+                    query += " AND MONTH(hd.NGAYLAP) = @Month AND YEAR(hd.NGAYLAP) = @Year";
+                }
+                else if (rdoKhoangTG.Checked)
+                {
+                    query += " AND hd.NGAYLAP BETWEEN @FromDate AND @ToDate";
+                }
+            }
+            else
+            {
+                query += " AND hd.MAHD LIKE '%' + @MaHD + '%'";
+            }
+            query += " ORDER BY hd.NGAYLAP DESC";
             try
             {
                 using (SqlConnection conn = DBConnection.GetConnection())
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@MaHD", string.IsNullOrEmpty(maHD) ? (object)DBNull.Value : maHD);
-
+                    if (!string.IsNullOrEmpty(maHD))
+                    {
+                        cmd.Parameters.AddWithValue("@MaHD", maHD);
+                    }
+                    if (string.IsNullOrEmpty(maHD))
+                    {
+                        if (rdoTheoNgay.Checked)
+                        {
+                            DateTime d = dtpNgay.Value;
+                            cmd.Parameters.AddWithValue("@Day", d.Day);
+                            cmd.Parameters.AddWithValue("@Month", d.Month);
+                            cmd.Parameters.AddWithValue("@Year", d.Year);
+                        }
+                        else if (rdoTheoThang.Checked)
+                        {
+                            if (string.IsNullOrEmpty(txtNam.Text)) { MessageBox.Show("Vui lòng nhập năm!"); return; }
+                            cmd.Parameters.AddWithValue("@Month", cboThang.Text);
+                            cmd.Parameters.AddWithValue("@Year", txtNam.Text.Trim());
+                        }
+                        else if (rdoKhoangTG.Checked)
+                        {
+                            DateTime tuNgay = dtpTuNgay.Value.Date;
+                            DateTime denNgay = dtpDenNgay.Value.Date.AddDays(1).AddSeconds(-1);
+                            cmd.Parameters.AddWithValue("@FromDate", tuNgay);
+                            cmd.Parameters.AddWithValue("@ToDate", denNgay);
+                        }
+                    }
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     conn.Open();
                     da.Fill(dt);
-
-                    dgvSanPham.DataSource = dt; // giả sử DataGridView tên là dgvHoaDon
-
-                    // Tính tổng doanh thu
+                    dgvSanPham.DataSource = dt;
                     double tong = 0;
                     foreach (DataRow row in dt.Rows)
                     {
                         if (double.TryParse(row["TONGTIEN"].ToString(), out double tien))
                             tong += tien;
                     }
-
                     lblTongTien.Text = tong.ToString("N0") + " VNĐ";
 
                     FormatGrid();
@@ -69,7 +107,7 @@ namespace QuanLiBanGiay
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void FormatGrid()
@@ -83,10 +121,23 @@ namespace QuanLiBanGiay
             dgvSanPham.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvSanPham.RowHeadersVisible = false;
         }
-
+        private void LoadDataComboBox()
+        {
+            cboThang.Items.Clear();
+            for (int i = 1; i <= 12; i++)
+            {
+                cboThang.Items.Add(i.ToString());
+            }
+            cboThang.SelectedIndex = DateTime.Now.Month - 1;
+            txtNam.Text = DateTime.Now.Year.ToString();
+        }
         private void Form_ThongKe_Load(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
+            LoadDataComboBox();
+            rdoTheoNgay.Checked = true;
+            dtpNgay.Value = DateTime.Now;
+            UpdateInputState();
             LoadHoaDon();
             LoadTop5SanPham();
         }
@@ -95,81 +146,75 @@ namespace QuanLiBanGiay
         {
             LoadHoaDon();
         }
+        private void UpdateInputState()
+        {
 
+            dtpNgay.Enabled = rdoTheoNgay.Checked;
+
+
+            cboThang.Enabled = rdoTheoThang.Checked;
+            txtNam.Enabled = rdoTheoThang.Checked;
+
+
+            dtpTuNgay.Enabled = rdoKhoangTG.Checked;
+            dtpDenNgay.Enabled = rdoKhoangTG.Checked;
+        }
         private void LoadTop5SanPham()
         {
+            
             string query = @"
         SELECT TOP 5 
             g.TENGIAY,
             SUM(ct.SOLUONG) AS SoLuongBan
         FROM CTHOADON ct
+        JOIN HOADON hd ON ct.MAHD = hd.MAHD  -- Cần Join thêm bảng Hóa Đơn để lấy ngày
         JOIN GIAY g ON ct.MAGIAY = g.MAGIAY
-        GROUP BY g.TENGIAY
-        ORDER BY SUM(ct.SOLUONG) DESC";
+        WHERE 1=1 ";
+
+            if (rdoTheoNgay.Checked)
+                query += " AND DAY(hd.NGAYLAP) = @Day AND MONTH(hd.NGAYLAP) = @Month AND YEAR(hd.NGAYLAP) = @Year";
+            else if (rdoTheoThang.Checked)
+                query += " AND MONTH(hd.NGAYLAP) = @Month AND YEAR(hd.NGAYLAP) = @Year";
+            else if (rdoKhoangTG.Checked)
+                query += " AND hd.NGAYLAP BETWEEN @FromDate AND @ToDate";
+
+            query += " GROUP BY g.TENGIAY ORDER BY SUM(ct.SOLUONG) DESC";
 
             try
             {
                 using (SqlConnection conn = DBConnection.GetConnection())
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
+                    if (rdoTheoNgay.Checked)
+                    {
+                        DateTime d = dtpNgay.Value;
+                        cmd.Parameters.AddWithValue("@Day", d.Day);
+                        cmd.Parameters.AddWithValue("@Month", d.Month);
+                        cmd.Parameters.AddWithValue("@Year", d.Year);
+                    }
+                    else if (rdoTheoThang.Checked)
+                    {
+                        if (string.IsNullOrEmpty(txtNam.Text)) return;
+                        cmd.Parameters.AddWithValue("@Month", cboThang.Text);
+                        cmd.Parameters.AddWithValue("@Year", txtNam.Text.Trim());
+                    }
+                    else if (rdoKhoangTG.Checked)
+                    {
+                        DateTime tuNgay = dtpTuNgay.Value.Date;
+                        DateTime denNgay = dtpDenNgay.Value.Date.AddDays(1).AddSeconds(-1);
+                        cmd.Parameters.AddWithValue("@FromDate", tuNgay);
+                        cmd.Parameters.AddWithValue("@ToDate", denNgay);
+                    }
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     conn.Open();
                     da.Fill(dt);
-
-                    // Thêm cột STT
                     dt.Columns.Add("STT", typeof(int));
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        dt.Rows[i]["STT"] = i + 1;
-                    }
-
-                    // Gán dữ liệu
+                    for (int i = 0; i < dt.Rows.Count; i++) dt.Rows[i]["STT"] = i + 1;
                     data_top5sp.DataSource = dt;
-
-                    // SẮP XẾP CỘT: STT | TÊN GIÀY | SỐ LƯỢNG
-                    data_top5sp.Columns["STT"].DisplayIndex = 0;
-                    data_top5sp.Columns["TENGIAY"].DisplayIndex = 1;
-                    data_top5sp.Columns["SoLuongBan"].DisplayIndex = 2;
-
-                    // ĐỔI TIÊU ĐỀ
-                    data_top5sp.Columns["STT"].HeaderText = "Top";
-                    data_top5sp.Columns["TENGIAY"].HeaderText = "Tên sản phẩm";
-                    data_top5sp.Columns["SoLuongBan"].HeaderText = "Số lượng";
-
-                    // ẨN CỘT KHÔNG CẦN
-                    // (không ẩn TENGIAY nữa)
-
-                    // ĐỊNH DẠNG
-                    data_top5sp.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                    data_top5sp.RowHeadersVisible = false;
-                    data_top5sp.AllowUserToAddRows = false;
-                    data_top5sp.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                    data_top5sp.DefaultCellStyle.Font = new Font("Segoe UI", 10);
-                    data_top5sp.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-                    data_top5sp.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    // TÔ MÀU TOP 1,2,3
-                    foreach (DataGridViewRow row in data_top5sp.Rows)
-                    {
-                        int stt = Convert.ToInt32(row.Cells["STT"].Value);
-                        switch (stt)
-                        {
-                            case 1: row.DefaultCellStyle.BackColor = Color.Gold; row.DefaultCellStyle.ForeColor = Color.Black; break;
-                            case 2: row.DefaultCellStyle.BackColor = Color.Silver; break;
-                            case 3: row.DefaultCellStyle.BackColor = Color.FromArgb(205, 127, 50); break;
-                        }
-                    }
-
-                    // Căn giữa cột Top và Số lượng
-                    data_top5sp.Columns["STT"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    data_top5sp.Columns["SoLuongBan"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi Top 5: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Lỗi Top 5: " + ex.Message); }
         }
 
         private void btnTimKiem_Click(object sender, EventArgs e)
@@ -278,6 +323,27 @@ namespace QuanLiBanGiay
         private void lblTongDT_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void rdoTheoNgay_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateInputState();
+        }
+
+        private void rdoTheoThang_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateInputState();
+        }
+
+        private void rdoKhoangTG_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateInputState();
+        }
+
+        private void btnXem_Click(object sender, EventArgs e)
+        {
+            LoadHoaDon();
+            LoadTop5SanPham();
         }
     }
 }
