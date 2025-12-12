@@ -59,7 +59,7 @@ namespace QuanLiBanGiay
                 da_ncc.Fill(ds_NCC, "NHACUNGCAP");
                 data_ncc.DataSource = ds_NCC.Tables["NHACUNGCAP"];
 
-                // Tiêu đề cột
+                
                 data_ncc.Columns["MANCC"].HeaderText = "Mã NCC";
                 data_ncc.Columns["TENNCC"].HeaderText = "Tên NCC";
                 data_ncc.Columns["Hotline"].HeaderText = "Hotline";
@@ -145,7 +145,19 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Vui lòng nhập Tên NCC!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            if (!Validator.KiemTraSDT(txtHotline.Text))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ (Phải bắt đầu bằng 0 và có 10 số)!",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtHotline.Focus();
+                return;
+            }
+            if (!Validator.KiemTraEmail(txtEmail.Text))
+            {
+                MessageBox.Show("Email không đúng định dạng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return;
+            }
             try
             {
                 string maMoi = TaoMaTuDong();
@@ -200,7 +212,18 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Vui lòng chọn nhà cung cấp cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            if (!Validator.KiemTraSDT(txtHotline.Text))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtHotline.Focus();
+                return;
+            }
+            if (!Validator.KiemTraEmail(txtEmail.Text))
+            {
+                MessageBox.Show("Email không đúng định dạng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return;
+            }
             try
             {
                 string sql = @"UPDATE NHACUNGCAP 

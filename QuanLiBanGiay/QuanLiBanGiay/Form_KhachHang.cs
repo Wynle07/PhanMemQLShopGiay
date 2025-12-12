@@ -128,6 +128,18 @@ namespace QuanLiBanGiay
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                     return;
                 }
+                if (!Validator.KiemTraSDT(sdt))
+                {
+                    MessageBox.Show("Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSDT.Focus();
+                    return;
+                }
+                if (!Validator.KiemTraEmail(email))
+                {
+                    MessageBox.Show("Email không đúng định dạng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEmail.Focus();
+                    return;
+                }
                 if (!int.TryParse(diemText, out int diemTL) || diemTL < 0)
                 {
                     MessageBox.Show("Điểm tích lũy không hợp lệ!");
@@ -179,11 +191,29 @@ namespace QuanLiBanGiay
         private void btnSua_Click(object sender, EventArgs e)
         {
             string maKH = txtMaKH.Text.Trim();
+            string tenkh = txtTenKH.Text.Trim();
+            string sdt = txtSDT.Text.Trim();      
+            string email = txtEmail.Text.Trim();  
+            string diachi = txtDiaChi.Text.Trim();
+            string diemText = txtDiemTL.Text.Trim();
             if (string.IsNullOrEmpty(maKH))
             {
                 MessageBox.Show("Vui lòng chọn khách hàng để sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            }            
+            }
+            if (!Validator.KiemTraSDT(sdt))
+            {
+                MessageBox.Show("Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSDT.Focus();
+                return;
+            }
+
+            if (!Validator.KiemTraEmail(email))
+            {
+                MessageBox.Show("Email không đúng định dạng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return;
+            }
             txtTenKH.ReadOnly = false;
             txtSDT.ReadOnly = false;
             txtEmail.ReadOnly = false;

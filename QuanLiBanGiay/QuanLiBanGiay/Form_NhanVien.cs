@@ -366,6 +366,16 @@ namespace QuanLiBanGiay
         }
         private void btnLuu_Click(object sender, EventArgs e)
         {
+            string sdt = txtSDT.Text.Trim();
+
+            
+            if (!Validator.KiemTraSDT(sdt))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ (Phải bắt đầu bằng số 0 và có 10 số)!",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSDT.Focus();
+                return; 
+            }
             if (isAdding)
             {
                 if (string.IsNullOrEmpty(txtMaNV.Text))

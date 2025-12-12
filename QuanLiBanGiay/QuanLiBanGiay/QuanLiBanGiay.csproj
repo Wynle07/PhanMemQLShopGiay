@@ -159,6 +159,7 @@
     <Compile Include="Form_TaoHoaDon.Designer.cs">
       <DependentUpon>Form_TaoHoaDon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Validator.cs" />
     <EmbeddedResource Include="Form_KhachHang.resx">
       <DependentUpon>Form_KhachHang.cs</DependentUpon>
     </EmbeddedResource>
