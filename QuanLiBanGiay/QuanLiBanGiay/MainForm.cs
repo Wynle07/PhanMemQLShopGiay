@@ -27,49 +27,49 @@ namespace QuanLiBanGiay
         {
             string vaiTro = global::QuanLiBanGiay.SessionContext.VaiTro;
 
-            //Mặc định vô hiệu hóa tất cả các nút quản lý (Trang chủ và Đăng xuất luôn được bật)
-            btnSanPham.Enabled = false;
-            btnNhaCungCap.Enabled = false;
-            btnTaoDonHang.Enabled = false;
-            btnNhanVien.Enabled = false;
-            btnThongKe.Enabled = false;
-            btnKhuyenMai.Enabled = false;
-            btnNhapHang.Enabled = false;
+            // 1) ẨN TẤT CẢ TRƯỚC
+            btnSanPham.Visible = false;
+            btnNhaCungCap.Visible = false;
+            btnTaoDonHang.Visible = false;
+            btnNhanVien.Visible = false;
+            btnThongKe.Visible = false;
+            btnKhuyenMai.Visible = false;   // ẨN MẶC ĐỊNH
+            btnNhapHang.Visible = false;
 
-            //Bật lại các nút dựa trên vai trò
+            // 2) BẬT THEO VAI TRÒ
             switch (vaiTro)
             {
                 case "Admin":
-                    // Tất cả
-                    btnSanPham.Enabled = true;
-                    btnNhaCungCap.Enabled = true;
-                    btnTaoDonHang.Enabled = true;
-                    btnNhanVien.Enabled = true;
-                    btnThongKe.Enabled = true;
-                    btnKhuyenMai.Enabled = true;
-                    btnNhapHang.Enabled = true;
+                    // Admin thấy tất cả
+                    btnSanPham.Visible = true;
+                    btnNhaCungCap.Visible = true;
+                    btnTaoDonHang.Visible = true;
+                    btnNhanVien.Visible = true;
+                    btnThongKe.Visible = true;
+                    btnKhuyenMai.Visible = true;   // Chỉ Admin thấy Khuyến mãi
+                    btnNhapHang.Visible = true;
                     break;
 
                 case "Thu ngân":
-                    // Thu ngân chỉ bật các chức năng bán hàng
-                    btnSanPham.Enabled = true;   
-                    btnTaoDonHang.Enabled = true;
-                    btnKhuyenMai.Enabled = true; 
+                    btnSanPham.Visible = true;
+                    btnTaoDonHang.Visible = true;
+                    // Khuyến mãi bị ẩn cho Thu ngân
                     break;
 
                 case "Quản lý kho":
-                    // Quản lý kho chỉ bật các chức năng kho
-                    btnSanPham.Enabled = true;    
-                    btnNhaCungCap.Enabled = true;  
-                    btnNhapHang.Enabled = true;    
+                    btnSanPham.Visible = true;
+                    btnNhaCungCap.Visible = true;
+                    btnNhapHang.Visible = true;
+                    // Khuyến mãi bị ẩn cho kho
                     break;
 
                 default:
-                    // Nếu vai trò không xác định, vô hiệu hóa tất cả
-                    MessageBox.Show("Vai trò không hợp lệ. Vui lòng đăng nhập lại.", "Lỗi phân quyền", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Vai trò không hợp lệ.", "Lỗi phân quyền");
                     break;
             }
         }
+
+
         private void CapNhatDongHo()
         {
             DateTime now = DateTime.Now;

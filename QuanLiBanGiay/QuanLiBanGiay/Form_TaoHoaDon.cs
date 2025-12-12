@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -25,6 +26,7 @@ namespace QuanLiBanGiay
             LoadNhanVien();
             LoadKhuyenMai();
             TaoBangSanPham();
+            txtMaDH.Text = SinhMaHoaDonTuDong();
         }
 
         // ===== Load khách hàng =====
@@ -43,6 +45,69 @@ namespace QuanLiBanGiay
                 cboMaKH.SelectedIndex = -1;
             }
         }
+        private string SinhMaHoaDonTuDong()
+        {
+            string maHD = "HD001"; // Nếu chưa có hóa đơn nào
+
+            try
+            {
+                using (SqlConnection conn = DBConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    string sql = "SELECT TOP 1 MAHD FROM HOADON ORDER BY TRY_CAST(SUBSTRING(MAHD, 3, 10) AS INT) DESC";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    object result = cmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        string lastID = result.ToString().Trim(); // Ví dụ: HD041
+
+                        // Tìm tất cả số trong chuỗi (011, 41, ...)
+                        Match m = Regex.Match(lastID, @"\d+");
+
+                        int number = 0;
+                        if (m.Success)
+                            number = int.Parse(m.Value);
+
+                        number++; // tăng số
+
+                        maHD = "HD" + number.ToString("D3"); // HD001, HD002...
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi sinh mã hóa đơn: " + ex.Message);
+            }
+
+            return maHD;
+        }
+        private void CongDiemTichLuy(string makh, int soLuong)
+        {
+            try
+            {
+                using (SqlConnection conn = DBConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    int diemCong = soLuong * 5;   // Mỗi sản phẩm = 5 điểm
+
+                    string sql = "UPDATE KHACHHANG SET DIEMTICHLUY = DIEMTICHLUY + @diem WHERE MAKH = @makh";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+
+                    cmd.Parameters.AddWithValue("@diem", diemCong);
+                    cmd.Parameters.AddWithValue("@makh", makh);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi cập nhật điểm tích lũy: " + ex.Message);
+            }
+        }
+
 
         private void cboMaKH_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -401,6 +466,8 @@ namespace QuanLiBanGiay
             txtMaLoai.Clear();
             txtSoLuongMua.Clear();
             txtMaDH.Clear();
+            txtMaDH.Text = SinhMaHoaDonTuDong();
+
 
             // Reset bảng sản phẩm nhưng GIỮ BINDING
             dtSanPham.Rows.Clear();
