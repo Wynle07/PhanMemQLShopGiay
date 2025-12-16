@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_NhaCungCap));
             this.grpDanhSach = new System.Windows.Forms.GroupBox();
             this.data_ncc = new System.Windows.Forms.DataGridView();
             this.btn_TimKiem = new System.Windows.Forms.Button();
@@ -50,6 +51,7 @@
             this.cboTrangThai = new System.Windows.Forms.ComboBox();
             this.lblTrangThai = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnLuu = new System.Windows.Forms.Button();
             this.grpDanhSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_ncc)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -111,7 +113,7 @@
             this.btn_reset.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btn_reset.Image = global::QuanLiBanGiay.Properties.Resources.icons8_refresh_16;
             this.btn_reset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_reset.Location = new System.Drawing.Point(361, 13);
+            this.btn_reset.Location = new System.Drawing.Point(476, 13);
             this.btn_reset.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_reset.Name = "btn_reset";
             this.btn_reset.Size = new System.Drawing.Size(150, 54);
@@ -252,7 +254,7 @@
             this.btnXuatExcel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnXuatExcel.Image = global::QuanLiBanGiay.Properties.Resources.save1;
             this.btnXuatExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnXuatExcel.Location = new System.Drawing.Point(517, 13);
+            this.btnXuatExcel.Location = new System.Drawing.Point(641, 13);
             this.btnXuatExcel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnXuatExcel.Name = "btnXuatExcel";
             this.btnXuatExcel.Size = new System.Drawing.Size(150, 54);
@@ -324,11 +326,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin nhà cung cấp";
             // 
+            // btnLuu
+            // 
+            this.btnLuu.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnLuu.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuu.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnLuu.Image = ((System.Drawing.Image)(resources.GetObject("btnLuu.Image")));
+            this.btnLuu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLuu.Location = new System.Drawing.Point(368, 15);
+            this.btnLuu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnLuu.Name = "btnLuu";
+            this.btnLuu.Size = new System.Drawing.Size(92, 52);
+            this.btnLuu.TabIndex = 94;
+            this.btnLuu.Text = "Lưu";
+            this.btnLuu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLuu.UseVisualStyleBackColor = false;
+            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
+            // 
             // Form_NhaCungCap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1276, 770);
+            this.Controls.Add(this.btnLuu);
             this.Controls.Add(this.btnThem);
             this.Controls.Add(this.btnXuatExcel);
             this.Controls.Add(this.groupBox1);
@@ -373,5 +393,6 @@
         private System.Windows.Forms.ComboBox cboTrangThai;
         private System.Windows.Forms.Label lblTrangThai;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnLuu;
     }
 }
