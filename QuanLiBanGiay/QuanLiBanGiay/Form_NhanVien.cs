@@ -75,10 +75,10 @@ namespace QuanLiBanGiay
             txtMaNV.Enabled = enabled;
             txtTenNV.Enabled = enabled;
             cbGioiTinh.Enabled = enabled;
-            textNgaySinh.Enabled = enabled;
+            dtNgaySinh.Enabled = enabled;
             txtSDT.Enabled = enabled;
             txtDiaChi.Enabled = enabled;
-            txtNgayVaoLam.Enabled = enabled;
+            dtNgayVaoLam.Enabled = enabled;
             txtTaiKhoan.Enabled = enabled;
             txtMatKhau.Enabled = enabled;
             cboVaiTro.Enabled = enabled;
@@ -149,16 +149,16 @@ namespace QuanLiBanGiay
                 {
                     if (DateTime.TryParse(row.Cells["NGAYSINH"].Value.ToString(), out DateTime ngaySinh))
                     {
-                        textNgaySinh.Text = ngaySinh.ToString("dd/MM/yyyy");
+                        dtNgaySinh.Text = ngaySinh.ToString("dd/MM/yyyy");
                     }
                     else
                     {
-                        textNgaySinh.Text = row.Cells["NGAYSINH"].Value?.ToString();
+                        dtNgaySinh.Text = row.Cells["NGAYSINH"].Value?.ToString();
                     }
                 }
                 else
                 {
-                    textNgaySinh.Text = "";
+                    dtNgaySinh.Text = "";
                 }
 
                 txtSDT.Text = row.Cells["SDT"].Value?.ToString();
@@ -167,16 +167,16 @@ namespace QuanLiBanGiay
                 {
                     if (DateTime.TryParse(row.Cells["NGAYVAOLAM"].Value.ToString(), out DateTime ngayVaoLam))
                     {
-                        txtNgayVaoLam.Text = ngayVaoLam.ToString("dd/MM/yyyy");
+                        dtNgayVaoLam.Text = ngayVaoLam.ToString("dd/MM/yyyy");
                     }
                     else
                     {
-                        txtNgayVaoLam.Text = row.Cells["NGAYVAOLAM"].Value?.ToString();
+                        dtNgayVaoLam.Text = row.Cells["NGAYVAOLAM"].Value?.ToString();
                     }
                 }
                 else
                 {
-                    txtNgayVaoLam.Text = "";
+                    dtNgayVaoLam.Text = "";
                 }
                 SetInputsEnabled(false);
                 btnSua.Enabled = true;
@@ -191,10 +191,8 @@ namespace QuanLiBanGiay
             txtMaNV.Clear();
             txtTenNV.Clear();
             cbGioiTinh.SelectedIndex = -1;
-            textNgaySinh.Clear();
             txtSDT.Clear();
             txtDiaChi.Clear();
-            txtNgayVaoLam.Clear();
             txtTaiKhoan.Clear();
             txtMatKhau.Clear();
             cboVaiTro.SelectedIndex = -1;
@@ -232,17 +230,6 @@ namespace QuanLiBanGiay
                 return false;
             }
 
-
-            if (!string.IsNullOrWhiteSpace(textNgaySinh.Text))
-            {
-                if (!DateTime.TryParseExact(textNgaySinh.Text.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))
-                {
-                    MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng dd/MM/yyyy.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    textNgaySinh.Focus();
-                    return false;
-                }
-                parsedNgaySinh = dt;
-            }
 
             return true;
         }
@@ -293,10 +280,9 @@ namespace QuanLiBanGiay
             txtMaNV.Clear();
             txtTenNV.Clear();
             cbGioiTinh.SelectedIndex = -1;
-            textNgaySinh.Clear();
             txtSDT.Clear();
             txtDiaChi.Clear();
-            txtNgayVaoLam.Text = DateTime.Now.ToString("dd/MM/yyyy"); 
+            dtNgayVaoLam.Text = DateTime.Now.ToString("dd/MM/yyyy"); 
             txtTaiKhoan.Clear();
             txtMatKhau.Clear();
             cboVaiTro.SelectedIndex = -1;
@@ -389,9 +375,9 @@ namespace QuanLiBanGiay
                         return;
                     }
                     DateTime ngayVaoLam = DateTime.Now;
-                    if (!string.IsNullOrWhiteSpace(txtNgayVaoLam.Text))
+                    if (!string.IsNullOrWhiteSpace(dtNgayVaoLam.Text))
                     {
-                        if (!DateTime.TryParseExact(txtNgayVaoLam.Text.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime tmpNgayVao))
+                        if (!DateTime.TryParseExact(dtNgayVaoLam.Text.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime tmpNgayVao))
                         {
                             tmpNgayVao = DateTime.Now;
                         }
