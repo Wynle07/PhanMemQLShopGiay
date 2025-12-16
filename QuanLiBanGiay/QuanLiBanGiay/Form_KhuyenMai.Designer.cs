@@ -53,6 +53,7 @@
             this.btnThem = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
+            this.btnLuu = new System.Windows.Forms.Button();
             this.grpDanhSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_KM)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -276,7 +277,7 @@
             this.btnReset.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnReset.Image = global::QuanLiBanGiay.Properties.Resources.icons8_refresh_16;
             this.btnReset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReset.Location = new System.Drawing.Point(358, 13);
+            this.btnReset.Location = new System.Drawing.Point(504, 13);
             this.btnReset.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(138, 49);
@@ -327,7 +328,7 @@
             this.btnXoa.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnXoa.Image = global::QuanLiBanGiay.Properties.Resources.substract_icon;
             this.btnXoa.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnXoa.Location = new System.Drawing.Point(249, 13);
+            this.btnXoa.Location = new System.Drawing.Point(265, 13);
             this.btnXoa.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(103, 49);
@@ -337,11 +338,29 @@
             this.btnXoa.UseVisualStyleBackColor = false;
             this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click_1);
             // 
+            // btnLuu
+            // 
+            this.btnLuu.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnLuu.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuu.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnLuu.Image = ((System.Drawing.Image)(resources.GetObject("btnLuu.Image")));
+            this.btnLuu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLuu.Location = new System.Drawing.Point(388, 13);
+            this.btnLuu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnLuu.Name = "btnLuu";
+            this.btnLuu.Size = new System.Drawing.Size(92, 52);
+            this.btnLuu.TabIndex = 94;
+            this.btnLuu.Text = "Lưu";
+            this.btnLuu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLuu.UseVisualStyleBackColor = false;
+            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
+            // 
             // Form_KhuyenMai
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1276, 770);
+            this.Controls.Add(this.btnLuu);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnThem);
             this.Controls.Add(this.btnSua);
@@ -386,5 +405,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clNgayKetThuc;
         private System.Windows.Forms.DataGridViewTextBoxColumn clGiamGia;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnLuu;
     }
 }

@@ -29,26 +29,32 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_SanPham));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.clMaSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clTH = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clTenSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clLoaiSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clMaNCC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clKichCo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clMauSac = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clSlton = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpDanhSach = new System.Windows.Forms.GroupBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.thêmSảnPhẩmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xóaSảnPhẩmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sửaSảnPhẩmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.inHóaĐơnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refeshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTenKM = new System.Windows.Forms.Label();
             this.txtMaSP = new System.Windows.Forms.TextBox();
             this.lblSanPham = new System.Windows.Forms.Label();
             this.lblHinhAnh = new System.Windows.Forms.Label();
             this.lblMaNCC = new System.Windows.Forms.Label();
-            this.txtMaNCC = new System.Windows.Forms.TextBox();
             this.txtTenSP = new System.Windows.Forms.TextBox();
-            this.txtKichCo = new System.Windows.Forms.TextBox();
             this.cbMaLoai = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblMauSac = new System.Windows.Forms.Label();
-            this.txtMauSac = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtGiaBan = new System.Windows.Forms.TextBox();
@@ -59,22 +65,17 @@
             this.txtSoLuongTon = new System.Windows.Forms.TextBox();
             this.btnChonAnh = new System.Windows.Forms.Button();
             this.lblTH = new System.Windows.Forms.Label();
-            this.txtTH = new System.Windows.Forms.TextBox();
             this.grbThongtin = new System.Windows.Forms.GroupBox();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.btnThem = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.clMaSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clTH = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clTenSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clLoaiSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clMaNCC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clKichCo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clMauSac = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clSlton = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cboKichCo = new System.Windows.Forms.ComboBox();
+            this.cboNCC = new System.Windows.Forms.ComboBox();
+            this.cboMauSac = new System.Windows.Forms.ComboBox();
+            this.cboTH = new System.Windows.Forms.ComboBox();
+            this.btnLuu = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.grpDanhSach.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -106,6 +107,78 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
+            // clMaSP
+            // 
+            this.clMaSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clMaSP.DataPropertyName = "MAGIAY";
+            this.clMaSP.HeaderText = "Mã SP";
+            this.clMaSP.MinimumWidth = 6;
+            this.clMaSP.Name = "clMaSP";
+            // 
+            // clTH
+            // 
+            this.clTH.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clTH.DataPropertyName = "TENTH";
+            this.clTH.HeaderText = "Tên thương hiệu";
+            this.clTH.MinimumWidth = 8;
+            this.clTH.Name = "clTH";
+            // 
+            // clTenSP
+            // 
+            this.clTenSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clTenSP.DataPropertyName = "TENGIAY";
+            this.clTenSP.HeaderText = "Tên SP";
+            this.clTenSP.MinimumWidth = 6;
+            this.clTenSP.Name = "clTenSP";
+            // 
+            // clLoaiSP
+            // 
+            this.clLoaiSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clLoaiSP.DataPropertyName = "TENLOAI";
+            this.clLoaiSP.HeaderText = "Loại SP";
+            this.clLoaiSP.MinimumWidth = 6;
+            this.clLoaiSP.Name = "clLoaiSP";
+            // 
+            // clMaNCC
+            // 
+            this.clMaNCC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clMaNCC.DataPropertyName = "TENNCC";
+            this.clMaNCC.HeaderText = "Tên nhà cung cấp";
+            this.clMaNCC.MinimumWidth = 6;
+            this.clMaNCC.Name = "clMaNCC";
+            // 
+            // clKichCo
+            // 
+            this.clKichCo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clKichCo.DataPropertyName = "KICHCO";
+            this.clKichCo.HeaderText = "Kích cỡ";
+            this.clKichCo.MinimumWidth = 6;
+            this.clKichCo.Name = "clKichCo";
+            // 
+            // clMauSac
+            // 
+            this.clMauSac.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clMauSac.DataPropertyName = "TENMAU";
+            this.clMauSac.HeaderText = "Màu Sắc";
+            this.clMauSac.MinimumWidth = 6;
+            this.clMauSac.Name = "clMauSac";
+            // 
+            // clGiaBan
+            // 
+            this.clGiaBan.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clGiaBan.DataPropertyName = "GIABAN";
+            this.clGiaBan.HeaderText = "Giá Bán";
+            this.clGiaBan.MinimumWidth = 6;
+            this.clGiaBan.Name = "clGiaBan";
+            // 
+            // clSlton
+            // 
+            this.clSlton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clSlton.DataPropertyName = "SOLUONGTON";
+            this.clSlton.HeaderText = "Số lượng tồn";
+            this.clSlton.MinimumWidth = 8;
+            this.clSlton.Name = "clSlton";
+            // 
             // grpDanhSach
             // 
             this.grpDanhSach.Controls.Add(this.dataGridView1);
@@ -127,10 +200,9 @@
             this.thêmSảnPhẩmToolStripMenuItem,
             this.xóaSảnPhẩmToolStripMenuItem,
             this.sửaSảnPhẩmToolStripMenuItem,
-            this.inHóaĐơnToolStripMenuItem,
             this.refeshToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(216, 164);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(216, 132);
             // 
             // thêmSảnPhẩmToolStripMenuItem
             // 
@@ -155,14 +227,6 @@
             this.sửaSảnPhẩmToolStripMenuItem.Size = new System.Drawing.Size(215, 32);
             this.sửaSảnPhẩmToolStripMenuItem.Text = "Sửa sản phẩm";
             this.sửaSảnPhẩmToolStripMenuItem.Click += new System.EventHandler(this.sửaSảnPhẩmToolStripMenuItem_Click);
-            // 
-            // inHóaĐơnToolStripMenuItem
-            // 
-            this.inHóaĐơnToolStripMenuItem.Image = global::QuanLiBanGiay.Properties.Resources.icons8_print_16;
-            this.inHóaĐơnToolStripMenuItem.Name = "inHóaĐơnToolStripMenuItem";
-            this.inHóaĐơnToolStripMenuItem.Size = new System.Drawing.Size(215, 32);
-            this.inHóaĐơnToolStripMenuItem.Text = "In hóa đơn";
-            this.inHóaĐơnToolStripMenuItem.Click += new System.EventHandler(this.inHóaĐơnToolStripMenuItem_Click);
             // 
             // refeshToolStripMenuItem
             // 
@@ -221,14 +285,6 @@
             this.lblMaNCC.Text = "Tên nhà cung cấp:";
             this.lblMaNCC.Click += new System.EventHandler(this.lblMaNCC_Click);
             // 
-            // txtMaNCC
-            // 
-            this.txtMaNCC.Location = new System.Drawing.Point(673, 157);
-            this.txtMaNCC.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtMaNCC.Name = "txtMaNCC";
-            this.txtMaNCC.Size = new System.Drawing.Size(298, 33);
-            this.txtMaNCC.TabIndex = 92;
-            // 
             // txtTenSP
             // 
             this.txtTenSP.Location = new System.Drawing.Point(256, 69);
@@ -236,14 +292,6 @@
             this.txtTenSP.Name = "txtTenSP";
             this.txtTenSP.Size = new System.Drawing.Size(370, 33);
             this.txtTenSP.TabIndex = 95;
-            // 
-            // txtKichCo
-            // 
-            this.txtKichCo.Location = new System.Drawing.Point(56, 157);
-            this.txtKichCo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtKichCo.Name = "txtKichCo";
-            this.txtKichCo.Size = new System.Drawing.Size(157, 33);
-            this.txtKichCo.TabIndex = 10;
             // 
             // cbMaLoai
             // 
@@ -253,6 +301,7 @@
             this.cbMaLoai.Name = "cbMaLoai";
             this.cbMaLoai.Size = new System.Drawing.Size(298, 33);
             this.cbMaLoai.TabIndex = 14;
+            this.cbMaLoai.SelectedIndexChanged += new System.EventHandler(this.cbMaLoai_SelectedIndexChanged_1);
             // 
             // label2
             // 
@@ -274,14 +323,6 @@
             this.lblMauSac.Size = new System.Drawing.Size(93, 25);
             this.lblMauSac.TabIndex = 98;
             this.lblMauSac.Text = "Màu sắc:";
-            // 
-            // txtMauSac
-            // 
-            this.txtMauSac.Location = new System.Drawing.Point(256, 157);
-            this.txtMauSac.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtMauSac.Name = "txtMauSac";
-            this.txtMauSac.Size = new System.Drawing.Size(128, 33);
-            this.txtMauSac.TabIndex = 99;
             // 
             // label4
             // 
@@ -384,17 +425,12 @@
             this.lblTH.TabIndex = 107;
             this.lblTH.Text = "Tên thương hiệu";
             // 
-            // txtTH
-            // 
-            this.txtTH.Location = new System.Drawing.Point(256, 243);
-            this.txtTH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtTH.Name = "txtTH";
-            this.txtTH.Size = new System.Drawing.Size(370, 33);
-            this.txtTH.TabIndex = 108;
-            // 
             // grbThongtin
             // 
-            this.grbThongtin.Controls.Add(this.txtTH);
+            this.grbThongtin.Controls.Add(this.cboTH);
+            this.grbThongtin.Controls.Add(this.cboMauSac);
+            this.grbThongtin.Controls.Add(this.cboNCC);
+            this.grbThongtin.Controls.Add(this.cboKichCo);
             this.grbThongtin.Controls.Add(this.lblTH);
             this.grbThongtin.Controls.Add(this.btnChonAnh);
             this.grbThongtin.Controls.Add(this.txtSoLuongTon);
@@ -405,13 +441,10 @@
             this.grbThongtin.Controls.Add(this.txtGiaBan);
             this.grbThongtin.Controls.Add(this.label1);
             this.grbThongtin.Controls.Add(this.label4);
-            this.grbThongtin.Controls.Add(this.txtMauSac);
             this.grbThongtin.Controls.Add(this.lblMauSac);
             this.grbThongtin.Controls.Add(this.label2);
             this.grbThongtin.Controls.Add(this.cbMaLoai);
-            this.grbThongtin.Controls.Add(this.txtKichCo);
             this.grbThongtin.Controls.Add(this.txtTenSP);
-            this.grbThongtin.Controls.Add(this.txtMaNCC);
             this.grbThongtin.Controls.Add(this.lblMaNCC);
             this.grbThongtin.Controls.Add(this.lblHinhAnh);
             this.grbThongtin.Controls.Add(this.lblSanPham);
@@ -431,6 +464,7 @@
             // 
             // panelButtons
             // 
+            this.panelButtons.Controls.Add(this.btnLuu);
             this.panelButtons.Controls.Add(this.btnThem);
             this.panelButtons.Controls.Add(this.btnXoa);
             this.panelButtons.Controls.Add(this.btnSua);
@@ -483,7 +517,7 @@
             this.btnSua.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnSua.Image = global::QuanLiBanGiay.Properties.Resources.update_icon;
             this.btnSua.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSua.Location = new System.Drawing.Point(229, 11);
+            this.btnSua.Location = new System.Drawing.Point(243, 11);
             this.btnSua.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(90, 53);
@@ -500,7 +534,7 @@
             this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.button1.Image = global::QuanLiBanGiay.Properties.Resources.icons8_refresh_16;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(325, 11);
+            this.button1.Location = new System.Drawing.Point(461, 11);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(126, 53);
@@ -510,77 +544,58 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // clMaSP
+            // cboKichCo
             // 
-            this.clMaSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clMaSP.DataPropertyName = "MAGIAY";
-            this.clMaSP.HeaderText = "Mã SP";
-            this.clMaSP.MinimumWidth = 6;
-            this.clMaSP.Name = "clMaSP";
+            this.cboKichCo.FormattingEnabled = true;
+            this.cboKichCo.Location = new System.Drawing.Point(56, 157);
+            this.cboKichCo.Name = "cboKichCo";
+            this.cboKichCo.Size = new System.Drawing.Size(157, 33);
+            this.cboKichCo.TabIndex = 108;
+            this.cboKichCo.SelectedIndexChanged += new System.EventHandler(this.cboKichCo_SelectedIndexChanged);
             // 
-            // clTH
+            // cboNCC
             // 
-            this.clTH.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clTH.DataPropertyName = "TENTH";
-            this.clTH.HeaderText = "Tên thương hiệu";
-            this.clTH.MinimumWidth = 8;
-            this.clTH.Name = "clTH";
+            this.cboNCC.FormattingEnabled = true;
+            this.cboNCC.Location = new System.Drawing.Point(681, 157);
+            this.cboNCC.Name = "cboNCC";
+            this.cboNCC.Size = new System.Drawing.Size(290, 33);
+            this.cboNCC.TabIndex = 109;
+            this.cboNCC.SelectedIndexChanged += new System.EventHandler(this.cboNCC_SelectedIndexChanged);
             // 
-            // clTenSP
+            // cboMauSac
             // 
-            this.clTenSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clTenSP.DataPropertyName = "TENGIAY";
-            this.clTenSP.HeaderText = "Tên SP";
-            this.clTenSP.MinimumWidth = 6;
-            this.clTenSP.Name = "clTenSP";
+            this.cboMauSac.FormattingEnabled = true;
+            this.cboMauSac.Location = new System.Drawing.Point(250, 157);
+            this.cboMauSac.Name = "cboMauSac";
+            this.cboMauSac.Size = new System.Drawing.Size(157, 33);
+            this.cboMauSac.TabIndex = 110;
+            this.cboMauSac.SelectedIndexChanged += new System.EventHandler(this.cboMauSac_SelectedIndexChanged);
             // 
-            // clLoaiSP
+            // cboTH
             // 
-            this.clLoaiSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clLoaiSP.DataPropertyName = "TENLOAI";
-            this.clLoaiSP.HeaderText = "Loại SP";
-            this.clLoaiSP.MinimumWidth = 6;
-            this.clLoaiSP.Name = "clLoaiSP";
+            this.cboTH.FormattingEnabled = true;
+            this.cboTH.Location = new System.Drawing.Point(250, 242);
+            this.cboTH.Name = "cboTH";
+            this.cboTH.Size = new System.Drawing.Size(376, 33);
+            this.cboTH.TabIndex = 111;
+            this.cboTH.SelectedIndexChanged += new System.EventHandler(this.cboTH_SelectedIndexChanged);
             // 
-            // clMaNCC
+            // btnLuu
             // 
-            this.clMaNCC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clMaNCC.DataPropertyName = "TENNCC";
-            this.clMaNCC.HeaderText = "Tên nhà cung cấp";
-            this.clMaNCC.MinimumWidth = 6;
-            this.clMaNCC.Name = "clMaNCC";
-            // 
-            // clKichCo
-            // 
-            this.clKichCo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clKichCo.DataPropertyName = "KICHCO";
-            this.clKichCo.HeaderText = "Kích cỡ";
-            this.clKichCo.MinimumWidth = 6;
-            this.clKichCo.Name = "clKichCo";
-            // 
-            // clMauSac
-            // 
-            this.clMauSac.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clMauSac.DataPropertyName = "TENMAU";
-            this.clMauSac.HeaderText = "Màu Sắc";
-            this.clMauSac.MinimumWidth = 6;
-            this.clMauSac.Name = "clMauSac";
-            // 
-            // clGiaBan
-            // 
-            this.clGiaBan.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clGiaBan.DataPropertyName = "GIABAN";
-            this.clGiaBan.HeaderText = "Giá Bán";
-            this.clGiaBan.MinimumWidth = 6;
-            this.clGiaBan.Name = "clGiaBan";
-            // 
-            // clSlton
-            // 
-            this.clSlton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clSlton.DataPropertyName = "SOLUONGTON";
-            this.clSlton.HeaderText = "Số lượng tồn";
-            this.clSlton.MinimumWidth = 8;
-            this.clSlton.Name = "clSlton";
+            this.btnLuu.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnLuu.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuu.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnLuu.Image = ((System.Drawing.Image)(resources.GetObject("btnLuu.Image")));
+            this.btnLuu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLuu.Location = new System.Drawing.Point(353, 10);
+            this.btnLuu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnLuu.Name = "btnLuu";
+            this.btnLuu.Size = new System.Drawing.Size(92, 52);
+            this.btnLuu.TabIndex = 93;
+            this.btnLuu.Text = "Lưu";
+            this.btnLuu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLuu.UseVisualStyleBackColor = false;
+            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // Form_SanPham
             // 
@@ -611,7 +626,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem thêmSảnPhẩmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem xóaSảnPhẩmToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem inHóaĐơnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refeshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sửaSảnPhẩmToolStripMenuItem;
         private System.Windows.Forms.Label lblTenKM;
@@ -619,13 +633,10 @@
         private System.Windows.Forms.Label lblSanPham;
         private System.Windows.Forms.Label lblHinhAnh;
         private System.Windows.Forms.Label lblMaNCC;
-        private System.Windows.Forms.TextBox txtMaNCC;
         private System.Windows.Forms.TextBox txtTenSP;
-        private System.Windows.Forms.TextBox txtKichCo;
         private System.Windows.Forms.ComboBox cbMaLoai;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblMauSac;
-        private System.Windows.Forms.TextBox txtMauSac;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtGiaBan;
@@ -636,7 +647,6 @@
         private System.Windows.Forms.TextBox txtSoLuongTon;
         private System.Windows.Forms.Button btnChonAnh;
         private System.Windows.Forms.Label lblTH;
-        private System.Windows.Forms.TextBox txtTH;
         private System.Windows.Forms.GroupBox grbThongtin;
         private System.Windows.Forms.Panel panelButtons;
         private System.Windows.Forms.Button btnThem;
@@ -652,5 +662,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clMauSac;
         private System.Windows.Forms.DataGridViewTextBoxColumn clGiaBan;
         private System.Windows.Forms.DataGridViewTextBoxColumn clSlton;
+        private System.Windows.Forms.ComboBox cboTH;
+        private System.Windows.Forms.ComboBox cboMauSac;
+        private System.Windows.Forms.ComboBox cboNCC;
+        private System.Windows.Forms.ComboBox cboKichCo;
+        private System.Windows.Forms.Button btnLuu;
     }
 }

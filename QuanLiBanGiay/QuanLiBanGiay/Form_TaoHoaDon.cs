@@ -27,9 +27,9 @@ namespace QuanLiBanGiay
             LoadKhuyenMai();
             TaoBangSanPham();
             txtMaDH.Text = SinhMaHoaDonTuDong();
+            LoadDanhSachHoaDon();
+            CheDoTaoMoi();
         }
-
-        // ===== Load khách hàng =====
         private void LoadKhachHang()
         {
             using (SqlConnection conn = DBConnection.GetConnection())
@@ -47,41 +47,54 @@ namespace QuanLiBanGiay
         }
         private string SinhMaHoaDonTuDong()
         {
-            string maHD = "HD001"; // Nếu chưa có hóa đơn nào
-
+            string maHD = "HD001"; // Mặc định
             try
             {
                 using (SqlConnection conn = DBConnection.GetConnection())
                 {
                     conn.Open();
-
-                    string sql = "SELECT TOP 1 MAHD FROM HOADON ORDER BY TRY_CAST(SUBSTRING(MAHD, 3, 10) AS INT) DESC";
+                    // Lấy mã có phần số lớn nhất (HDxxx -> lấy xxx so sánh)
+                    string sql = "SELECT TOP 1 MAHD FROM HOADON ORDER BY CAST(SUBSTRING(MAHD, 3, 10) AS INT) DESC";
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     object result = cmd.ExecuteScalar();
 
                     if (result != null)
                     {
-                        string lastID = result.ToString().Trim(); // Ví dụ: HD041
-
-                        // Tìm tất cả số trong chuỗi (011, 41, ...)
-                        Match m = Regex.Match(lastID, @"\d+");
-
-                        int number = 0;
-                        if (m.Success)
-                            number = int.Parse(m.Value);
-
-                        number++; // tăng số
-
-                        maHD = "HD" + number.ToString("D3"); // HD001, HD002...
+                        string lastID = result.ToString().Trim();
+                        // Tách số: HD009 -> 009
+                        string numberPart = lastID.Substring(2);
+                        if (int.TryParse(numberPart, out int number))
+                        {
+                            number++; // Tăng lên 1
+                            maHD = "HD" + number.ToString("D3"); // Format thành 3 chữ số (VD: HD010)
+                        }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi sinh mã hóa đơn: " + ex.Message);
-            }
-
+            catch (Exception ex) { MessageBox.Show("Lỗi sinh mã: " + ex.Message); }
             return maHD;
+        }
+        private void CheDoTaoMoi()
+        {
+            // 1. Xóa trắng các ô nhập liệu
+            cboMaKH.SelectedIndex = -1;
+            cboMaSP.SelectedIndex = -1;
+            cboTenSP.SelectedIndex = -1;
+            cboMaNVXL.SelectedIndex = -1;
+            cboKhuyenMai.SelectedIndex = 0;
+
+            txtTenKH.Clear(); txtSDT.Clear(); txtDiaChi.Clear(); txtDiemTL.Clear();
+            txtMaLoai.Clear(); txtSoLuongMua.Clear();
+
+            // 2. Xóa danh sách sản phẩm (giỏ hàng)
+            dtSanPham.Rows.Clear();
+            dgvSanPham.DataSource = dtSanPham;
+
+            // 3. SINH MÃ MỚI TỰ ĐỘNG (Điểm quan trọng nhất)
+            txtMaDH.Text = SinhMaHoaDonTuDong();
+
+            // 4. Cập nhật ngày giờ hiện tại
+            dtpThoiGian.Value = DateTime.Now;
         }
         private void CongDiemTichLuy(string makh, int soLuong)
         {
@@ -91,7 +104,7 @@ namespace QuanLiBanGiay
                 {
                     conn.Open();
 
-                    int diemCong = soLuong * 5;   // Mỗi sản phẩm = 5 điểm
+                    int diemCong = soLuong * 5;   
 
                     string sql = "UPDATE KHACHHANG SET DIEMTICHLUY = DIEMTICHLUY + @diem WHERE MAKH = @makh";
                     SqlCommand cmd = new SqlCommand(sql, conn);
@@ -119,8 +132,6 @@ namespace QuanLiBanGiay
             txtDiaChi.Text = r["DIACHI"].ToString();
             txtDiemTL.Text = r["DIEMTICHLUY"].ToString();
         }
-
-        // ===== Load sản phẩm =====
         private void LoadSanPham()
         {
             using (SqlConnection conn = DBConnection.GetConnection())
@@ -145,7 +156,81 @@ namespace QuanLiBanGiay
                 cboTenSP.SelectedIndex = -1;
             }
         }
+        private void LoadDanhSachHoaDon()
+        {
+            try
+            {
+                using (SqlConnection conn = DBConnection.GetConnection())
+                {
+                    conn.Open();
+                    string sql = @"
+                SELECT HD.MAHD, KH.TENKH, NV.TENNV, HD.NGAYLAP, HD.TONGTIEN 
+                FROM HOADON HD
+                LEFT JOIN KHACHHANG KH ON HD.MAKH = KH.MAKH
+                LEFT JOIN NHANVIEN NV ON HD.MANV = NV.MANV
+                ORDER BY HD.NGAYLAP DESC";
 
+                    SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                    DataTable dtHD = new DataTable();
+                    da.Fill(dtHD);
+
+                    dgvHoaDon.DataSource = dtHD;
+                    dgvHoaDon.Columns["MAHD"].HeaderText = "Mã hóa đơn";
+                    dgvHoaDon.Columns["TENKH"].HeaderText = "Khách hàng";
+                    dgvHoaDon.Columns["TENNV"].HeaderText = "Nhân viên xử lý";
+                    dgvHoaDon.Columns["NGAYLAP"].HeaderText = "Ngày lập";
+                    dgvHoaDon.Columns["TONGTIEN"].HeaderText = "Tổng tiền";
+                    dgvHoaDon.Columns["TONGTIEN"].DefaultCellStyle.Format = "N0"; 
+                    dgvHoaDon.Columns["NGAYLAP"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
+
+                    dgvHoaDon.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải danh sách hóa đơn: " + ex.Message);
+            }
+        }
+        private void LoadChiTietHoaDon(string maHD)
+        { 
+            dtSanPham.Rows.Clear();
+
+            try
+            {
+                using (SqlConnection conn = DBConnection.GetConnection())
+                {
+                    conn.Open();
+                    string sql = @"
+                            SELECT CT.MAGIAY, G.TENGIAY, G.MALOAI, KC.KICHCO, MS.TENMAU, CT.SOLUONG, CT.DONGIA
+                            FROM CTHOADON CT
+                            INNER JOIN GIAY G ON CT.MAGIAY = G.MAGIAY
+                            LEFT JOIN KICHCO KC ON CT.MASIZE = KC.MASIZE  -- Join để lấy tên size
+                            LEFT JOIN MAUSAC MS ON CT.MAMAU = MS.MAMAU    -- Join để lấy tên màu
+                            WHERE CT.MAHD = @MAHD";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@MAHD", maHD);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    { 
+                        dtSanPham.Rows.Add(
+                            reader["MAGIAY"].ToString(),
+                            reader["TENGIAY"].ToString(),
+                            reader["MALOAI"].ToString(),
+                            reader["KICHCO"].ToString(),  
+                            reader["TENMAU"].ToString(),  
+                            Convert.ToInt32(reader["SOLUONG"]),
+                            Convert.ToDouble(reader["DONGIA"])
+);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải chi tiết hóa đơn: " + ex.Message);
+            }
+        }
         private void cboMaSP_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cboMaSP.SelectedIndex == -1) return;
@@ -167,8 +252,6 @@ namespace QuanLiBanGiay
             cboKichCo.Text = r["MASIZE"].ToString();
             cboMauSac.Text = r["MAMAU"].ToString();
         }
-
-        // ===== Load nhân viên =====
         private void LoadNhanVien()
         {
             using (SqlConnection conn = DBConnection.GetConnection())
@@ -184,8 +267,6 @@ namespace QuanLiBanGiay
                 cboMaNVXL.SelectedIndex = -1;
             }
         }
-
-        // ===== Load khuyến mãi =====
         private void LoadKhuyenMai()
         {
             try
@@ -200,8 +281,6 @@ namespace QuanLiBanGiay
                     SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
-
-                    // Thêm dòng "Không áp dụng" ở đầu
                     DataRow rowKhongKM = dt.NewRow();
                     rowKhongKM["MAKM"] = "";
                     rowKhongKM["TENKM"] = "-- Không áp dụng khuyến mãi --";
@@ -209,12 +288,10 @@ namespace QuanLiBanGiay
                     rowKhongKM["NGAYBATDAU"] = DBNull.Value;
                     rowKhongKM["NGAYKETTHUC"] = DBNull.Value;
                     dt.Rows.InsertAt(rowKhongKM, 0);
-
                     cboKhuyenMai.DisplayMember = "TENKM";
                     cboKhuyenMai.ValueMember = "MAKM";
                     cboKhuyenMai.DataSource = dt;
-
-                    cboKhuyenMai.SelectedIndex = 0; // Mặc định không áp dụng
+                    cboKhuyenMai.SelectedIndex = 0; 
                 }
             }
             catch (Exception ex)
@@ -222,10 +299,9 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Lỗi load khuyến mãi: " + ex.Message);
             }
         }
-
-        // ===== Tạo bảng sản phẩm =====
         private void TaoBangSanPham()
         {
+            dtSanPham = new DataTable(); 
             dtSanPham.Columns.Add("MAGIAY");
             dtSanPham.Columns.Add("TENGIAY");
             dtSanPham.Columns.Add("MALOAI");
@@ -235,6 +311,15 @@ namespace QuanLiBanGiay
             dtSanPham.Columns.Add("GIABAN", typeof(double));
 
             dgvSanPham.DataSource = dtSanPham;
+            dgvSanPham.Columns["MAGIAY"].HeaderText = "Mã giày";
+            dgvSanPham.Columns["TENGIAY"].HeaderText = "Tên giày";
+            dgvSanPham.Columns["MALOAI"].HeaderText = "Loại giày";
+            dgvSanPham.Columns["MASIZE"].HeaderText = "Kích cỡ";
+            dgvSanPham.Columns["MAMAU"].HeaderText = "Màu sắc";
+            dgvSanPham.Columns["SOLUONG"].HeaderText = "Số lượng";
+            dgvSanPham.Columns["GIABAN"].HeaderText = "Đơn giá";
+            dgvSanPham.Columns["GIABAN"].DefaultCellStyle.Format = "N0";
+            dgvSanPham.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void btnThemSP_Click(object sender, EventArgs e)
@@ -264,8 +349,6 @@ namespace QuanLiBanGiay
             if (dgvSanPham.CurrentRow != null)
                 dtSanPham.Rows.RemoveAt(dgvSanPham.CurrentRow.Index);
         }
-
-        // ===== Tính tổng tiền =====
         private double TinhTongTien()
         {
             double tong = 0;
@@ -275,10 +358,9 @@ namespace QuanLiBanGiay
             }
             return tong;
         }
-        //======Kiểm tra khuyến mãi hợp lệ======//
         private bool KiemTraKhuyenMaiHopLeVoiNgay(string maKM, DateTime ngayLap)
         {
-            if (string.IsNullOrEmpty(maKM)) return true; // Không chọn KM → luôn hợp lệ
+            if (string.IsNullOrEmpty(maKM)) return true; 
 
             try
             {
@@ -299,8 +381,6 @@ namespace QuanLiBanGiay
                             {
                                 DateTime ngayBD = reader.GetDateTime(0);
                                 DateTime ngayKT = reader.GetDateTime(1);
-
-                                // So sánh chỉ lấy phần ngày (không tính giờ phút giây)
                                 if (ngayLap.Date >= ngayBD.Date && ngayLap.Date <= ngayKT.Date)
                                     return true;
                                 else
@@ -317,7 +397,6 @@ namespace QuanLiBanGiay
             }
             return false;
         }
-        // ===== Lưu hóa đơn =====
         private bool LuuHoaDon()
         {
             if (string.IsNullOrWhiteSpace(txtMaDH.Text))
@@ -384,9 +463,8 @@ namespace QuanLiBanGiay
                         cmd.ExecuteNonQuery();
                     }
 
-                    string sqlCT = @"
-                        INSERT INTO CTHOADON (MAHD, MAGIAY, SOLUONG, DONGIA, THANHTIEN)
-                        VALUES (@MAHD, @MAGIAY, @SOLUONG, @DONGIA, @THANHTIEN)";
+                    string sqlCT = @"INSERT INTO CTHOADON (MAHD, MAGIAY, MASIZE, MAMAU, SOLUONG, DONGIA, THANHTIEN)
+                 VALUES (@MAHD, @MAGIAY, @MASIZE, @MAMAU, @SOLUONG, @DONGIA, @THANHTIEN)";
                     foreach (DataRow r in dtSanPham.Rows)
                     {
                         double gia = Convert.ToDouble(r["GIABAN"]);
@@ -400,6 +478,8 @@ namespace QuanLiBanGiay
                             cmd.Parameters.AddWithValue("@SOLUONG", sl);
                             cmd.Parameters.AddWithValue("@DONGIA", gia);
                             cmd.Parameters.AddWithValue("@THANHTIEN", thanhTien);
+                            cmd.Parameters.AddWithValue("@MASIZE", r["MASIZE"]);
+                            cmd.Parameters.AddWithValue("@MAMAU", r["MAMAU"]);
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -415,8 +495,6 @@ namespace QuanLiBanGiay
                 }
             }
         }
-
-        // ===== Xuất hóa đơn sang Form_HoaDon =====
         private void btnXuatHD_Click(object sender, EventArgs e)
         {
             if (!LuuHoaDon()) return;
@@ -436,7 +514,7 @@ namespace QuanLiBanGiay
 
             if (cboKhuyenMai.SelectedItem is DataRowView km)
             {
-                frm.KhuyenMai = km["GIAMGIA"].ToString();   // % khuyến mãi
+                frm.KhuyenMai = km["GIAMGIA"].ToString();   
                 frm.TenKhuyenMai = km["TENKM"].ToString();
             }
             else
@@ -447,40 +525,26 @@ namespace QuanLiBanGiay
 
             frm.Show();
         }
-
-        // ===== Refresh Form =====
         private void btnRefesh_Click(object sender, EventArgs e)
         {
-            // Reset combobox lựa chọn
+
             cboMaKH.SelectedIndex = -1;
             cboMaSP.SelectedIndex = -1;
             cboTenSP.SelectedIndex = -1;
             cboMaNVXL.SelectedIndex = -1;
-            cboKhuyenMai.SelectedIndex = -1;
+            cboKhuyenMai.SelectedIndex = 0;
 
-            // Xóa thông tin text
-            txtTenKH.Clear();
-            txtSDT.Clear();
-            txtDiaChi.Clear();
-            txtDiemTL.Clear();
-            txtMaLoai.Clear();
-            txtSoLuongMua.Clear();
-            txtMaDH.Clear();
+            txtTenKH.Clear(); txtSDT.Clear(); txtDiaChi.Clear(); txtDiemTL.Clear();
+            txtMaLoai.Clear(); txtSoLuongMua.Clear();
             txtMaDH.Text = SinhMaHoaDonTuDong();
-
-
-            // Reset bảng sản phẩm nhưng GIỮ BINDING
             dtSanPham.Rows.Clear();
             dgvSanPham.DataSource = dtSanPham;
-
-            // Reset thời gian
-            dtpThoiGian.Value = DateTime.Now;
-
-            // Load lại dữ liệu gốc
+            CheDoTaoMoi();
             LoadKhachHang();
             LoadSanPham();
             LoadNhanVien();
             LoadKhuyenMai();
+            LoadDanhSachHoaDon();
         }
 
 
@@ -488,7 +552,6 @@ namespace QuanLiBanGiay
         {
             try
             {
-                // Lấy mã hóa đơn
                 string maHD = txtMaDH.Text;
                 if (string.IsNullOrEmpty(maHD))
                     maHD = "HD_Default";
@@ -498,27 +561,19 @@ namespace QuanLiBanGiay
                 Document doc = new Document(PageSize.A4, 30, 30, 30, 30);
                 PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
                 doc.Open();
-
-                // Font tiếng Việt
                 string fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "times.ttf");
                 BaseFont bf = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
                 iTextSharp.text.Font f12 = new iTextSharp.text.Font(bf, 12);
                 iTextSharp.text.Font f12b = new iTextSharp.text.Font(bf, 12, iTextSharp.text.Font.BOLD);
                 iTextSharp.text.Font f20b = new iTextSharp.text.Font(bf, 20, iTextSharp.text.Font.BOLD);
-
-                // ===== TITLE =====
                 Paragraph title = new Paragraph("PHIẾU HÓA ĐƠN\n\n", f20b) { Alignment = Element.ALIGN_CENTER };
                 doc.Add(title);
-
-                // ===== THÔNG TIN HÓA ĐƠN =====
                 PdfPTable tblInfo = new PdfPTable(2) { WidthPercentage = 100 };
                 tblInfo.SetWidths(new float[] { 1f, 1f });
                 tblInfo.AddCell(new PdfPCell(new Phrase($"Mã hóa đơn: {maHD}", f12)) { Border = PdfPCell.NO_BORDER });
                 tblInfo.AddCell(new PdfPCell(new Phrase($"Mã NV xử lý: {cboMaNVXL.Text}", f12)) { Border = PdfPCell.NO_BORDER, HorizontalAlignment = Element.ALIGN_RIGHT });
                 tblInfo.SpacingAfter = 10;
                 doc.Add(tblInfo);
-
-                // ===== THÔNG TIN KHÁCH HÀNG =====
                 PdfPTable tblKH = new PdfPTable(2) { WidthPercentage = 100 };
                 tblKH.SetWidths(new float[] { 1f, 2f });
                 void KHRow(string label, string value)
@@ -532,8 +587,6 @@ namespace QuanLiBanGiay
                 KHRow("Ngày mua:", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
                 tblKH.SpacingAfter = 15;
                 doc.Add(tblKH);
-
-                // ===== BẢNG SẢN PHẨM =====
                 PdfPTable tblSP = new PdfPTable(8) { WidthPercentage = 100 };
                 tblSP.SetWidths(new float[] { 1.2f, 3.5f, 1f, 1f, 1f, 1.2f, 1.5f, 1.5f });
                 string[] headers = { "MÃ GIÀY", "TÊN GIÀY", "LOẠI", "SIZE", "MÀU", "SỐ LƯỢNG", "GIÁ BÁN", "THÀNH TIỀN" };
@@ -543,8 +596,6 @@ namespace QuanLiBanGiay
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         BackgroundColor = BaseColor.LIGHT_GRAY
                     });
-
-                // ===== DỮ LIỆU BẢNG =====
                 foreach (DataGridViewRow row in dgvSanPham.Rows)
                 {
                     if (row.IsNewRow) continue;
@@ -563,8 +614,6 @@ namespace QuanLiBanGiay
                 }
                 tblSP.SpacingAfter = 20;
                 doc.Add(tblSP);
-
-                // ===== TÍNH TIỀN =====
                 double tong = 0;
                 foreach (DataGridViewRow row in dgvSanPham.Rows)
                 {
@@ -581,7 +630,7 @@ namespace QuanLiBanGiay
                 double thue = tongSauGiam * 0.08;
                 double thanhTienFinal = tongSauGiam + thue;
 
-                PdfPTable tTien = new PdfPTable(2) { WidthPercentage = 100 }; // Đặt lại WidthPercentage cho phù hợp khi nhúng vào cell
+                PdfPTable tTien = new PdfPTable(2) { WidthPercentage = 100 }; 
                 void MoneyRow(string label, string value)
                 {
                     tTien.AddCell(new PdfPCell(new Phrase(label, f12b)) { Border = PdfPCell.NO_BORDER });
@@ -592,26 +641,18 @@ namespace QuanLiBanGiay
                 MoneyRow("Sau giảm:", $"{tongSauGiam:N0} VNĐ");
                 MoneyRow("Thuế VAT (8%):", $"{thue:N0} VNĐ");
                 MoneyRow("Thành tiền:", $"{thanhTienFinal:N0} VNĐ");
-
-                // ===== BẢNG CHÍNH CHO CHỮ KÝ VÀ TÍNH TIỀN =====
                 PdfPTable mainTable = new PdfPTable(2) { WidthPercentage = 100 };
-                mainTable.SetWidths(new float[] { 1f, 1f }); // Có thể điều chỉnh tỷ lệ nếu cần, ví dụ { 0.5f, 1.5f } để chữ ký nhỏ hơn
-
-                // Ô bên trái: Chữ ký khách hàng
+                mainTable.SetWidths(new float[] { 1f, 1f }); 
                 PdfPCell leftCell = new PdfPCell();
                 leftCell.AddElement(new Paragraph("Chữ ký khách hàng:\n\n____________________", f12));
                 leftCell.Border = PdfPCell.NO_BORDER;
-                leftCell.VerticalAlignment = Element.ALIGN_BOTTOM; // Căn dưới nếu cần
-
-                // Ô bên phải: Bảng tính tiền
+                leftCell.VerticalAlignment = Element.ALIGN_BOTTOM;
                 PdfPCell rightCell = new PdfPCell(tTien);
                 rightCell.Border = PdfPCell.NO_BORDER;
 
                 mainTable.AddCell(leftCell);
                 mainTable.AddCell(rightCell);
-
                 doc.Add(mainTable);
-
                 doc.Close();
                 writer.Close();
 
@@ -627,7 +668,7 @@ namespace QuanLiBanGiay
             if (cboKhuyenMai.SelectedValue == null) return;
 
             string maKM = cboKhuyenMai.SelectedValue.ToString();
-            if (string.IsNullOrEmpty(maKM)) return; // Không chọn KM → bỏ qua
+            if (string.IsNullOrEmpty(maKM)) return;
 
             DateTime ngayLap = dtpThoiGian.Value;
 
@@ -639,8 +680,6 @@ namespace QuanLiBanGiay
                     "Khuyến mãi không hợp lệ",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
-
-                // Tự động quay về "Không áp dụng"
                 cboKhuyenMai.SelectedIndex = 0;
             }
         }
@@ -663,8 +702,6 @@ namespace QuanLiBanGiay
                 using (SqlConnection conn = DBConnection.GetConnection())
                 {
                     conn.Open();
-
-                    // Load Size còn hàng
                     string sqlSize = @"
                 SELECT DISTINCT MASIZE 
                 FROM CHITIETGIAY 
@@ -684,8 +721,6 @@ namespace QuanLiBanGiay
 
                     conn.Close();
                     conn.Open();
-
-                    // Load Màu còn hàng
                     string sqlMau = @"
                 SELECT DISTINCT MAMAU 
                 FROM CHITIETGIAY 
@@ -703,8 +738,6 @@ namespace QuanLiBanGiay
                         }
                     }
                 }
-
-                // Reset chọn
                 cboKichCo.Text = "";
                 cboMauSac.Text = "";
             }
@@ -733,8 +766,6 @@ namespace QuanLiBanGiay
 
             cboTenSP.Text = r["TENGIAY"].ToString();
             txtMaLoai.Text = r["MALOAI"].ToString();
-
-            // Load size và màu theo mã giày
             LoadKichCoVaMauSac(maGiay);
         }
 
@@ -747,8 +778,6 @@ namespace QuanLiBanGiay
 
             cboMaSP.Text = maGiay;
             txtMaLoai.Text = r["MALOAI"].ToString();
-
-            // Load size và màu theo mã giày
             LoadKichCoVaMauSac(maGiay);
         }
         private void KiemTraTonKho()
@@ -791,8 +820,6 @@ namespace QuanLiBanGiay
                                 loi = $"Đã hết màu {mau}!";
 
                             MessageBox.Show(loi, "Hết hàng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                            // Tự động xóa chọn sai
                             if (!string.IsNullOrEmpty(size) && string.IsNullOrEmpty(mau))
                                 cboKichCo.Text = "";
                             else if (!string.IsNullOrEmpty(mau))
@@ -806,8 +833,6 @@ namespace QuanLiBanGiay
                 MessageBox.Show("Lỗi kiểm tra tồn kho: " + ex.Message);
             }
         }
-
-        // === CLICK CHUỘT PHẢI CHỌN DÒNG CHÍNH XÁC ===
         private void dgvSanPham_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
@@ -817,8 +842,6 @@ namespace QuanLiBanGiay
                 dgvSanPham.CurrentCell = dgvSanPham.Rows[e.RowIndex].Cells[e.ColumnIndex];
             }
         }
-
-        // === THÊM SẢN PHẨM ===
         private void thêmSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cboMaSP.SelectedIndex = -1;
@@ -830,8 +853,6 @@ namespace QuanLiBanGiay
             
             btnThemSP.PerformClick();
         }
-
-        // === XÓA SẢN PHẨM ===
         private void xóaSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvSanPham.SelectedRows.Count == 0) return;
@@ -844,24 +865,40 @@ namespace QuanLiBanGiay
                 dgvSanPham.DataSource = dtSanPham;
             }
         }
-
-        // === XUẤT HÓA ĐƠN ===
         private void xuấtHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnXuatHD_Click(sender, e);
         }
-
-        // === IN HÓA ĐƠN ===
         private void inHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnInHoaDon_Click(sender, e);
         }
-
-        // === LÀM MỚI ===
         private void refeshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnRefesh.PerformClick();
         }
 
+        private void dgvHoaDon_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvHoaDon.Rows.Count) return;
+
+            try
+            {
+                DataGridViewRow row = dgvHoaDon.Rows[e.RowIndex];
+                string maHD = row.Cells["MAHD"].Value.ToString();
+                string tenKH = row.Cells["TENKH"].Value.ToString();
+                string tenNV = row.Cells["TENNV"].Value.ToString();
+                txtMaDH.Text = maHD;
+                LoadChiTietHoaDon(maHD);
+                if (DateTime.TryParse(row.Cells["NGAYLAP"].Value.ToString(), out DateTime ngayLap))
+                {
+                    dtpThoiGian.Value = ngayLap;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi chọn hóa đơn: " + ex.Message);
+            }
+        }
     }
 }

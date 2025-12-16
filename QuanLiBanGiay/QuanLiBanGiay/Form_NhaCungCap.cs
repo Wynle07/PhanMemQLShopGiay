@@ -17,12 +17,46 @@ namespace QuanLiBanGiay
         SqlConnection conn;
         DataSet ds_NCC = new DataSet();
         SqlDataAdapter da_ncc;
+        bool isAdding = false;
+        bool isEditing = false;
         public Form_NhaCungCap()
         {
             conn = DBConnection.GetConnection();
             InitializeComponent();
         }
+        private void SetInputsEnabled(bool enabled)
+        {
+            cbTenNCC.Enabled = enabled;
+            txtHotline.Enabled = enabled;
+            txtEmail.Enabled = enabled;
+            txtDiaChi.Enabled = enabled;
+            cboTrangThai.Enabled = enabled;
+        }
 
+        private void ResetForm()
+        {
+            XoaTrangChiTiet(); 
+            isAdding = false;
+            isEditing = false;
+            SetInputsEnabled(false);
+            txtMaNCC.Enabled = false;
+            btnThem.Enabled = true;
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = false;
+
+            data_ncc.ClearSelection();
+        }
+        private void XoaTrangChiTiet()
+        {
+            txtMaNCC.Clear();
+            cbTenNCC.Text = "";
+            txtHotline.Clear();
+            txtEmail.Clear();
+            txtDiaChi.Clear();
+            cboTrangThai.SelectedIndex = -1;
+            txt_TimKiem.Clear();
+        }
         private void Form_NhaCungCap_Load(object sender, EventArgs e)
         {
             LoadNhaCungCap();
@@ -31,6 +65,7 @@ namespace QuanLiBanGiay
             cboTrangThai.Items.Add("Ngừng hợp tác");
             LoadTeNCCC();
             txtMaNCC.Enabled = false;
+            ResetForm();
         }
         private void LoadNhaCungCap(string search = "")
         {
@@ -58,15 +93,12 @@ namespace QuanLiBanGiay
                 ds_NCC.Clear();
                 da_ncc.Fill(ds_NCC, "NHACUNGCAP");
                 data_ncc.DataSource = ds_NCC.Tables["NHACUNGCAP"];
-
-                // Tiêu đề cột
                 data_ncc.Columns["MANCC"].HeaderText = "Mã NCC";
                 data_ncc.Columns["TENNCC"].HeaderText = "Tên NCC";
                 data_ncc.Columns["Hotline"].HeaderText = "Hotline";
                 data_ncc.Columns["EMAIL"].HeaderText = "Email";
                 data_ncc.Columns["DIACHI"].HeaderText = "Địa chỉ";
                 data_ncc.Columns["TRANGTHAI"].HeaderText = "Trạng thái";
-
                 data_ncc.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
             catch (Exception ex)
@@ -95,7 +127,9 @@ namespace QuanLiBanGiay
         
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+
+            try
             {
                 DataGridViewRow row = data_ncc.Rows[e.RowIndex];
                 txtMaNCC.Text = row.Cells["MANCC"].Value?.ToString();
@@ -104,6 +138,17 @@ namespace QuanLiBanGiay
                 txtEmail.Text = row.Cells["EMAIL"].Value?.ToString();
                 txtDiaChi.Text = row.Cells["DIACHI"].Value?.ToString();
                 cboTrangThai.Text = row.Cells["TRANGTHAI"].Value?.ToString();
+                btnThem.Enabled = true;  
+                btnSua.Enabled = true;   
+                btnXoa.Enabled = true;  
+                btnLuu.Enabled = false;  
+                SetInputsEnabled(false);
+                isAdding = false;
+                isEditing = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi chọn dòng: " + ex.Message);
             }
         }
         private string TaoMaTuDong()
@@ -140,97 +185,29 @@ namespace QuanLiBanGiay
         }
         private void btnThem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(cbTenNCC.Text))
-            {
-                MessageBox.Show("Vui lòng nhập Tên NCC!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            try
-            {
-                string maMoi = TaoMaTuDong();
-                txtMaNCC.Text = maMoi; 
-                string sql = @"INSERT INTO NHACUNGCAP (MANCC, TENNCC, SDT, EMAIL, DIACHI, TRANGTHAI)
-                       VALUES (@mancc, @tenncc, @sdt, @email, @diachi, @trangthai)";
-
-                if (conn.State == ConnectionState.Closed) conn.Open();
-
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@mancc", maMoi); 
-                    cmd.Parameters.AddWithValue("@tenncc", cbTenNCC.Text);
-                    cmd.Parameters.AddWithValue("@sdt", txtHotline.Text);
-                    cmd.Parameters.AddWithValue("@email", txtEmail.Text);
-                    cmd.Parameters.AddWithValue("@diachi", txtDiaChi.Text);
-                    string trangThai = string.IsNullOrEmpty(cboTrangThai.Text) ? "Đang hợp tác" : cboTrangThai.Text;
-                    cmd.Parameters.AddWithValue("@trangthai", trangThai);
-                    cmd.ExecuteNonQuery();
-                }
-
-                MessageBox.Show($"Thêm nhà cung cấp thành công! Mã: {maMoi}", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                LoadNhaCungCap();
-                ResetForm();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi thêm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if (conn.State == ConnectionState.Open) conn.Close();
-            }
-        }
-        private void ResetForm()
-        {
-            txtMaNCC.Clear(); 
-            cbTenNCC.Text = "";
-            txtHotline.Clear();
-            txtEmail.Clear();
-            txtDiaChi.Clear();
-            cboTrangThai.SelectedIndex = -1;
-            txt_TimKiem.Clear();
+            isAdding = true;
+            isEditing = false;
+            SetInputsEnabled(true);
+            XoaTrangChiTiet();
+            txtMaNCC.Text = TaoMaTuDong();
             cbTenNCC.Focus();
-            data_ncc.ClearSelection();
+            btnThem.Enabled = false;
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = true; 
         }
+        
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtMaNCC.Text))
-            {
-                MessageBox.Show("Vui lòng chọn nhà cung cấp cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            try
-            {
-                string sql = @"UPDATE NHACUNGCAP 
-                               SET TENNCC = @tenncc, 
-                                   SDT = @sdt, 
-                                   EMAIL = @email, 
-                                   DIACHI = @diachi, 
-                                   TRANGTHAI = @trangthai 
-                               WHERE MANCC = @mancc";
-
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@mancc", txtMaNCC.Text);
-                cmd.Parameters.AddWithValue("@tenncc", cbTenNCC.Text);
-                cmd.Parameters.AddWithValue("@sdt", txtHotline.Text);
-                cmd.Parameters.AddWithValue("@email", txtEmail.Text);
-                cmd.Parameters.AddWithValue("@diachi", txtDiaChi.Text);
-                cmd.Parameters.AddWithValue("@trangthai", cboTrangThai.Text);
-
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-
-                MessageBox.Show("Sửa nhà cung cấp thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadNhaCungCap();
-            }
-            catch (Exception ex)
-            {
-                conn.Close();
-                MessageBox.Show("Lỗi khi sửa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            if (string.IsNullOrEmpty(txtMaNCC.Text)) return;
+            isEditing = true;
+            isAdding = false;
+            SetInputsEnabled(true);
+            txtMaNCC.Enabled = false;
+            btnThem.Enabled = false;
+            btnSua.Enabled = false; 
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = true; 
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
@@ -344,6 +321,101 @@ namespace QuanLiBanGiay
         private void txt_TimKiem_TextChanged(object sender, EventArgs e)
         {
             LoadNhaCungCap(txt_TimKiem.Text.Trim());
+        }
+
+        private void btnLuu_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(cbTenNCC.Text))
+            {
+                MessageBox.Show("Vui lòng nhập Tên Nhà Cung Cấp!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbTenNCC.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtHotline.Text))
+            {
+                MessageBox.Show("Vui lòng nhập Số điện thoại (Hotline)!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtHotline.Focus();
+                return;
+            }
+            string ma = txtMaNCC.Text.Trim();
+            string ten = cbTenNCC.Text.Trim();
+            string sdt = txtHotline.Text.Trim();
+            string email = txtEmail.Text.Trim();
+            string diachi = txtDiaChi.Text.Trim();
+            string trangthai = string.IsNullOrEmpty(cboTrangThai.Text) ? "Đang hợp tác" : cboTrangThai.Text;
+
+            try
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                if (isAdding) 
+                {
+                    string sqlCheck = "SELECT COUNT(*) FROM NHACUNGCAP WHERE MANCC = @ma";
+                    using (SqlCommand cmdCheck = new SqlCommand(sqlCheck, conn))
+                    {
+                        cmdCheck.Parameters.AddWithValue("@ma", ma);
+                        int count = (int)cmdCheck.ExecuteScalar();
+                        if (count > 0)
+                        {
+                            MessageBox.Show("Mã nhà cung cấp này đã tồn tại trong hệ thống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                    string sqlInsert = @"INSERT INTO NHACUNGCAP (MANCC, TENNCC, SDT, EMAIL, DIACHI, TRANGTHAI)
+                                 VALUES (@ma, @ten, @sdt, @email, @diachi, @tt)";
+
+                    using (SqlCommand cmd = new SqlCommand(sqlInsert, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ma", ma);
+                        cmd.Parameters.AddWithValue("@ten", ten);
+                        cmd.Parameters.AddWithValue("@sdt", sdt);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@diachi", diachi);
+                        cmd.Parameters.AddWithValue("@tt", trangthai);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("✅ Thêm nhà cung cấp thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (isEditing) 
+                {
+                  
+                    string sqlUpdate = @"UPDATE NHACUNGCAP 
+                                 SET TENNCC = @ten, 
+                                     SDT = @sdt, 
+                                     EMAIL = @email, 
+                                     DIACHI = @diachi, 
+                                     TRANGTHAI = @tt 
+                                 WHERE MANCC = @ma";
+
+                    using (SqlCommand cmd = new SqlCommand(sqlUpdate, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ma", ma);
+                        cmd.Parameters.AddWithValue("@ten", ten);
+                        cmd.Parameters.AddWithValue("@sdt", sdt);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@diachi", diachi);
+                        cmd.Parameters.AddWithValue("@tt", trangthai);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("✅ Cập nhật thông tin thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("❌ Lỗi Database: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                LoadNhaCungCap(); 
+                ResetForm();      
+            }
         }
     }
 }

@@ -139,10 +139,10 @@ namespace QuanLiBanGiay
         {
             dtChiTiet.Columns.Add("MaSP", typeof(string));
             dtChiTiet.Columns.Add("TenSP", typeof(string));
-            dtChiTiet.Columns.Add("MaSize", typeof(string));      // Mã size (để lưu vào DB)
-            dtChiTiet.Columns.Add("TenSize", typeof(string));     // Tên size (để hiển thị)
-            dtChiTiet.Columns.Add("MaMau", typeof(string));       // Mã màu (để lưu vào DB)
-            dtChiTiet.Columns.Add("TenMau", typeof(string));      // Tên màu (để hiển thị)
+            dtChiTiet.Columns.Add("MaSize", typeof(string));      
+            dtChiTiet.Columns.Add("TenSize", typeof(string));     
+            dtChiTiet.Columns.Add("MaMau", typeof(string));       
+            dtChiTiet.Columns.Add("TenMau", typeof(string));     
             dtChiTiet.Columns.Add("SoLuong", typeof(int));
             dtChiTiet.Columns.Add("DonGia", typeof(decimal));
             dtChiTiet.Columns.Add("ThanhTien", typeof(decimal));
@@ -162,28 +162,28 @@ namespace QuanLiBanGiay
                     HeaderText = "Tên sản phẩm",
                     Width = 150
                 });
-                // Cột MaSize - ẨN (để lấy dữ liệu khi click)
+
                 dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     DataPropertyName = "MaSize",
                     HeaderText = "MaSize",
-                    Visible = false  // Ẩn cột này
+                    Visible = false 
                 });
-                // Cột TenSize - HIỂN THỊ
+
                 dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     DataPropertyName = "TenSize",
                     HeaderText = "Size",
                     Width = 80
                 });
-                // Cột MaMau - ẨN (để lấy dữ liệu khi click)
+
                 dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     DataPropertyName = "MaMau",
                     HeaderText = "MaMau",
-                    Visible = false  // Ẩn cột này
+                    Visible = false  
                 });
-                // Cột TenMau - HIỂN THỊ
+
                 dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     DataPropertyName = "TenMau",
@@ -215,7 +215,7 @@ namespace QuanLiBanGiay
             dgvCTPN.DataSource = dtChiTiet;
         }
 
-        // Phương thức xóa dòng đang chọn trong DataGridView
+
         private void XoaDongChiTiet()
         {
             if (dgvCTPN.CurrentRow == null || dgvCTPN.CurrentRow.Index < 0)
@@ -235,10 +235,10 @@ namespace QuanLiBanGiay
             {
                 int rowIndex = dgvCTPN.CurrentRow.Index;
                 
-                // Xóa dòng
+ 
                 dtChiTiet.Rows.RemoveAt(rowIndex);
 
-                // Cập nhật tổng tiền
+
                 CapNhatTongTien();
 
                 MessageBox.Show("Đã xóa dòng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -264,8 +264,6 @@ namespace QuanLiBanGiay
             btnLuuPN.Enabled = false;
             btnTaoPN.Enabled = true;
             dtChiTiet.Clear();
-
-            // Đặt lại DataSource cho DataGridView
             dgvCTPN.DataSource = dtChiTiet;
         }
 
@@ -373,8 +371,6 @@ namespace QuanLiBanGiay
                 {
                     txtDonGia.Clear();
                 }
-
-                // Load kích cỡ và màu sắc theo sản phẩm được chọn
                 string maGiay = row["MAGIAY"].ToString();
                 LoadKichCoVaMauSac(maGiay);
             }
@@ -451,12 +447,10 @@ namespace QuanLiBanGiay
             string maSP = cboMaSP.SelectedValue.ToString();
             string tenSP = cboMaSP.Text;
             string maSize = cboKichCo.SelectedValue.ToString();
-            string tenSize = cboKichCo.Text;  // Lấy tên size để hiển thị
+            string tenSize = cboKichCo.Text;  
             string maMau = cboMauSac.SelectedValue.ToString();
-            string tenMau = cboMauSac.Text;   // Lấy tên màu để hiển thị
+            string tenMau = cboMauSac.Text;   
             decimal thanhTien = soLuong * donGia;
-
-            // Kiểm tra nếu đã có sản phẩm với cùng mã, size và màu
             DataRow existingRow = dtChiTiet.AsEnumerable()
                                            .FirstOrDefault(row => 
                                                string.Equals(row.Field<string>("MaSP"), maSP, StringComparison.OrdinalIgnoreCase) &&
@@ -465,12 +459,12 @@ namespace QuanLiBanGiay
 
             if (existingRow == null)
             {
-                // Thêm mới: MaSP, TenSP, MaSize, TenSize, MaMau, TenMau, SoLuong, DonGia, ThanhTien
+                
                 dtChiTiet.Rows.Add(maSP, tenSP, maSize, tenSize, maMau, tenMau, soLuong, donGia, thanhTien);
             }
             else
             {
-                // Nếu đã tồn tại, cộng dồn số lượng
+
                 int soLuongCu = Convert.ToInt32(existingRow["SoLuong"]);
                 int soLuongMoi = soLuongCu + soLuong;
                 existingRow["SoLuong"] = soLuongMoi;
@@ -483,7 +477,7 @@ namespace QuanLiBanGiay
 
         private void LamMoiNhapChiTiet()
         {
-            // Reset các control để nhập sản phẩm mới
+
             cboMaSP.SelectedIndex = -1;
             cboKichCo.SelectedIndex = -1;
             cboMauSac.SelectedIndex = -1;
@@ -549,7 +543,6 @@ namespace QuanLiBanGiay
                 SqlTransaction transaction = connection.BeginTransaction();
                 try
                 {
-                    // 1. Lưu phiếu nhập
                     using (SqlCommand cmdPN = new SqlCommand("INSERT INTO PHIEUNHAP (MAPN, NGAYNHAP, MANV, MANCC, TONGTIEN) VALUES (@mapn, @ngaynhap, @manv, @mancc, @tongtien)", connection, transaction))
                     {
                         cmdPN.Parameters.AddWithValue("@mapn", maPN);
@@ -560,7 +553,6 @@ namespace QuanLiBanGiay
                         cmdPN.ExecuteNonQuery();
                     }
 
-                    // 2. Lưu chi tiết phiếu nhập (KHÔNG cập nhật tồn kho nếu database đã có trigger)
                     foreach (DataRow row in dtChiTiet.Rows)
                     {
                         string maGiay = row["MaSP"].ToString();
@@ -569,7 +561,7 @@ namespace QuanLiBanGiay
                         int soLuong = Convert.ToInt32(row["SoLuong"]);
                         decimal donGia = Convert.ToDecimal(row["DonGia"]);
 
-                        // Lưu chi tiết phiếu nhập với size và màu
+
                         using (SqlCommand cmdCT = new SqlCommand("INSERT INTO CTPHIEUNHAP (MAPN, MAGIAY, MASIZE, MAMAU, SOLUONG, DONGIA) VALUES (@mapn, @masp, @masize, @mamau, @soluong, @dongia)", connection, transaction))
                         {
                             cmdCT.Parameters.AddWithValue("@mapn", maPN);
@@ -581,9 +573,6 @@ namespace QuanLiBanGiay
                             cmdCT.ExecuteNonQuery();
                         }
 
-                       
-                        
-                        // Cập nhật tồn kho trong CHITIETGIAY
                         string checkSql = "SELECT COUNT(*) FROM CHITIETGIAY WHERE MAGIAY = @magiay AND MASIZE = @masize AND MAMAU = @mamau";
                         using (SqlCommand cmdCheck = new SqlCommand(checkSql, connection, transaction))
                         {
@@ -607,7 +596,7 @@ namespace QuanLiBanGiay
                             }
                             else
                             {
-                                // Nếu chưa tồn tại, thêm mới
+                                
                                 string insertSql = "INSERT INTO CHITIETGIAY (MAGIAY, MASIZE, MAMAU, SOLUONGTON) VALUES (@magiay, @masize, @mamau, @soluong)";
                                 using (SqlCommand cmdInsert = new SqlCommand(insertSql, connection, transaction))
                                 {

@@ -14,6 +14,8 @@ namespace QuanLiBanGiay
 {
     public partial class Form_KhuyenMai : Form
     {
+        bool isAdding = false;
+        bool isEditing = false;
         SqlConnection conn;
         DataSet ds_KM = new DataSet();
         SqlDataAdapter da_KM = new SqlDataAdapter();
@@ -42,7 +44,7 @@ namespace QuanLiBanGiay
                 if (data_KM.Columns["NGAYKETTHUC"] != null)
                     data_KM.Columns["NGAYKETTHUC"].DefaultCellStyle.Format = "dd/MM/yyyy";
 
-                AddDataBindings(); 
+
             }
             catch (Exception ex)
             {
@@ -50,36 +52,55 @@ namespace QuanLiBanGiay
             }
             finally { if (conn.State == ConnectionState.Open) conn.Close(); }
         }
-        //private void DataBindings_KhuyenMai()
-        //{
+        private void SetInputsEnabled(bool enabled)
+        {
+            txtTenKM.Enabled = enabled;
+            txtNgayBatDau.Enabled = enabled;
+            txtNgayKetThuc.Enabled = enabled;
+            txtGiamGia.Enabled = enabled;
+        }
 
-        //    txtMaKM.DataBindings.Clear();
-        //    txtTenKM.DataBindings.Clear();
-        //    txtNgayBatDau.DataBindings.Clear();
-        //    txtNgayKetThuc.DataBindings.Clear();
-        //    txtGiamGia.DataBindings.Clear();
-
-            
-        //    txtMaKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "MAKM");
-        //    txtTenKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "TENKM");
-        //    txtNgayBatDau.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYBATDAU");
-        //    txtNgayKetThuc.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYKETTHUC");
-        //    txtGiamGia.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "GIAMGIA");
-        //}
+        private void ResetForm()
+        {
+            txtMaKM.Clear();
+            txtTenKM.Clear();
+            txtNgayBatDau.Clear();
+            txtNgayKetThuc.Clear();
+            txtGiamGia.Clear();
+            txtTimKiem.Clear();
+            isAdding = false;
+            isEditing = false;
+            SetInputsEnabled(false);
+            txtMaKM.Enabled = false;
+            btnThem.Enabled = true;
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = false;
+            data_KM.ClearSelection();
+        }
 
         private bool KiemTraDuLieu()
         {
-            if  (string.IsNullOrWhiteSpace(txtTenKM.Text) ||
-                string.IsNullOrWhiteSpace(txtNgayBatDau.Text) || string.IsNullOrWhiteSpace(txtNgayKetThuc.Text) ||
-                string.IsNullOrWhiteSpace(txtGiamGia.Text))
+            if (string.IsNullOrWhiteSpace(txtTenKM.Text) ||
+        string.IsNullOrWhiteSpace(txtNgayBatDau.Text) ||
+        string.IsNullOrWhiteSpace(txtNgayKetThuc.Text) ||
+        string.IsNullOrWhiteSpace(txtGiamGia.Text))
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin Khuyến mãi.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-
-            if (!DateTime.TryParse(txtNgayBatDau.Text, out DateTime ngayBD) || !DateTime.TryParse(txtNgayKetThuc.Text, out DateTime ngayKT))
+            DateTime ngayBD, ngayKT;
+            if (!DateTime.TryParseExact(txtNgayBatDau.Text, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out ngayBD))
             {
-                MessageBox.Show("Định dạng Ngày Bắt Đầu/Kết Thúc không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ngày Bắt Đầu không hợp lệ (Định dạng đúng: dd/MM/yyyy)", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtNgayBatDau.Focus();
+                return false;
+            }
+
+            if (!DateTime.TryParseExact(txtNgayKetThuc.Text, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out ngayKT))
+            {
+                MessageBox.Show("Ngày Kết Thúc không hợp lệ (Định dạng đúng: dd/MM/yyyy)", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtNgayKetThuc.Focus();
                 return false;
             }
             if (ngayBD > ngayKT)
@@ -106,9 +127,7 @@ namespace QuanLiBanGiay
 
      
         private void btnReset_Click_1(object sender, EventArgs e)
-        {
-
-            ClearDataBindings(); 
+        {  
             txtMaKM.Text = TaoMaTuDong();
             txtTenKM.Clear();
             txtNgayBatDau.Clear();
@@ -151,65 +170,38 @@ namespace QuanLiBanGiay
         }
         private void btnThem_Click_1(object sender, EventArgs e)
         {
-            if (!KiemTraDuLieu()) return;
-            try
-            {
-                ClearDataBindings();
-                string maMoi = TaoMaTuDong();
-                txtMaKM.Text = maMoi;
-                DataRow newRow = ds_KM.Tables["KhuyenMai"].NewRow();
-                newRow["MAKM"] = maMoi;
-                newRow["TENKM"] = txtTenKM.Text;
-                if (DateTime.TryParse(txtNgayBatDau.Text, out DateTime bd)) newRow["NGAYBATDAU"] = bd;
-                if (DateTime.TryParse(txtNgayKetThuc.Text, out DateTime kt)) newRow["NGAYKETTHUC"] = kt;
-                if (decimal.TryParse(txtGiamGia.Text, out decimal gg)) newRow["GIAMGIA"] = gg;
-                ds_KM.Tables["KhuyenMai"].Rows.Add(newRow);
-                if (cb == null) cb = new SqlCommandBuilder(da_KM);
-                da_KM.Update(ds_KM, "KhuyenMai");
-
-                MessageBox.Show($"Thêm thành công mã {maMoi}!", "Thông báo");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi thêm: " + ex.Message);
-            }
-            finally
-            {
-                LoadDataKhuyenMai();
-            }
+            isAdding = true;
+            isEditing = false;
+            SetInputsEnabled(true); 
+            txtTenKM.Clear();
+            txtNgayBatDau.Clear();
+            txtNgayKetThuc.Clear();
+            txtGiamGia.Clear();
+            txtMaKM.Text = TaoMaTuDong();
+            txtMaKM.Enabled = false;
+            txtTenKM.Focus();
+            btnThem.Enabled = false;
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = true; 
         }
 
         private void btnSua_Click_1(object sender, EventArgs e)
         {
-            if (data_KM.CurrentRow == null)
+            if (string.IsNullOrEmpty(txtMaKM.Text))
             {
-                MessageBox.Show("Vui lòng chọn khuyến mãi cần sửa.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn khuyến mãi cần sửa!");
                 return;
             }
-            if (!KiemTraDuLieu()) return;
-            try
-            {
-                DataRowView drv = (DataRowView)data_KM.CurrentRow.DataBoundItem;
-                drv.BeginEdit();
-                drv["TENKM"] = txtTenKM.Text;
-                if (DateTime.TryParse(txtNgayBatDau.Text, out DateTime bd)) drv["NGAYBATDAU"] = bd;
-                if (DateTime.TryParse(txtNgayKetThuc.Text, out DateTime kt)) drv["NGAYKETTHUC"] = kt;
-                if (decimal.TryParse(txtGiamGia.Text, out decimal gg)) drv["GIAMGIA"] = gg;
-                drv.EndEdit();
-                if (ds_KM.HasChanges())
-                {
-                    da_KM.Update(ds_KM, "KhuyenMai");
-                    MessageBox.Show("Cập nhật khuyến mãi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Không có thông tin nào thay đổi.", "Thông báo");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi sửa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+            isEditing = true;
+            isAdding = false;
+
+            SetInputsEnabled(true);
+            btnThem.Enabled = false;
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = true; 
         }
 
         private void btnTimKiem_Click(object sender, EventArgs e)
@@ -258,37 +250,53 @@ namespace QuanLiBanGiay
             {
                 LoadDataKhuyenMai();
             }
-        }
-        private void ClearDataBindings()
-        {
-            txtMaKM.DataBindings.Clear();
-            txtTenKM.DataBindings.Clear();
-            txtNgayBatDau.DataBindings.Clear();
-            txtNgayKetThuc.DataBindings.Clear();
-            txtGiamGia.DataBindings.Clear();
-        }
-        private void AddDataBindings()
-        {
-            ClearDataBindings(); 
-            txtMaKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "MAKM", true, DataSourceUpdateMode.Never);
-            txtTenKM.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "TENKM", true, DataSourceUpdateMode.Never);
-            txtNgayBatDau.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYBATDAU", true, DataSourceUpdateMode.Never, "", "dd/MM/yyyy");
-            txtNgayKetThuc.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "NGAYKETTHUC", true, DataSourceUpdateMode.Never, "", "dd/MM/yyyy");
-            txtGiamGia.DataBindings.Add("Text", ds_KM.Tables["KhuyenMai"], "GIAMGIA", true, DataSourceUpdateMode.Never);
-        }
+        }     
         private void data_KM_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             
         }
         private void data_KM_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            AddDataBindings();
+            if (e.RowIndex < 0 || e.RowIndex >= data_KM.Rows.Count) return;
+
+            try
+            {
+                DataRowView drv = data_KM.Rows[e.RowIndex].DataBoundItem as DataRowView;
+
+                if (drv == null) return;
+                txtMaKM.Text = drv["MAKM"].ToString();
+                txtTenKM.Text = drv["TENKM"].ToString();
+                txtGiamGia.Text = drv["GIAMGIA"].ToString();
+                if (drv["NGAYBATDAU"] != DBNull.Value)
+                {
+                    txtNgayBatDau.Text = Convert.ToDateTime(drv["NGAYBATDAU"]).ToString("dd/MM/yyyy");
+                }
+                else txtNgayBatDau.Clear();
+
+                if (drv["NGAYKETTHUC"] != DBNull.Value)
+                {
+                    txtNgayKetThuc.Text = Convert.ToDateTime(drv["NGAYKETTHUC"]).ToString("dd/MM/yyyy");
+                }
+                else txtNgayKetThuc.Clear();                
+                SetInputsEnabled(false); 
+                btnThem.Enabled = true;
+                btnSua.Enabled = true;   
+                btnXoa.Enabled = true;   
+                btnLuu.Enabled = false;
+                isAdding = false;
+                isEditing = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi chọn dòng: " + ex.Message);
+            }
         }
         private void Form_KhuyenMai_Load_1(object sender, EventArgs e)
         {
             LoadDataKhuyenMai();
             data_KM.SelectionChanged += data_KM_SelectionChanged;
             txtMaKM.Enabled = false;
+            ResetForm();
         }
         private void data_KM_SelectionChanged(object sender, EventArgs e)
         {
@@ -297,6 +305,73 @@ namespace QuanLiBanGiay
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnLuu_Click(object sender, EventArgs e)
+        {
+            if (!KiemTraDuLieu()) return;
+
+           
+            string ma = txtMaKM.Text.Trim();
+            string ten = txtTenKM.Text.Trim();
+            decimal giam = decimal.Parse(txtGiamGia.Text.Trim());
+
+            
+            DateTime bd, kt;
+            try
+            {
+                bd = DateTime.ParseExact(txtNgayBatDau.Text, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                kt = DateTime.ParseExact(txtNgayKetThuc.Text, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                MessageBox.Show("Ngày tháng không đúng định dạng dd/MM/yyyy"); return;
+            }
+
+            try
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
+                if (isAdding) 
+                {
+                    
+                    string sqlInsert = "INSERT INTO KHUYENMAI (MAKM, TENKM, NGAYBATDAU, NGAYKETTHUC, GIAMGIA) VALUES (@ma, @ten, @bd, @kt, @giam)";
+                    using (SqlCommand cmd = new SqlCommand(sqlInsert, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ma", ma);
+                        cmd.Parameters.AddWithValue("@ten", ten);
+                        cmd.Parameters.AddWithValue("@bd", bd);
+                        cmd.Parameters.AddWithValue("@kt", kt);
+                        cmd.Parameters.AddWithValue("@giam", giam);
+                        cmd.ExecuteNonQuery();
+                    }
+                    MessageBox.Show("Thêm thành công!");
+                }
+                else if (isEditing)
+                {
+                    string sqlUpdate = "UPDATE KHUYENMAI SET TENKM=@ten, NGAYBATDAU=@bd, NGAYKETTHUC=@kt, GIAMGIA=@giam WHERE MAKM=@ma";
+                    using (SqlCommand cmd = new SqlCommand(sqlUpdate, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ma", ma);
+                        cmd.Parameters.AddWithValue("@ten", ten);
+                        cmd.Parameters.AddWithValue("@bd", bd);
+                        cmd.Parameters.AddWithValue("@kt", kt);
+                        cmd.Parameters.AddWithValue("@giam", giam);
+                        cmd.ExecuteNonQuery();
+                    }
+                    MessageBox.Show("Cập nhật thành công!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+                LoadDataKhuyenMai();
+                ResetForm();
+            }
         }
     }
 }
