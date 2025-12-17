@@ -12,6 +12,7 @@ namespace QuanLiBanGiay
 {
     public partial class Form_TaoHoaDon : Form
     {
+        bool isLoading = true;
         public Form_TaoHoaDon()
         {
             InitializeComponent();
@@ -21,6 +22,7 @@ namespace QuanLiBanGiay
 
         private void Form_TaoHoaDon_Load(object sender, EventArgs e)
         {
+            isLoading = true; // Bắt đầu load, chặn các sự kiện kiểm tra kho
             LoadKhachHang();
             LoadSanPham();
             LoadNhanVien();
@@ -29,6 +31,7 @@ namespace QuanLiBanGiay
             txtMaDH.Text = SinhMaHoaDonTuDong();
             LoadDanhSachHoaDon();
             CheDoTaoMoi();
+            isLoading = false; // Load xong, cho phép kiểm tra kho
         }
         private void LoadKhachHang()
         {
@@ -134,22 +137,43 @@ namespace QuanLiBanGiay
         }
         private void LoadSanPham()
         {
+            //using (SqlConnection conn = DBConnection.GetConnection())
+            //{
+            //    string sql = @"
+            //        SELECT DISTINCT g.MAGIAY, g.TENGIAY, g.MALOAI, g.GIABAN, ct.MASIZE, ct.MAMAU, ct.SOLUONGTON
+            //        FROM GIAY g, CHITIETGIAY ct WHERE g.MAGIAY = ct.MAGIAY
+            //    ";
+
+            //    SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+            //    DataTable dt = new DataTable();
+            //    da.Fill(dt);
+
+            //    cboMaSP.DataSource = dt;
+            //    cboMaSP.DisplayMember = "MAGIAY";
+            //    cboMaSP.ValueMember = "MAGIAY";
+            //    cboMaSP.SelectedIndex = -1;
+
+            //    cboTenSP.DataSource = dt.Copy();
+            //    cboTenSP.DisplayMember = "TENGIAY";
+            //    cboTenSP.ValueMember = "MAGIAY";
+            //    cboTenSP.SelectedIndex = -1;
+            //}
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string sql = @"
-                    SELECT DISTINCT g.MAGIAY, g.TENGIAY, g.MALOAI, g.GIABAN, ct.MASIZE, ct.MAMAU, ct.SOLUONGTON
-                    FROM GIAY g, CHITIETGIAY ct WHERE g.MAGIAY = ct.MAGIAY
-                ";
+                // SỬA: Chỉ lấy thông tin chung từ bảng GIAY để tránh trùng lặp
+                string sql = "SELECT MAGIAY, TENGIAY, MALOAI, GIABAN FROM GIAY";
 
                 SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
+                // Gán dữ liệu cho ComboBox Mã SP
                 cboMaSP.DataSource = dt;
                 cboMaSP.DisplayMember = "MAGIAY";
                 cboMaSP.ValueMember = "MAGIAY";
                 cboMaSP.SelectedIndex = -1;
 
+                // Gán dữ liệu cho ComboBox Tên SP (Copy ra bảng mới để không bị xung đột con trỏ)
                 cboTenSP.DataSource = dt.Copy();
                 cboTenSP.DisplayMember = "TENGIAY";
                 cboTenSP.ValueMember = "MAGIAY";
@@ -235,22 +259,44 @@ namespace QuanLiBanGiay
         {
             if (cboMaSP.SelectedIndex == -1) return;
 
-            DataRowView r = (DataRowView)cboMaSP.SelectedItem;
-            cboTenSP.Text = r["TENGIAY"].ToString();
-            txtMaLoai.Text = r["MALOAI"].ToString();
-            cboKichCo.Text = r["MASIZE"].ToString();
-            cboMauSac.Text = r["MAMAU"].ToString();
+            try
+            {
+                // Lấy dòng dữ liệu hiện tại từ ComboBox
+                DataRowView r = (DataRowView)cboMaSP.SelectedItem;
+                string maGiay = r["MAGIAY"].ToString();
+
+                // Đồng bộ sang ô Tên SP và Loại
+                // Lưu ý: Ta gán SelectedValue chứ không gán Text để đảm bảo đồng bộ đúng
+                cboTenSP.SelectedValue = maGiay;
+                txtMaLoai.Text = r["MALOAI"].ToString();
+
+                // QUAN TRỌNG: Tải danh sách Size và Màu dành riêng cho Mã Giày này
+                LoadKichCoVaMauSac(maGiay);
+            }
+            catch { }
         }
 
         private void cboTenSP_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cboTenSP.SelectedIndex == -1) return;
 
-            DataRowView r = (DataRowView)cboTenSP.SelectedItem;
-            cboMaSP.Text = r["MAGIAY"].ToString();
-            txtMaLoai.Text = r["MALOAI"].ToString();
-            cboKichCo.Text = r["MASIZE"].ToString();
-            cboMauSac.Text = r["MAMAU"].ToString();
+            try
+            {
+                DataRowView r = (DataRowView)cboTenSP.SelectedItem;
+                string maGiay = r["MAGIAY"].ToString();
+
+                // Đồng bộ ngược lại ô Mã SP
+                if (cboMaSP.SelectedValue?.ToString() != maGiay)
+                {
+                    cboMaSP.SelectedValue = maGiay;
+                }
+
+                txtMaLoai.Text = r["MALOAI"].ToString();
+
+                // Không cần gọi LoadKichCoVaMauSac ở đây nữa vì khi cboMaSP thay đổi ở trên nó đã gọi rồi
+                // hoặc nếu muốn chắc chắn thì cứ gọi lại cũng không sao.
+            }
+            catch { }
         }
         private void LoadNhanVien()
         {
@@ -324,24 +370,88 @@ namespace QuanLiBanGiay
 
         private void btnThemSP_Click(object sender, EventArgs e)
         {
-            if (cboMaSP.Text == "" || txtSoLuongMua.Text == "")
+            // 1. KIỂM TRA DỮ LIỆU ĐẦU VÀO (VALIDATION)
+            // Kiểm tra đã chọn mã sản phẩm chưa
+            if (cboMaSP.SelectedIndex == -1 || string.IsNullOrEmpty(cboMaSP.Text))
             {
-                MessageBox.Show("Bạn phải chọn sản phẩm và số lượng!");
+                MessageBox.Show("Vui lòng chọn sản phẩm!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboMaSP.Focus();
                 return;
             }
 
-            DataRowView r = (DataRowView)cboMaSP.SelectedItem;
-            double gia = double.Parse(r["GIABAN"].ToString());
+            // Kiểm tra đã chọn Size và Màu chưa
+            // Lưu ý: Màu sắc bắt buộc phải chọn trong danh sách để lấy được Mã Màu (Value)
+            if (string.IsNullOrEmpty(cboKichCo.Text) || cboMauSac.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn đầy đủ Kích cỡ và Màu sắc!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            dtSanPham.Rows.Add(
-                cboMaSP.Text,
-                cboTenSP.Text,
-                txtMaLoai.Text,
-                cboKichCo.Text,
-                cboMauSac.Text,
-                int.Parse(txtSoLuongMua.Text),
-                gia
-            );
+            // Kiểm tra số lượng
+            if (string.IsNullOrEmpty(txtSoLuongMua.Text) || !int.TryParse(txtSoLuongMua.Text, out int soLuong) || soLuong <= 0)
+            {
+                MessageBox.Show("Vui lòng nhập số lượng hợp lệ (lớn hơn 0)!", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSoLuongMua.Focus();
+                return;
+            }
+
+            // 2. LẤY THÔNG TIN ĐỂ THÊM VÀO LƯỚI
+            try
+            {
+                // Lấy thông tin cơ bản từ ComboBox Mã SP
+                DataRowView r = (DataRowView)cboMaSP.SelectedItem;
+                string maGiay = cboMaSP.SelectedValue.ToString(); // Lấy mã chuẩn
+                string tenGiay = cboTenSP.Text;
+                string loaiGiay = txtMaLoai.Text;
+
+                // Lấy Size từ Text (vì size thường là số/chữ hiển thị trực tiếp)
+                string size = cboKichCo.Text;
+
+                // --- QUAN TRỌNG NHẤT ---
+                // Lấy MÃ MÀU (Value) để lưu vào Database, không lấy Tên Màu (Text)
+                // Ví dụ: Lấy "MS01" thay vì "Trắng"
+                string maMau = cboMauSac.SelectedValue.ToString();
+
+                double gia = double.Parse(r["GIABAN"].ToString());
+
+                // 3. KIỂM TRA TRÙNG LẶP TRONG GIỎ HÀNG
+                // Nếu sản phẩm này (cùng Mã + cùng Size + cùng Mã Màu) đã có thì cộng dồn số lượng
+                bool daCo = false;
+                foreach (DataRow row in dtSanPham.Rows)
+                {
+                    if (row["MAGIAY"].ToString() == maGiay &&
+                        row["MASIZE"].ToString() == size &&
+                        row["MAMAU"].ToString() == maMau) // So sánh theo Mã Màu
+                    {
+                        // Cộng thêm số lượng mới vào số lượng cũ
+                        row["SOLUONG"] = Convert.ToInt32(row["SOLUONG"]) + soLuong;
+                        daCo = true;
+                        break;
+                    }
+                }
+
+                // 4. NẾU CHƯA CÓ THÌ THÊM DÒNG MỚI
+                if (!daCo)
+                {
+                    dtSanPham.Rows.Add(
+                        maGiay,
+                        tenGiay,
+                        loaiGiay,
+                        size,
+                        maMau,      // Lưu Mã màu (MS01)
+                        soLuong,
+                        gia
+                    );
+                }
+
+                // Xóa số lượng để nhập tiếp cho tiện
+                txtSoLuongMua.Clear();
+                txtSoLuongMua.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm sản phẩm: " + ex.Message);
+            }
         }
 
         private void btnXoaSP_Click(object sender, EventArgs e)
@@ -702,12 +812,12 @@ namespace QuanLiBanGiay
                 using (SqlConnection conn = DBConnection.GetConnection())
                 {
                     conn.Open();
-                    string sqlSize = @"
-                SELECT DISTINCT MASIZE 
-                FROM CHITIETGIAY 
-                WHERE MAGIAY = @MAGIAY AND SOLUONGTON > 0
-                ORDER BY MASIZE";
 
+                    // 1. Load Size (Giữ nguyên logic cũ nhưng viết gọn lại)
+                    string sqlSize = @"SELECT DISTINCT MASIZE 
+                               FROM CHITIETGIAY 
+                               WHERE MAGIAY = @MAGIAY AND SOLUONGTON > 0 
+                               ORDER BY MASIZE";
                     using (SqlCommand cmd = new SqlCommand(sqlSize, conn))
                     {
                         cmd.Parameters.AddWithValue("@MAGIAY", maGiay);
@@ -717,29 +827,34 @@ namespace QuanLiBanGiay
                         {
                             cboKichCo.Items.Add(reader["MASIZE"].ToString());
                         }
+                        reader.Close(); // Đóng reader để dùng tiếp connection
                     }
 
-                    conn.Close();
-                    conn.Open();
-                    string sqlMau = @"
-                SELECT DISTINCT MAMAU 
-                FROM CHITIETGIAY 
-                WHERE MAGIAY = @MAGIAY AND SOLUONGTON > 0
-                ORDER BY MAMAU";
+                    // 2. Load Màu Sắc (SỬA PHẦN NÀY)
+                    // Join với bảng MAUSAC để lấy tên màu
+                    string sqlMau = @"SELECT DISTINCT CT.MAMAU, MS.TENMAU 
+                              FROM CHITIETGIAY CT
+                              JOIN MAUSAC MS ON CT.MAMAU = MS.MAMAU
+                              WHERE CT.MAGIAY = @MAGIAY AND CT.SOLUONGTON > 0";
 
-                    using (SqlCommand cmd = new SqlCommand(sqlMau, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@MAGIAY", maGiay);
-                        SqlDataReader reader = cmd.ExecuteReader();
-                        cboMauSac.Items.Clear();
-                        while (reader.Read())
-                        {
-                            cboMauSac.Items.Add(reader["MAMAU"].ToString());
-                        }
-                    }
+                    SqlDataAdapter da = new SqlDataAdapter(sqlMau, conn);
+                    da.SelectCommand.Parameters.AddWithValue("@MAGIAY", maGiay);
+
+                    DataTable dtMau = new DataTable();
+                    da.Fill(dtMau);
+
+                    //// Cấu hình hiển thị tên nhưng giá trị là mã
+                    //cboMauSac.DataSource = dtMau;
+                    //cboMauSac.DisplayMember = "TENMAU"; // Hiển thị: Trắng, Đen...
+                    //cboMauSac.ValueMember = "MAMAU";    // Giá trị thực: MS01, MS02...
+                    //cboMauSac.SelectedIndex = -1;
+
+                    // SỬA LẠI THỨ TỰ NHƯ SAU:
+                    cboMauSac.DisplayMember = "TENMAU";
+                    cboMauSac.ValueMember = "MAMAU";
+                    cboMauSac.DataSource = dtMau;       // Gán DataSource cuối cùng để tránh lỗi DataRowView
+                    cboMauSac.SelectedIndex = -1;       // Reset về chưa chọn
                 }
-                cboKichCo.Text = "";
-                cboMauSac.Text = "";
             }
             catch (Exception ex)
             {
@@ -782,12 +897,18 @@ namespace QuanLiBanGiay
         }
         private void KiemTraTonKho()
         {
+            // 1. Thêm dòng này: Nếu đang load dữ liệu hoặc chưa chọn item nào thì không kiểm tra
+            if (isLoading || cboMaSP.SelectedIndex == -1) return;
             if (string.IsNullOrEmpty(cboMaSP.Text)) return;
-            if (string.IsNullOrEmpty(cboKichCo.Text) && string.IsNullOrEmpty(cboMauSac.Text)) return;
+
+            // Sửa: Kiểm tra SelectedValue cho màu (vì Text giờ là tên màu)
+            if (string.IsNullOrEmpty(cboKichCo.Text) && cboMauSac.SelectedValue == null) return;
 
             string maGiay = cboMaSP.Text.Trim();
             string size = cboKichCo.Text.Trim();
-            string mau = cboMauSac.Text.Trim();
+
+            // SỬA: Lấy Mã màu từ SelectedValue
+            string mau = cboMauSac.SelectedValue?.ToString() ?? "";
 
             try
             {
@@ -805,25 +926,26 @@ namespace QuanLiBanGiay
                     {
                         cmd.Parameters.AddWithValue("@MAGIAY", maGiay);
                         cmd.Parameters.AddWithValue("@MASIZE", size);
-                        cmd.Parameters.AddWithValue("@MAMAU", mau);
+                        cmd.Parameters.AddWithValue("@MAMAU", mau); // Truyền Mã màu (MS01) vào SQL
 
                         object result = cmd.ExecuteScalar();
 
                         if (result == null || Convert.ToInt32(result) <= 0)
                         {
+                            // Logic thông báo lỗi giữ nguyên...
                             string loi = "";
                             if (!string.IsNullOrEmpty(size) && !string.IsNullOrEmpty(mau))
-                                loi = $"Đã hết hàng size {size} - màu {mau}!";
+                                loi = $"Đã hết hàng size {size} - màu {cboMauSac.Text}!"; // Dùng Text để hiện tên màu cho thân thiện
                             else if (!string.IsNullOrEmpty(size))
                                 loi = $"Đã hết size {size}!";
                             else if (!string.IsNullOrEmpty(mau))
-                                loi = $"Đã hết màu {mau}!";
+                                loi = $"Đã hết màu {cboMauSac.Text}!";
 
                             MessageBox.Show(loi, "Hết hàng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            if (!string.IsNullOrEmpty(size) && string.IsNullOrEmpty(mau))
-                                cboKichCo.Text = "";
-                            else if (!string.IsNullOrEmpty(mau))
-                                cboMauSac.Text = "";
+
+                            // Reset
+                            if (!string.IsNullOrEmpty(size) && string.IsNullOrEmpty(mau)) cboKichCo.SelectedIndex = -1;
+                            else if (!string.IsNullOrEmpty(mau)) cboMauSac.SelectedIndex = -1;
                         }
                     }
                 }
