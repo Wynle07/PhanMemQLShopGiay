@@ -1,5 +1,5 @@
 # HƯỚNG DẪN CÀI ĐẶT VÀ CHẠY ĐỒ ÁN QUẢN LÝ CỬA HÀNG GIÀY
-==================================================
+
 PHẦN 1: CÀI ĐẶT MÔI TRƯỜNG & THƯ VIỆN
 ==================================================
 1. Cài đặt Crystal Reports (Bắt buộc)
@@ -13,7 +13,7 @@ PHẦN 1: CÀI ĐẶT MÔI TRƯỜNG & THƯ VIỆN
      + iTextSharp (Dùng để xuất PDF hóa đơn).
      + Microsoft.Office.Interop.Excel (Dùng để xuất báo cáo Excel).
 
-==================================================
+
 PHẦN 2: CẤU HÌNH CƠ SỞ DỮ LIỆU (SQL SERVER)
 ==================================================
 1. Chạy file SQL
@@ -30,7 +30,6 @@ PHẦN 2: CẤU HÌNH CƠ SỞ DỮ LIỆU (SQL SERVER)
      "Data Source=TEN_MAY_CUA_THAY;Initial Catalog=QL_BANGIAY;Integrated Security=True;TrustServerCertificate=True";
      -----------------------------------------------------------------------
 
-==================================================
 PHẦN 3: THÔNG TIN ĐĂNG NHẬP (DỮ LIỆU MẪU)
 ==================================================
 Hệ thống đã có sẵn dữ liệu mẫu cho 3 vai trò. Thầy có thể dùng các tài khoản sau để kiểm tra:
@@ -44,7 +43,7 @@ Hệ thống đã có sẵn dữ liệu mẫu cho 3 vai trò. Thầy có thể d
    - Tài khoản: quanlykho1
    - Mật khẩu:  123456
 
-==================================================
+
 THÔNG TIN NHÓM THỰC HIỆN
 ==================================================
 Nhóm 16 - Lớp 14DHTH10
