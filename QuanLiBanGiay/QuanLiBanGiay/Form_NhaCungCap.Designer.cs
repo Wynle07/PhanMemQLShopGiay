@@ -252,7 +252,7 @@
             this.btnXuatExcel.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.btnXuatExcel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXuatExcel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnXuatExcel.Image = global::QuanLiBanGiay.Properties.Resources.save1;
+            this.btnXuatExcel.Image = global::QuanLiBanGiay.Properties.Resources.icons8_export_16;
             this.btnXuatExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnXuatExcel.Location = new System.Drawing.Point(641, 13);
             this.btnXuatExcel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

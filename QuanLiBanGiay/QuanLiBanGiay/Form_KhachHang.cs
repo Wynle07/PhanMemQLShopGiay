@@ -40,18 +40,27 @@ namespace QuanLiBanGiay
                 da_kh.Fill(dt_kh);
                 dgvKhachHang.DataSource = dt_kh;               
                 dgvKhachHang.Columns["MAKH"].HeaderText = "Mã KH";
+                dgvKhachHang.Columns["MAKH"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgvKhachHang.Columns["TENKH"].HeaderText = "Tên khách hàng";
+                dgvKhachHang.Columns["TENKH"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgvKhachHang.Columns["SDT"].HeaderText = "SĐT";
+                dgvKhachHang.Columns["SDT"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgvKhachHang.Columns["EMAIL"].HeaderText = "Email";
+                dgvKhachHang.Columns["EMAIL"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgvKhachHang.Columns["DIACHI"].HeaderText = "Địa chỉ";
+                dgvKhachHang.Columns["DIACHI"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgvKhachHang.Columns["DIEMTICHLUY"].HeaderText = "Điểm TL";
-                dgvKhachHang.Columns["NGAYTAO"].HeaderText = "Ngày tạo";              
+                dgvKhachHang.Columns["DIEMTICHLUY"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvKhachHang.Columns["NGAYTAO"].HeaderText = "Ngày tạo";
+                dgvKhachHang.Columns["NGAYTAO"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvKhachHang.Columns["NGAYTAO"].DefaultCellStyle.Format = "dd/MM/yyyy";
                 if (dt_kh.Rows.Count > 0)
                 {
                     dgvKhachHang.ClearSelection();
                     dgvKhachHang.Rows[0].Selected = true;
                     ShowCurrentRowToTextbox(0);
                 }
+                dgvKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             }
             catch (Exception ex)
             {

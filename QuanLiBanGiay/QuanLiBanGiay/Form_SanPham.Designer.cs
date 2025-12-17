@@ -31,15 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_SanPham));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.clMaSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clTH = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clTenSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clLoaiSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clMaNCC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clKichCo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clMauSac = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clSlton = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpDanhSach = new System.Windows.Forms.GroupBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.thêmSảnPhẩmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,16 +57,26 @@
             this.btnChonAnh = new System.Windows.Forms.Button();
             this.lblTH = new System.Windows.Forms.Label();
             this.grbThongtin = new System.Windows.Forms.GroupBox();
+            this.cboTH = new System.Windows.Forms.ComboBox();
+            this.cboMauSac = new System.Windows.Forms.ComboBox();
+            this.cboNCC = new System.Windows.Forms.ComboBox();
+            this.cboKichCo = new System.Windows.Forms.ComboBox();
             this.panelButtons = new System.Windows.Forms.Panel();
+            this.btnLuu = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.cboKichCo = new System.Windows.Forms.ComboBox();
-            this.cboNCC = new System.Windows.Forms.ComboBox();
-            this.cboMauSac = new System.Windows.Forms.ComboBox();
-            this.cboTH = new System.Windows.Forms.ComboBox();
-            this.btnLuu = new System.Windows.Forms.Button();
+            this.clMaSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clTenSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clLoaiSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clKichCo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clMauSac = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clSlton = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clMaNCC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clTH = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HINHANHSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.grpDanhSach.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -89,14 +90,15 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clMaSP,
-            this.clTH,
             this.clTenSP,
             this.clLoaiSP,
-            this.clMaNCC,
             this.clKichCo,
             this.clMauSac,
             this.clGiaBan,
-            this.clSlton});
+            this.clSlton,
+            this.clMaNCC,
+            this.clTH,
+            this.HINHANHSP});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 28);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -106,78 +108,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(1479, 323);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // clMaSP
-            // 
-            this.clMaSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clMaSP.DataPropertyName = "MAGIAY";
-            this.clMaSP.HeaderText = "Mã SP";
-            this.clMaSP.MinimumWidth = 6;
-            this.clMaSP.Name = "clMaSP";
-            // 
-            // clTH
-            // 
-            this.clTH.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clTH.DataPropertyName = "TENTH";
-            this.clTH.HeaderText = "Tên thương hiệu";
-            this.clTH.MinimumWidth = 8;
-            this.clTH.Name = "clTH";
-            // 
-            // clTenSP
-            // 
-            this.clTenSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clTenSP.DataPropertyName = "TENGIAY";
-            this.clTenSP.HeaderText = "Tên SP";
-            this.clTenSP.MinimumWidth = 6;
-            this.clTenSP.Name = "clTenSP";
-            // 
-            // clLoaiSP
-            // 
-            this.clLoaiSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clLoaiSP.DataPropertyName = "TENLOAI";
-            this.clLoaiSP.HeaderText = "Loại SP";
-            this.clLoaiSP.MinimumWidth = 6;
-            this.clLoaiSP.Name = "clLoaiSP";
-            // 
-            // clMaNCC
-            // 
-            this.clMaNCC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clMaNCC.DataPropertyName = "TENNCC";
-            this.clMaNCC.HeaderText = "Tên nhà cung cấp";
-            this.clMaNCC.MinimumWidth = 6;
-            this.clMaNCC.Name = "clMaNCC";
-            // 
-            // clKichCo
-            // 
-            this.clKichCo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clKichCo.DataPropertyName = "KICHCO";
-            this.clKichCo.HeaderText = "Kích cỡ";
-            this.clKichCo.MinimumWidth = 6;
-            this.clKichCo.Name = "clKichCo";
-            // 
-            // clMauSac
-            // 
-            this.clMauSac.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clMauSac.DataPropertyName = "TENMAU";
-            this.clMauSac.HeaderText = "Màu Sắc";
-            this.clMauSac.MinimumWidth = 6;
-            this.clMauSac.Name = "clMauSac";
-            // 
-            // clGiaBan
-            // 
-            this.clGiaBan.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clGiaBan.DataPropertyName = "GIABAN";
-            this.clGiaBan.HeaderText = "Giá Bán";
-            this.clGiaBan.MinimumWidth = 6;
-            this.clGiaBan.Name = "clGiaBan";
-            // 
-            // clSlton
-            // 
-            this.clSlton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clSlton.DataPropertyName = "SOLUONGTON";
-            this.clSlton.HeaderText = "Số lượng tồn";
-            this.clSlton.MinimumWidth = 8;
-            this.clSlton.Name = "clSlton";
             // 
             // grpDanhSach
             // 
@@ -462,6 +392,42 @@
             this.grbThongtin.Text = "Thông tin sản phẩm";
             this.grbThongtin.Enter += new System.EventHandler(this.grbThongtin_Enter);
             // 
+            // cboTH
+            // 
+            this.cboTH.FormattingEnabled = true;
+            this.cboTH.Location = new System.Drawing.Point(250, 242);
+            this.cboTH.Name = "cboTH";
+            this.cboTH.Size = new System.Drawing.Size(376, 33);
+            this.cboTH.TabIndex = 111;
+            this.cboTH.SelectedIndexChanged += new System.EventHandler(this.cboTH_SelectedIndexChanged);
+            // 
+            // cboMauSac
+            // 
+            this.cboMauSac.FormattingEnabled = true;
+            this.cboMauSac.Location = new System.Drawing.Point(250, 157);
+            this.cboMauSac.Name = "cboMauSac";
+            this.cboMauSac.Size = new System.Drawing.Size(157, 33);
+            this.cboMauSac.TabIndex = 110;
+            this.cboMauSac.SelectedIndexChanged += new System.EventHandler(this.cboMauSac_SelectedIndexChanged);
+            // 
+            // cboNCC
+            // 
+            this.cboNCC.FormattingEnabled = true;
+            this.cboNCC.Location = new System.Drawing.Point(681, 157);
+            this.cboNCC.Name = "cboNCC";
+            this.cboNCC.Size = new System.Drawing.Size(290, 33);
+            this.cboNCC.TabIndex = 109;
+            this.cboNCC.SelectedIndexChanged += new System.EventHandler(this.cboNCC_SelectedIndexChanged);
+            // 
+            // cboKichCo
+            // 
+            this.cboKichCo.FormattingEnabled = true;
+            this.cboKichCo.Location = new System.Drawing.Point(56, 157);
+            this.cboKichCo.Name = "cboKichCo";
+            this.cboKichCo.Size = new System.Drawing.Size(157, 33);
+            this.cboKichCo.TabIndex = 108;
+            this.cboKichCo.SelectedIndexChanged += new System.EventHandler(this.cboKichCo_SelectedIndexChanged);
+            // 
             // panelButtons
             // 
             this.panelButtons.Controls.Add(this.btnLuu);
@@ -475,6 +441,23 @@
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(1485, 68);
             this.panelButtons.TabIndex = 27;
+            // 
+            // btnLuu
+            // 
+            this.btnLuu.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnLuu.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuu.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnLuu.Image = ((System.Drawing.Image)(resources.GetObject("btnLuu.Image")));
+            this.btnLuu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLuu.Location = new System.Drawing.Point(353, 10);
+            this.btnLuu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnLuu.Name = "btnLuu";
+            this.btnLuu.Size = new System.Drawing.Size(92, 52);
+            this.btnLuu.TabIndex = 93;
+            this.btnLuu.Text = "Lưu";
+            this.btnLuu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLuu.UseVisualStyleBackColor = false;
+            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // btnThem
             // 
@@ -544,58 +527,85 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // cboKichCo
+            // clMaSP
             // 
-            this.cboKichCo.FormattingEnabled = true;
-            this.cboKichCo.Location = new System.Drawing.Point(56, 157);
-            this.cboKichCo.Name = "cboKichCo";
-            this.cboKichCo.Size = new System.Drawing.Size(157, 33);
-            this.cboKichCo.TabIndex = 108;
-            this.cboKichCo.SelectedIndexChanged += new System.EventHandler(this.cboKichCo_SelectedIndexChanged);
+            this.clMaSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clMaSP.DataPropertyName = "MAGIAY";
+            this.clMaSP.HeaderText = "Mã SP";
+            this.clMaSP.MinimumWidth = 6;
+            this.clMaSP.Name = "clMaSP";
             // 
-            // cboNCC
+            // clTenSP
             // 
-            this.cboNCC.FormattingEnabled = true;
-            this.cboNCC.Location = new System.Drawing.Point(681, 157);
-            this.cboNCC.Name = "cboNCC";
-            this.cboNCC.Size = new System.Drawing.Size(290, 33);
-            this.cboNCC.TabIndex = 109;
-            this.cboNCC.SelectedIndexChanged += new System.EventHandler(this.cboNCC_SelectedIndexChanged);
+            this.clTenSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clTenSP.DataPropertyName = "TENGIAY";
+            this.clTenSP.HeaderText = "Tên SP";
+            this.clTenSP.MinimumWidth = 6;
+            this.clTenSP.Name = "clTenSP";
             // 
-            // cboMauSac
+            // clLoaiSP
             // 
-            this.cboMauSac.FormattingEnabled = true;
-            this.cboMauSac.Location = new System.Drawing.Point(250, 157);
-            this.cboMauSac.Name = "cboMauSac";
-            this.cboMauSac.Size = new System.Drawing.Size(157, 33);
-            this.cboMauSac.TabIndex = 110;
-            this.cboMauSac.SelectedIndexChanged += new System.EventHandler(this.cboMauSac_SelectedIndexChanged);
+            this.clLoaiSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clLoaiSP.DataPropertyName = "TENLOAI";
+            this.clLoaiSP.HeaderText = "Loại SP";
+            this.clLoaiSP.MinimumWidth = 6;
+            this.clLoaiSP.Name = "clLoaiSP";
             // 
-            // cboTH
+            // clKichCo
             // 
-            this.cboTH.FormattingEnabled = true;
-            this.cboTH.Location = new System.Drawing.Point(250, 242);
-            this.cboTH.Name = "cboTH";
-            this.cboTH.Size = new System.Drawing.Size(376, 33);
-            this.cboTH.TabIndex = 111;
-            this.cboTH.SelectedIndexChanged += new System.EventHandler(this.cboTH_SelectedIndexChanged);
+            this.clKichCo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clKichCo.DataPropertyName = "KICHCO";
+            this.clKichCo.HeaderText = "Kích cỡ";
+            this.clKichCo.MinimumWidth = 6;
+            this.clKichCo.Name = "clKichCo";
             // 
-            // btnLuu
+            // clMauSac
             // 
-            this.btnLuu.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnLuu.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLuu.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnLuu.Image = ((System.Drawing.Image)(resources.GetObject("btnLuu.Image")));
-            this.btnLuu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLuu.Location = new System.Drawing.Point(353, 10);
-            this.btnLuu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(92, 52);
-            this.btnLuu.TabIndex = 93;
-            this.btnLuu.Text = "Lưu";
-            this.btnLuu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnLuu.UseVisualStyleBackColor = false;
-            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
+            this.clMauSac.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clMauSac.DataPropertyName = "TENMAU";
+            this.clMauSac.HeaderText = "Màu Sắc";
+            this.clMauSac.MinimumWidth = 6;
+            this.clMauSac.Name = "clMauSac";
+            // 
+            // clGiaBan
+            // 
+            this.clGiaBan.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clGiaBan.DataPropertyName = "GIABAN";
+            this.clGiaBan.HeaderText = "Giá Bán";
+            this.clGiaBan.MinimumWidth = 6;
+            this.clGiaBan.Name = "clGiaBan";
+            // 
+            // clSlton
+            // 
+            this.clSlton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clSlton.DataPropertyName = "SOLUONGTON";
+            this.clSlton.HeaderText = "Số lượng tồn";
+            this.clSlton.MinimumWidth = 8;
+            this.clSlton.Name = "clSlton";
+            // 
+            // clMaNCC
+            // 
+            this.clMaNCC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clMaNCC.DataPropertyName = "TENNCC";
+            this.clMaNCC.HeaderText = "Tên nhà cung cấp";
+            this.clMaNCC.MinimumWidth = 6;
+            this.clMaNCC.Name = "clMaNCC";
+            // 
+            // clTH
+            // 
+            this.clTH.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clTH.DataPropertyName = "TENTH";
+            this.clTH.HeaderText = "Tên thương hiệu";
+            this.clTH.MinimumWidth = 8;
+            this.clTH.Name = "clTH";
+            // 
+            // HINHANHSP
+            // 
+            this.HINHANHSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.HINHANHSP.DataPropertyName = "HINHANHSP";
+            this.HINHANHSP.HeaderText = "Hình ảnh";
+            this.HINHANHSP.MinimumWidth = 8;
+            this.HINHANHSP.Name = "HINHANHSP";
             // 
             // Form_SanPham
             // 
@@ -653,19 +663,20 @@
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clMaSP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clTH;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clTenSP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clLoaiSP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clMaNCC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clKichCo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clMauSac;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clGiaBan;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clSlton;
         private System.Windows.Forms.ComboBox cboTH;
         private System.Windows.Forms.ComboBox cboMauSac;
         private System.Windows.Forms.ComboBox cboNCC;
         private System.Windows.Forms.ComboBox cboKichCo;
         private System.Windows.Forms.Button btnLuu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clMaSP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clTenSP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clLoaiSP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clKichCo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clMauSac;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clGiaBan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clSlton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clMaNCC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clTH;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HINHANHSP;
     }
 }
