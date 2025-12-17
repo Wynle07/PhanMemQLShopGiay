@@ -168,14 +168,50 @@ namespace QuanLiBanGiay
             {
                 return;
             }
+            btnInPN.Enabled = true;
             if (e.RowIndex >= 0 && e.RowIndex < dgvPhieuNhap.Rows.Count)
             {
-                DataGridViewRow row = dgvPhieuNhap.Rows[e.RowIndex];
-                string maPN = row.Cells["MAPN"].Value?.ToString();
 
-                if (!string.IsNullOrEmpty(maPN))
+                //DataGridViewRow row = dgvPhieuNhap.Rows[e.RowIndex];
+                //string maPN = row.Cells["MAPN"].Value?.ToString();
+
+                //if (!string.IsNullOrEmpty(maPN))
+                //{
+                //    LoadChiTietPhieuNhap(maPN);
+                //}
+
+                DataGridViewRow row = dgvPhieuNhap.Rows[e.RowIndex];
+                txtMaPhieuNhap.Text = row.Cells["MAPN"].Value?.ToString();
+                txtMaNV.Text = row.Cells["MANV"].Value?.ToString();
+                string maNCC = row.Cells["MANCC"].Value?.ToString();
+                if (!string.IsNullOrEmpty(maNCC))
                 {
-                    LoadChiTietPhieuNhap(maPN);
+                    cboNCC.SelectedValue = maNCC;
+                }
+
+                if (row.Cells["NGAYNHAP"].Value != null &&
+                DateTime.TryParse(row.Cells["NGAYNHAP"].Value.ToString(), out DateTime ngayNhap))
+                {
+                    txtNgayNhap.Text = ngayNhap.ToString("dd/MM/yyyy");
+                }
+                else
+                {
+                    txtNgayNhap.Text = "";
+                }
+
+                if (row.Cells["TONGTIEN"].Value != null &&
+                decimal.TryParse(row.Cells["TONGTIEN"].Value.ToString(), out decimal tongTien))
+                {
+                    txtTongTien.Text = tongTien.ToString("N0");
+                }
+                else
+                {
+                    txtTongTien.Text = "0";
+                }
+
+                if (!string.IsNullOrEmpty(txtMaPhieuNhap.Text))
+                {
+                    LoadChiTietPhieuNhap(txtMaPhieuNhap.Text);
                 }
             }
         }
@@ -303,6 +339,7 @@ namespace QuanLiBanGiay
             grpCTPhieuNhap.Enabled = false;
             dgvCTPN.Enabled = false;
             btnLuuPN.Enabled = false;
+            btnInPN.Enabled = false;
             btnTaoPN.Enabled = true;
             dtChiTiet.Clear();
             dgvCTPN.DataSource = dtChiTiet;
@@ -341,6 +378,7 @@ namespace QuanLiBanGiay
         private void btnTaoPN_Click(object sender, EventArgs e)
         {
             dgvPhieuNhap.ReadOnly = true;
+            btnInPN.Enabled=true;
             dtChiTiet.Clear();
             dgvCTPN.DataSource = dtChiTiet;
             if (cboNCC.SelectedValue == null)
@@ -672,7 +710,71 @@ namespace QuanLiBanGiay
 
         private void btnInPN_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtMaPhieuNhap.Text))
+            {
+                MessageBox.Show("Vui lòng chọn phiếu nhập cần in.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            try
+            {
+                // 2. Viết câu lệnh SQL lấy đầy đủ thông tin (Join nhiều bảng)
+                // Lưu ý: Tên cột (AS ...) phải khớp y hệt tên cột trong DataSet ở Bước 1
+                string sql = @"
+                                SELECT DISTINCT
+                                    PN.MAPN, 
+                                    PN.NGAYNHAP, 
+                                    PN.TONGTIEN,
+                                    NV.TENNV, 
+                                    NCC.TENNCC, 
+                                    G.MAGIAY,
+                                    G.TENGIAY, 
+                                    KC.KICHCO AS SIZE, 
+                                    MS.TENMAU AS MAUSAC, 
+                                    CT.SOLUONG, 
+                                    CT.DONGIA, 
+                                    (CT.SOLUONG * CT.DONGIA) AS THANHTIEN
+                                FROM PHIEUNHAP PN
+                                JOIN CTPHIEUNHAP CT ON PN.MAPN = CT.MAPN
+                                JOIN NHANVIEN NV ON PN.MANV = NV.MANV
+                                JOIN NHACUNGCAP NCC ON PN.MANCC = NCC.MANCC
+                                JOIN GIAY G ON CT.MAGIAY = G.MAGIAY
+                                JOIN KICHCO KC ON CT.MASIZE = KC.MASIZE
+                                JOIN MAUSAC MS ON CT.MAMAU = MS.MAMAU
+                                WHERE PN.MAPN = @mapn";
+
+                DataTable dt = new DataTable();
+
+                using (SqlConnection conn = DBConnection.GetConnection())
+                {
+                    DBConnection.OpenConnection(conn);
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@mapn", txtMaPhieuNhap.Text.Trim());
+
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(dt);
+                    }
+                }
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("Không tìm thấy dữ liệu cho phiếu nhập này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                rptPhieuNhap rpt = new rptPhieuNhap();
+                rpt.SetDataSource(dt);
+
+                //Hiển thị lên Form In
+                Form_InPhieuNhap frmIn = new Form_InPhieuNhap();
+                frmIn.HienThiBaoCao(rpt);
+                frmIn.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi in phiếu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void xóaToolStripMenuItem_Click(object sender, EventArgs e)
