@@ -34,11 +34,6 @@
             this.txtNgayBatDau = new System.Windows.Forms.TextBox();
             this.grpDanhSach = new System.Windows.Forms.GroupBox();
             this.data_KM = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clTenKM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clNgaybatdau = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clNgayKetThuc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clGiamGia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnTimKiem = new System.Windows.Forms.Button();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
             this.txtNgayKetThuc = new System.Windows.Forms.TextBox();
@@ -54,6 +49,11 @@
             this.btnSua = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnLuu = new System.Windows.Forms.Button();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clTenKM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clNgaybatdau = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clNgayKetThuc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clGiamGia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpDanhSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_KM)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -119,46 +119,6 @@
             this.data_KM.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_KM_CellClick_1);
             this.data_KM.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_KM_CellContentClick_1);
             this.data_KM.SelectionChanged += new System.EventHandler(this.data_KM_SelectionChanged);
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "MAKM";
-            this.Column1.HeaderText = "Mã KM";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 200;
-            // 
-            // clTenKM
-            // 
-            this.clTenKM.DataPropertyName = "TENKM";
-            this.clTenKM.HeaderText = "Tên KM";
-            this.clTenKM.MinimumWidth = 6;
-            this.clTenKM.Name = "clTenKM";
-            this.clTenKM.Width = 200;
-            // 
-            // clNgaybatdau
-            // 
-            this.clNgaybatdau.DataPropertyName = "NGAYBATDAU";
-            this.clNgaybatdau.HeaderText = "Ngày bắt đầu";
-            this.clNgaybatdau.MinimumWidth = 6;
-            this.clNgaybatdau.Name = "clNgaybatdau";
-            this.clNgaybatdau.Width = 200;
-            // 
-            // clNgayKetThuc
-            // 
-            this.clNgayKetThuc.DataPropertyName = "NGAYKETTHUC";
-            this.clNgayKetThuc.HeaderText = "Ngày kết thúc";
-            this.clNgayKetThuc.MinimumWidth = 6;
-            this.clNgayKetThuc.Name = "clNgayKetThuc";
-            this.clNgayKetThuc.Width = 200;
-            // 
-            // clGiamGia
-            // 
-            this.clGiamGia.DataPropertyName = "GIAMGIA";
-            this.clGiamGia.HeaderText = "Giảm giá";
-            this.clGiamGia.MinimumWidth = 6;
-            this.clGiamGia.Name = "clGiamGia";
-            this.clGiamGia.Width = 200;
             // 
             // btnTimKiem
             // 
@@ -355,6 +315,46 @@
             this.btnLuu.UseVisualStyleBackColor = false;
             this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column1.DataPropertyName = "MAKM";
+            this.Column1.HeaderText = "Mã KM";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            // 
+            // clTenKM
+            // 
+            this.clTenKM.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clTenKM.DataPropertyName = "TENKM";
+            this.clTenKM.HeaderText = "Tên KM";
+            this.clTenKM.MinimumWidth = 6;
+            this.clTenKM.Name = "clTenKM";
+            // 
+            // clNgaybatdau
+            // 
+            this.clNgaybatdau.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clNgaybatdau.DataPropertyName = "NGAYBATDAU";
+            this.clNgaybatdau.HeaderText = "Ngày bắt đầu";
+            this.clNgaybatdau.MinimumWidth = 6;
+            this.clNgaybatdau.Name = "clNgaybatdau";
+            // 
+            // clNgayKetThuc
+            // 
+            this.clNgayKetThuc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clNgayKetThuc.DataPropertyName = "NGAYKETTHUC";
+            this.clNgayKetThuc.HeaderText = "Ngày kết thúc";
+            this.clNgayKetThuc.MinimumWidth = 6;
+            this.clNgayKetThuc.Name = "clNgayKetThuc";
+            // 
+            // clGiamGia
+            // 
+            this.clGiamGia.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clGiamGia.DataPropertyName = "GIAMGIA";
+            this.clGiamGia.HeaderText = "Giảm giá";
+            this.clGiamGia.MinimumWidth = 6;
+            this.clGiamGia.Name = "clGiamGia";
+            // 
             // Form_KhuyenMai
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -399,12 +399,12 @@
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Label lblNgayBatDau;
         private System.Windows.Forms.TextBox txtTenKM;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnLuu;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn clTenKM;
         private System.Windows.Forms.DataGridViewTextBoxColumn clNgaybatdau;
         private System.Windows.Forms.DataGridViewTextBoxColumn clNgayKetThuc;
         private System.Windows.Forms.DataGridViewTextBoxColumn clGiamGia;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnLuu;
     }
 }

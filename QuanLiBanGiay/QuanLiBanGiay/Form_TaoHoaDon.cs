@@ -137,10 +137,10 @@ namespace QuanLiBanGiay
             using (SqlConnection conn = DBConnection.GetConnection())
             {
                 string sql = @"
-                    SELECT g.MAGIAY, g.TENGIAY, g.MALOAI, g.GIABAN, ct.MASIZE, ct.MAMAU, ct.SOLUONGTON
-                    FROM GIAY g
-                    INNER JOIN CHITIETGIAY ct ON g.MAGIAY = ct.MAGIAY
+                    SELECT DISTINCT g.MAGIAY, g.TENGIAY, g.MALOAI, g.GIABAN, ct.MASIZE, ct.MAMAU, ct.SOLUONGTON
+                    FROM GIAY g, CHITIETGIAY ct WHERE g.MAGIAY = ct.MAGIAY
                 ";
+
                 SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -899,6 +899,11 @@ namespace QuanLiBanGiay
             {
                 MessageBox.Show("Lỗi chọn hóa đơn: " + ex.Message);
             }
+        }
+
+        private void lblMaSP_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

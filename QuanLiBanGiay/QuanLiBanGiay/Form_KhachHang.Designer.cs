@@ -302,14 +302,14 @@
             this.btnXemIn.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.btnXemIn.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXemIn.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnXemIn.Image = ((System.Drawing.Image)(resources.GetObject("btnXemIn.Image")));
+            this.btnXemIn.Image = global::QuanLiBanGiay.Properties.Resources.icons8_export_16;
             this.btnXemIn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnXemIn.Location = new System.Drawing.Point(489, 11);
             this.btnXemIn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnXemIn.Name = "btnXemIn";
-            this.btnXemIn.Size = new System.Drawing.Size(136, 65);
+            this.btnXemIn.Size = new System.Drawing.Size(159, 65);
             this.btnXemIn.TabIndex = 107;
-            this.btnXemIn.Text = "Xem In";
+            this.btnXemIn.Text = "Xuất Excel";
             this.btnXemIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnXemIn.UseVisualStyleBackColor = false;
             this.btnXemIn.Click += new System.EventHandler(this.btnXemIn_Click);
@@ -321,7 +321,7 @@
             this.btnRefesh.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnRefesh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefesh.Image")));
             this.btnRefesh.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRefesh.Location = new System.Drawing.Point(631, 13);
+            this.btnRefesh.Location = new System.Drawing.Point(654, 13);
             this.btnRefesh.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnRefesh.Name = "btnRefesh";
             this.btnRefesh.Size = new System.Drawing.Size(136, 63);
