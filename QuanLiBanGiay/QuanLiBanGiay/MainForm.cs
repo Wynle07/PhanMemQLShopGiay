@@ -35,6 +35,7 @@ namespace QuanLiBanGiay
             btnThongKe.Visible = false;
             btnKhuyenMai.Visible = false;   // ẨN MẶC ĐỊNH
             btnNhapHang.Visible = false;
+            btnKhachHang.Visible= false;
 
             // 2) BẬT THEO VAI TRÒ
             switch (vaiTro)
@@ -48,11 +49,13 @@ namespace QuanLiBanGiay
                     btnThongKe.Visible = true;
                     btnKhuyenMai.Visible = true;   // Chỉ Admin thấy Khuyến mãi
                     btnNhapHang.Visible = true;
+                    btnKhachHang.Visible = true;
                     break;
 
-                case "Thu ngân":
+                case "Nhân viên bán hàng":
                     btnSanPham.Visible = true;
                     btnTaoDonHang.Visible = true;
+                    btnKhachHang.Visible = true;
                     // Khuyến mãi bị ẩn cho Thu ngân
                     break;
 
