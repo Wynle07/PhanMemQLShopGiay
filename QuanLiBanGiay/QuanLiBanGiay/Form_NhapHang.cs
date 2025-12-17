@@ -32,6 +32,7 @@ namespace QuanLiBanGiay
             LoadNhaCC();
             LoadSanPham();
             HienThiMaNhanVienDangNhap();
+            LoadPhieuNhap();
         }
         private void LoadNhaCC()
         {
@@ -73,6 +74,109 @@ namespace QuanLiBanGiay
             catch (Exception ex)
             {
                 MessageBox.Show("Không thể tải danh sách sản phẩm. " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadPhieuNhap()
+        {
+            try
+            {
+                string query = @"SELECT PN.MAPN, PN.MANV, NV.TENNV, PN.MANCC, NCC.TENNCC, 
+                                PN.NGAYNHAP, PN.TONGTIEN
+                                FROM PHIEUNHAP PN
+                                LEFT JOIN NHANVIEN NV ON PN.MANV = NV.MANV
+                                LEFT JOIN NHACUNGCAP NCC ON PN.MANCC = NCC.MANCC
+                                ORDER BY PN.NGAYNHAP DESC";
+
+                using (SqlDataAdapter da = new SqlDataAdapter(query, conn))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    dgvPhieuNhap.DataSource = dt;
+                    dgvPhieuNhap.Columns["TongTien"].DefaultCellStyle.Format = "N0";
+                    dgvPhieuNhap.Columns["TongTien"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    dgvPhieuNhap.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể tải danh sách phiếu nhập. " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadChiTietPhieuNhap(string maPN)
+        {
+            try
+            {
+                string query = @"SELECT 
+                                CT.MAPN AS 'MaPN',
+                                CT.MAGIAY,
+                                G.TENGIAY AS 'TenSP',
+                                CT.MASIZE AS 'MaSize',
+                                KC.KICHCO AS 'Size',
+                                CT.MAMAU AS 'MaMau',
+                                MS.TENMAU AS 'MauSac',
+                                CT.SOLUONG AS 'SoLuong',
+                                CT.DONGIA AS 'DonGia',
+                                (CT.SOLUONG * CT.DONGIA) AS 'ThanhTien'
+                                FROM CTPHIEUNHAP CT
+                                INNER JOIN GIAY G ON CT.MAGIAY = G.MAGIAY
+                                INNER JOIN KICHCO KC ON CT.MASIZE = KC.MASIZE
+                                INNER JOIN MAUSAC MS ON CT.MAMAU = MS.MAMAU
+                                WHERE CT.MAPN = @mapn";
+
+                using (SqlDataAdapter da = new SqlDataAdapter(query, conn))
+                {
+                    da.SelectCommand.Parameters.AddWithValue("@mapn", maPN);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    dgvCTPN.DataSource = dt;
+
+                    if (dgvCTPN.Columns.Count > 0)
+                    {
+                        if (dgvCTPN.Columns.Contains("DonGia"))
+                        {
+                            dgvCTPN.Columns["DonGia"].DefaultCellStyle.Format = "N0";
+                            dgvCTPN.Columns["DonGia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                        }
+                        
+                        if (dgvCTPN.Columns.Contains("ThanhTien"))
+                        {
+                            dgvCTPN.Columns["ThanhTien"].DefaultCellStyle.Format = "N0";
+                            dgvCTPN.Columns["ThanhTien"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                        }
+
+                        if (dgvCTPN.Columns.Contains("SoLuong"))
+                        {
+                            dgvCTPN.Columns["SoLuong"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        }
+
+                        dgvCTPN.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể tải chi tiết phiếu nhập. " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvPhieuNhap_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (btnTaoPN.Enabled == false)
+            {
+                return;
+            }
+            if (e.RowIndex >= 0 && e.RowIndex < dgvPhieuNhap.Rows.Count)
+            {
+                DataGridViewRow row = dgvPhieuNhap.Rows[e.RowIndex];
+                string maPN = row.Cells["MAPN"].Value?.ToString();
+
+                if (!string.IsNullOrEmpty(maPN))
+                {
+                    LoadChiTietPhieuNhap(maPN);
+                }
             }
         }
 
@@ -137,80 +241,17 @@ namespace QuanLiBanGiay
 
         private void KhoiTaoBangChiTiet()
         {
-            dtChiTiet.Columns.Add("MaSP", typeof(string));
+            dtChiTiet.Columns.Add("MAGIAY", typeof(string));    
             dtChiTiet.Columns.Add("TenSP", typeof(string));
-            dtChiTiet.Columns.Add("MaSize", typeof(string));      
-            dtChiTiet.Columns.Add("TenSize", typeof(string));     
-            dtChiTiet.Columns.Add("MaMau", typeof(string));       
-            dtChiTiet.Columns.Add("TenMau", typeof(string));     
+            dtChiTiet.Columns.Add("MaSize", typeof(string));
+            dtChiTiet.Columns.Add("Size", typeof(string));     
+            dtChiTiet.Columns.Add("MaMau", typeof(string));
+            dtChiTiet.Columns.Add("MauSac", typeof(string));    
             dtChiTiet.Columns.Add("SoLuong", typeof(int));
             dtChiTiet.Columns.Add("DonGia", typeof(decimal));
             dtChiTiet.Columns.Add("ThanhTien", typeof(decimal));
 
             dgvCTPN.AutoGenerateColumns = false;
-            if (dgvCTPN.Columns.Count == 0)
-            {
-                dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "MaSP",
-                    HeaderText = "Mã sản phẩm",
-                    Width = 100
-                });
-                dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "TenSP",
-                    HeaderText = "Tên sản phẩm",
-                    Width = 150
-                });
-
-                dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "MaSize",
-                    HeaderText = "MaSize",
-                    Visible = false 
-                });
-
-                dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "TenSize",
-                    HeaderText = "Size",
-                    Width = 80
-                });
-
-                dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "MaMau",
-                    HeaderText = "MaMau",
-                    Visible = false  
-                });
-
-                dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "TenMau",
-                    HeaderText = "Màu sắc",
-                    Width = 100
-                });
-                dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "SoLuong",
-                    HeaderText = "Số lượng",
-                    Width = 80
-                });
-                dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "DonGia",
-                    HeaderText = "Đơn giá",
-                    Width = 120,
-                    DefaultCellStyle = new DataGridViewCellStyle { Format = "N0" }
-                });
-                dgvCTPN.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "ThanhTien",
-                    HeaderText = "Thành tiền",
-                    Width = 130,
-                    DefaultCellStyle = new DataGridViewCellStyle { Format = "N0" }
-                });
-            }
 
             dgvCTPN.DataSource = dtChiTiet;
         }
@@ -299,6 +340,9 @@ namespace QuanLiBanGiay
 
         private void btnTaoPN_Click(object sender, EventArgs e)
         {
+            dgvPhieuNhap.ReadOnly = true;
+            dtChiTiet.Clear();
+            dgvCTPN.DataSource = dtChiTiet;
             if (cboNCC.SelectedValue == null)
             {
                 MessageBox.Show("Vui lòng chọn nhà cung cấp trước khi tạo phiếu nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -323,6 +367,7 @@ namespace QuanLiBanGiay
                 cboNCC.Enabled = false;
                 txtNgayNhap.Text = DateTime.Now.ToString("dd/MM/yyyy");
                 dtChiTiet.Clear();
+                dgvCTPN.DataSource = dtChiTiet;
                 CapNhatTongTien();
             }
             catch (Exception ex)
@@ -453,7 +498,7 @@ namespace QuanLiBanGiay
             decimal thanhTien = soLuong * donGia;
             DataRow existingRow = dtChiTiet.AsEnumerable()
                                            .FirstOrDefault(row => 
-                                               string.Equals(row.Field<string>("MaSP"), maSP, StringComparison.OrdinalIgnoreCase) &&
+                                               string.Equals(row.Field<string>("MAGIAY"), maSP, StringComparison.OrdinalIgnoreCase) &&
                                                string.Equals(row.Field<string>("MaSize"), maSize, StringComparison.OrdinalIgnoreCase) &&
                                                string.Equals(row.Field<string>("MaMau"), maMau, StringComparison.OrdinalIgnoreCase));
 
@@ -555,7 +600,7 @@ namespace QuanLiBanGiay
 
                     foreach (DataRow row in dtChiTiet.Rows)
                     {
-                        string maGiay = row["MaSP"].ToString();
+                        string maGiay = row["MAGIAY"].ToString();
                         string maSize = row["MaSize"].ToString();
                         string maMau = row["MaMau"].ToString();
                         int soLuong = Convert.ToInt32(row["SoLuong"]);
@@ -612,6 +657,9 @@ namespace QuanLiBanGiay
 
                     transaction.Commit();
                     MessageBox.Show("Lưu phiếu nhập và cập nhật tồn kho thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    // Cập nhật lại danh sách phiếu nhập
+                    LoadPhieuNhap();
                     ThietLapTrangThaiBanDau();
                 }
                 catch (Exception ex)
@@ -630,6 +678,137 @@ namespace QuanLiBanGiay
         private void xóaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XoaDongChiTiet();
+        }
+
+        private void dgvCTPN_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvCTPN.Rows.Count) return;
+
+            try
+            {
+                DataGridViewRow row = dgvCTPN.Rows[e.RowIndex];
+
+                string maSP = row.Cells["MaSP"].Value?.ToString();
+                string maSize = row.Cells["MaSize"].Value?.ToString();
+                string maMau = row.Cells["MaMau"].Value?.ToString();
+                string soLuong = row.Cells["SoLuong"].Value?.ToString();
+
+                string donGia = "0";
+                if (row.Cells["DonGia"].Value != null && decimal.TryParse(row.Cells["DonGia"].Value.ToString(), out decimal valDonGia))
+                {
+                    donGia = valDonGia.ToString("0");
+                }
+
+                if (!string.IsNullOrEmpty(maSP))
+                {
+                    cboMaSP.SelectedValue = maSP;
+                }
+
+                if (!string.IsNullOrEmpty(maSize))
+                {
+                    cboKichCo.SelectedValue = maSize;
+                }
+
+                if (!string.IsNullOrEmpty(maMau))
+                {
+                    cboMauSac.SelectedValue = maMau;
+                }
+
+                txtSoLuong.Text = soLuong;
+                txtDonGia.Text = donGia;
+
+                TinhThanhTien();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi hiển thị: " + ex.Message);
+            }
+        }
+        private void SuaCTPN()
+        {
+            if (cboMaSP.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn sản phẩm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboMaSP.Focus();
+                return;
+            }
+            if (cboKichCo.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn kích cỡ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboKichCo.Focus();
+                return;
+            }
+            if (cboMauSac.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn màu sắc.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboMauSac.Focus();
+                return;
+            }
+            if (!int.TryParse(txtSoLuong.Text.Trim(), out int soLuong) || soLuong <= 0)
+            {
+                MessageBox.Show("Số lượng phải là số nguyên dương.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSoLuong.Focus();
+                return;
+            }
+            if (!decimal.TryParse(txtDonGia.Text.Trim(), out decimal donGia) || donGia < 0)
+            {
+                MessageBox.Show("Đơn giá không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtDonGia.Focus();
+                return;
+            }
+
+            // Cập nhật vào DataTable
+            try
+            {
+                int rowIndex = dgvCTPN.CurrentRow.Index;
+
+                DataRow row = dtChiTiet.Rows[rowIndex];
+
+                row["MAGIAY"] = cboMaSP.SelectedValue.ToString();
+                row["TenSP"] = cboMaSP.Text;
+
+                row["MaSize"] = cboKichCo.SelectedValue.ToString();
+                row["Size"] = cboKichCo.Text;
+
+                row["MaMau"] = cboMauSac.SelectedValue.ToString();
+                row["MauSac"] = cboMauSac.Text;
+
+                row["SoLuong"] = soLuong;
+                row["DonGia"] = donGia;
+
+                row["ThanhTien"] = soLuong * donGia;
+
+                CapNhatTongTien(); 
+                LamMoiNhapChiTiet(); 
+
+                MessageBox.Show("Cập nhật sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi khi sửa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void sửaToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            if (dgvCTPN.CurrentRow == null || dgvCTPN.CurrentRow.Index < 0)
+            {
+                MessageBox.Show("Vui lòng chọn dòng sản phẩm cần sửa trong danh sách.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            SuaCTPN();
+            
+        }
+
+        private void btnSuaSP_Click(object sender, EventArgs e)
+        {
+            if (dgvCTPN.CurrentRow == null || dgvCTPN.CurrentRow.Index < 0)
+            {
+                MessageBox.Show("Vui lòng chọn dòng sản phẩm cần sửa trong danh sách.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            SuaCTPN();
         }
     }
 }

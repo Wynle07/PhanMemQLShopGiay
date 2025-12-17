@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Globalization;
 using DocumentFormat.OpenXml.Office2010.Drawing;
+using DocumentFormat.OpenXml.Office.Word;
 
 namespace QuanLiBanGiay
 {
@@ -75,10 +76,10 @@ namespace QuanLiBanGiay
             txtMaNV.Enabled = enabled;
             txtTenNV.Enabled = enabled;
             cbGioiTinh.Enabled = enabled;
-            textNgaySinh.Enabled = enabled;
+            dtNgaySinh.Enabled = enabled;
             txtSDT.Enabled = enabled;
             txtDiaChi.Enabled = enabled;
-            txtNgayVaoLam.Enabled = enabled;
+            dtNgayVaoLam.Enabled = enabled;
             txtTaiKhoan.Enabled = enabled;
             txtMatKhau.Enabled = enabled;
             cboVaiTro.Enabled = enabled;
@@ -98,34 +99,9 @@ namespace QuanLiBanGiay
                 ds_NhanVien.Clear();
                 da_nv.Fill(ds_NhanVien, "NHANVIEN");
                 dgvNhanVien.DataSource = ds_NhanVien.Tables["NHANVIEN"];
-                if (dgvNhanVien.Columns.Count > 0)
-                {
-                    dgvNhanVien.Columns["MANV"].HeaderText = "Mã NV";
-                    dgvNhanVien.Columns["TENNV"].HeaderText = "Tên NV";
-                    dgvNhanVien.Columns["GIOITINH"].HeaderText = "Giới Tính";
-                    dgvNhanVien.Columns["NGAYSINH"].HeaderText = "Ngày Sinh";
-                    dgvNhanVien.Columns["SDT"].HeaderText = "SĐT";
-                    dgvNhanVien.Columns["DIACHI"].HeaderText = "Địa Chỉ";
-                    dgvNhanVien.Columns["NGAYVAOLAM"].HeaderText = "Ngày vào làm";
-                    if (dgvNhanVien.Columns.Contains("TAIKHOAN"))
-                    {
-                        dgvNhanVien.Columns["TAIKHOAN"].HeaderText = "Tài Khoản";
-                    }
-                    if (dgvNhanVien.Columns.Contains("MATKHAU"))
-                    {
-                        dgvNhanVien.Columns["MATKHAU"].HeaderText = "Mật Khẩu";
-                    }
-                    if (dgvNhanVien.Columns.Contains("VAITRO"))
-                    {
-                        dgvNhanVien.Columns["VAITRO"].HeaderText = "Vai Trò";
-                    }
-                    if (dgvNhanVien.Columns.Contains("TRANGTHAI"))
-                    {
-                        dgvNhanVien.Columns["TRANGTHAI"].HeaderText = "Trạng Thái";
-                    }
-                }
-
-                dgvNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+              
+                // Tự động điều chỉnh kích thước cột vừa đủ với nội dung
+                dgvNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             }
             catch (Exception ex)
             {
@@ -149,16 +125,16 @@ namespace QuanLiBanGiay
                 {
                     if (DateTime.TryParse(row.Cells["NGAYSINH"].Value.ToString(), out DateTime ngaySinh))
                     {
-                        textNgaySinh.Text = ngaySinh.ToString("dd/MM/yyyy");
+                        dtNgaySinh.Text = ngaySinh.ToString("dd/MM/yyyy");
                     }
                     else
                     {
-                        textNgaySinh.Text = row.Cells["NGAYSINH"].Value?.ToString();
+                        dtNgaySinh.Text = row.Cells["NGAYSINH"].Value?.ToString();
                     }
                 }
                 else
                 {
-                    textNgaySinh.Text = "";
+                    dtNgaySinh.Text = "";
                 }
 
                 txtSDT.Text = row.Cells["SDT"].Value?.ToString();
@@ -167,16 +143,16 @@ namespace QuanLiBanGiay
                 {
                     if (DateTime.TryParse(row.Cells["NGAYVAOLAM"].Value.ToString(), out DateTime ngayVaoLam))
                     {
-                        txtNgayVaoLam.Text = ngayVaoLam.ToString("dd/MM/yyyy");
+                        dtNgayVaoLam.Text = ngayVaoLam.ToString("dd/MM/yyyy");
                     }
                     else
                     {
-                        txtNgayVaoLam.Text = row.Cells["NGAYVAOLAM"].Value?.ToString();
+                        dtNgayVaoLam.Text = row.Cells["NGAYVAOLAM"].Value?.ToString();
                     }
                 }
                 else
                 {
-                    txtNgayVaoLam.Text = "";
+                    dtNgayVaoLam.Text = "";
                 }
                 SetInputsEnabled(false);
                 btnSua.Enabled = true;
@@ -191,10 +167,8 @@ namespace QuanLiBanGiay
             txtMaNV.Clear();
             txtTenNV.Clear();
             cbGioiTinh.SelectedIndex = -1;
-            textNgaySinh.Clear();
             txtSDT.Clear();
             txtDiaChi.Clear();
-            txtNgayVaoLam.Clear();
             txtTaiKhoan.Clear();
             txtMatKhau.Clear();
             cboVaiTro.SelectedIndex = -1;
@@ -232,16 +206,39 @@ namespace QuanLiBanGiay
                 return false;
             }
 
-
-            if (!string.IsNullOrWhiteSpace(textNgaySinh.Text))
+            // Parse ngày sinh từ DateTimePicker
+            if (!string.IsNullOrWhiteSpace(dtNgaySinh.Text))
             {
-                if (!DateTime.TryParseExact(textNgaySinh.Text.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))
+                if (DateTime.TryParseExact(dtNgaySinh.Text.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime tmpNgaySinh))
                 {
-                    MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng dd/MM/yyyy.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    textNgaySinh.Focus();
+                    parsedNgaySinh = tmpNgaySinh;
+                }
+                else if (DateTime.TryParse(dtNgaySinh.Text.Trim(), out DateTime tmpNgaySinh2))
+                {
+                    parsedNgaySinh = tmpNgaySinh2;
+                }
+            }
+
+            // Validate số điện thoại: phải là số và có 10 chữ số
+            if (!string.IsNullOrWhiteSpace(txtSDT.Text))
+            {
+                string sdt = txtSDT.Text.Trim();
+                
+                // Kiểm tra có phải toàn bộ là số không
+                if (!sdt.All(char.IsDigit))
+                {
+                    MessageBox.Show("Số điện thoại phải là số!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSDT.Focus();
                     return false;
                 }
-                parsedNgaySinh = dt;
+                
+                // Kiểm tra độ dài phải là 10 số
+                if (sdt.Length != 10)
+                {
+                    MessageBox.Show("Số điện thoại phải có 10 chữ số!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSDT.Focus();
+                    return false;
+                }
             }
 
             return true;
@@ -293,14 +290,13 @@ namespace QuanLiBanGiay
             txtMaNV.Clear();
             txtTenNV.Clear();
             cbGioiTinh.SelectedIndex = -1;
-            textNgaySinh.Clear();
             txtSDT.Clear();
             txtDiaChi.Clear();
-            txtNgayVaoLam.Text = DateTime.Now.ToString("dd/MM/yyyy"); 
+            dtNgayVaoLam.Text = DateTime.Now.ToString("dd/MM/yyyy"); 
             txtTaiKhoan.Clear();
             txtMatKhau.Clear();
             cboVaiTro.SelectedIndex = -1;
-            cboTrangThai.SelectedIndex = -1;
+            cboTrangThai.SelectedIndex = 0;
         }
         private void btnSua_Click(object sender, EventArgs e)
         {
@@ -372,6 +368,7 @@ namespace QuanLiBanGiay
                     txtMaNV.Text = TaoMaNVTuDong();
 
                 if (!ValidateInput(out DateTime? parsedNgaySinh)) return;
+               
 
                 try
                 {
@@ -388,10 +385,28 @@ namespace QuanLiBanGiay
                         txtMaNV.Focus();
                         return;
                     }
-                    DateTime ngayVaoLam = DateTime.Now;
-                    if (!string.IsNullOrWhiteSpace(txtNgayVaoLam.Text))
+
+                    // Kiểm tra trùng số điện thoại
+                    if (!string.IsNullOrWhiteSpace(txtSDT.Text))
                     {
-                        if (!DateTime.TryParseExact(txtNgayVaoLam.Text.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime tmpNgayVao))
+                        string checkSDT = "SELECT COUNT(*) FROM NHANVIEN WHERE SDT = @sdt";
+                        SqlCommand cmdCheckSDT = new SqlCommand(checkSDT, conn);
+                        cmdCheckSDT.Parameters.AddWithValue("@sdt", txtSDT.Text.Trim());
+                        int countSDT = (int)cmdCheckSDT.ExecuteScalar();
+
+                        if (countSDT > 0)
+                        {
+                            DBConnection.CloseConnection(conn);
+                            MessageBox.Show("Số điện thoại đã tồn tại trong hệ thống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            txtSDT.Focus();
+                            return;
+                        }
+                    }
+
+                    DateTime ngayVaoLam = DateTime.Now;
+                    if (!string.IsNullOrWhiteSpace(dtNgayVaoLam.Text))
+                    {
+                        if (!DateTime.TryParseExact(dtNgayVaoLam.Text.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime tmpNgayVao))
                         {
                             tmpNgayVao = DateTime.Now;
                         }
@@ -462,6 +477,25 @@ namespace QuanLiBanGiay
 
                 try
                 {
+                    // Kiểm tra trùng số điện thoại (loại trừ chính nhân viên đang sửa)
+                    if (!string.IsNullOrWhiteSpace(txtSDT.Text))
+                    {
+                        string checkSDT = "SELECT COUNT(*) FROM NHANVIEN WHERE SDT = @sdt AND MANV != @manv";
+                        SqlCommand cmdCheckSDT = new SqlCommand(checkSDT, conn);
+                        cmdCheckSDT.Parameters.AddWithValue("@sdt", txtSDT.Text.Trim());
+                        cmdCheckSDT.Parameters.AddWithValue("@manv", txtMaNV.Text.Trim());
+                        
+                        DBConnection.OpenConnection(conn);
+                        int countSDT = (int)cmdCheckSDT.ExecuteScalar();
+                        DBConnection.CloseConnection(conn);
+
+                        if (countSDT > 0)
+                        {
+                            MessageBox.Show("Số điện thoại đã tồn tại trong hệ thống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            txtSDT.Focus();
+                            return;
+                        }
+                    }
 
                     string sql = @"UPDATE NHANVIEN 
                                    SET TENNV = @tennv, 
@@ -504,60 +538,6 @@ namespace QuanLiBanGiay
             }
         }
 
-        //private void btnXuatExcel_Click(object sender, EventArgs e)
-        //{
-        //    if (dgvNhanVien.Rows.Count == 0)
-        //    {
-        //        MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        return;
-        //    }
-
-        //    SaveFileDialog save = new SaveFileDialog();
-        //    save.Filter = "Excel File (*.xlsx)|*.xlsx";
-        //    save.Title = "Chọn nơi lưu file Excel";
-        //    save.FileName = "DanhSach_NhanVien_" + DateTime.Now.ToString("ddMMyyyy_HHmm") + ".xlsx";
-
-        //    if (save.ShowDialog() == DialogResult.OK)
-        //    {
-        //        try
-        //        {
-        //            var workbook = new XLWorkbook();
-        //            var worksheet = workbook.Worksheets.Add("Danh sách nhân viên");
-
-        //            // Tiêu đề
-        //            worksheet.Cell(1, 1).Value = "DANH SÁCH NHÂN VIÊN";
-        //            worksheet.Range(1, 1, 1, dgvNhanVien.Columns.Count).Merge();
-        //            worksheet.Cell(1, 1).Style.Font.Bold = true;
-        //            worksheet.Cell(1, 1).Style.Font.FontSize = 16;
-        //            worksheet.Cell(1, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-
-        //            for (int i = 0; i < dgvNhanVien.Columns.Count; i++)
-        //            {
-        //                worksheet.Cell(3, i + 1).Value = dgvNhanVien.Columns[i].HeaderText;
-        //                worksheet.Cell(3, i + 1).Style.Font.Bold = true;
-        //                worksheet.Cell(3, i + 1).Style.Fill.BackgroundColor = XLColor.LightGray;
-        //            }
-
-        //            for (int i = 0; i < dgvNhanVien.Rows.Count; i++)
-        //            {
-        //                for (int j = 0; j < dgvNhanVien.Columns.Count; j++)
-        //                {
-        //                    worksheet.Cell(i + 4, j + 1).Value = dgvNhanVien.Rows[i].Cells[j].Value?.ToString();
-        //                }
-        //            }
-
-        //            worksheet.Columns().AdjustToContents(); // Tự căn chỉnh độ rộng
-
-        //            workbook.SaveAs(save.FileName);
-        //            MessageBox.Show("Xuất Excel thành công!\nĐường dẫn: " + save.FileName,
-        //                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Lỗi khi xuất Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        }
-        //    }
-        //}
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -569,9 +549,160 @@ namespace QuanLiBanGiay
 
         }
 
-        private void btnXemIn_Click(object sender, EventArgs e)
-        {
 
+        private void xóaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+            DialogResult rs = MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên này?\n(Việc xóa có thể ảnh hưởng đến dữ liệu liên quan!)",
+                                            "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (rs == DialogResult.No) return;
+
+            try
+            {
+                string check = "SELECT COUNT(*) FROM HOADON WHERE MANV = @manv";
+                SqlCommand cmdCheck = new SqlCommand(check, conn);
+                cmdCheck.Parameters.AddWithValue("@manv", txtMaNV.Text.Trim());
+                DBConnection.OpenConnection(conn);
+                int count = (int)cmdCheck.ExecuteScalar();
+                DBConnection.CloseConnection(conn);
+                if (count > 0)
+                {
+                    MessageBox.Show("Không thể xóa nhân viên này vì đang có hóa đơn liên quan!",
+                                    "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    return;
+                }
+                DBConnection.OpenConnection(conn);
+                string sqlTK = "DELETE FROM TAIKHOAN WHERE MANV = @manv";
+                SqlCommand cmdTK = new SqlCommand(sqlTK, conn);
+                cmdTK.Parameters.AddWithValue("@manv", txtMaNV.Text.Trim());
+                cmdTK.ExecuteNonQuery();
+                string sql = "DELETE FROM NHANVIEN WHERE MANV = @manv";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@manv", txtMaNV.Text.Trim());
+                cmd.ExecuteNonQuery();
+                DBConnection.CloseConnection(conn);
+                MessageBox.Show("Xóa thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadNhanVien();
+                ResetForm();
+            }
+            catch (Exception ex)
+            {
+                DBConnection.CloseConnection(conn);
+                MessageBox.Show("Lỗi khi xóa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void sửaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            isEditing = true;
+            isAdding = false;
+            SetInputsEnabled(true);
+            txtMaNV.Enabled = false;
+            btnLuu.Enabled = true;
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+        }
+
+        private void btnXuatExcel_Click(object sender, EventArgs e)
+        {
+            if (dgvNhanVien.Rows.Count == 0)
+            {
+                MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Excel File (*.xlsx)|*.xlsx";
+            save.Title = "Chọn nơi lưu file Excel";
+            save.FileName = "DanhSach_NhanVien_" + DateTime.Now.ToString("ddMMyyyy_HHmm") + ".xlsx";
+
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    var workbook = new XLWorkbook();
+                    var worksheet = workbook.Worksheets.Add("Danh sách nhân viên");
+
+                    // Tiêu đề
+                    worksheet.Cell(1, 1).Value = "DANH SÁCH NHÂN VIÊN";
+                    worksheet.Range(1, 1, 1, dgvNhanVien.Columns.Count).Merge();
+                    worksheet.Cell(1, 1).Style.Font.Bold = true;
+                    worksheet.Cell(1, 1).Style.Font.FontSize = 16;
+                    worksheet.Cell(1, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+                    for (int i = 0; i < dgvNhanVien.Columns.Count; i++)
+                    {
+                        worksheet.Cell(3, i + 1).Value = dgvNhanVien.Columns[i].HeaderText;
+                        worksheet.Cell(3, i + 1).Style.Font.Bold = true;
+                        worksheet.Cell(3, i + 1).Style.Fill.BackgroundColor = XLColor.LightGray;
+                    }
+
+                    for (int i = 0; i < dgvNhanVien.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dgvNhanVien.Columns.Count; j++)
+                        {
+                            worksheet.Cell(i + 4, j + 1).Value = dgvNhanVien.Rows[i].Cells[j].Value?.ToString();
+                        }
+                    }
+
+                    worksheet.Columns().AdjustToContents(); // Tự căn chỉnh độ rộng
+
+                    workbook.SaveAs(save.FileName);
+                    MessageBox.Show("Xuất Excel thành công!\nĐường dẫn: " + save.FileName,
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi xuất Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        }
+
+        private void btnTimKiem_Click(object sender, EventArgs e)
+        {
+            string keyword = txtTimKiem.Text.Trim();
+
+            // Nếu không nhập từ khóa, hiển thị tất cả
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                LoadNhanVien();
+                return;
+            }
+
+            try
+            {
+                // Tìm kiếm theo mã nhân viên, tên nhân viên, hoặc địa chỉ
+                string query = @"SELECT NV.MANV, NV.TENNV, NV.GIOITINH, NV.NGAYSINH, NV.SDT, NV.DIACHI, NV.NGAYVAOLAM,
+                                 TK.TENDANGNHAP AS TAIKHOAN, TK.MATKHAU, TK.VAITRO, TK.TRANGTHAI
+                                 FROM NHANVIEN NV, TAIKHOAN TK
+                                 WHERE NV.MANV = TK.MANV 
+                                 AND (NV.MANV LIKE @keyword OR NV.TENNV LIKE @keyword OR NV.DIACHI LIKE @keyword)";
+
+                da_nv = new SqlDataAdapter(query, conn);
+                da_nv.SelectCommand.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
+
+                ds_NhanVien.Clear();
+                da_nv.Fill(ds_NhanVien, "NHANVIEN");
+                dgvNhanVien.DataSource = ds_NhanVien.Tables["NHANVIEN"];
+
+                if (ds_NhanVien.Tables["NHANVIEN"].Rows.Count == 0)
+                {
+                    MessageBox.Show("Không tìm thấy nhân viên nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Tìm thấy {ds_NhanVien.Tables["NHANVIEN"].Rows.Count} nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                // Tự động điều chỉnh kích thước cột vừa đủ với nội dung
+                dgvNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
