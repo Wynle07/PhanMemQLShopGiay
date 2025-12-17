@@ -142,6 +142,8 @@ CREATE TABLE CTHOADON
 (
     MAHD VARCHAR(10) NOT NULL,
     MAGIAY VARCHAR(10) NOT NULL,
+	MASIZE VARCHAR(10),
+	MAMAU VARCHAR(10),
 	MAKM VARCHAR(10) NULL,
     SOLUONG INT,
     DONGIA DECIMAL(18,2),
@@ -150,6 +152,8 @@ CREATE TABLE CTHOADON
     CONSTRAINT PK_CTHOADON PRIMARY KEY(MAHD, MAGIAY),
     CONSTRAINT FK_CTHOADON_HOADON FOREIGN KEY(MAHD) REFERENCES HOADON(MAHD),
     CONSTRAINT FK_CTHOADON_GIAY FOREIGN KEY(MAGIAY) REFERENCES GIAY(MAGIAY),
+	CONSTRAINT FK_CTHOADON_KICHCO FOREIGN KEY(MASIZE) REFERENCES KICHCO(MASIZE),
+	CONSTRAINT FK_CTHOADON_MAUSAC FOREIGN KEY(MAMAU) REFERENCES MAUSAC(MAMAU),
 	CONSTRAINT FK_CTHOADON_KHUYENMAI FOREIGN KEY(MAKM) REFERENCES KHUYENMAI(MAKM)
 )
 
@@ -190,7 +194,7 @@ CREATE TABLE TAIKHOAN
     TENDANGNHAP VARCHAR(30) NOT NULL,
     MATKHAU VARCHAR(100) NOT NULL,
     MANV VARCHAR(10),
-    VAITRO NVARCHAR(20),  -- Admin, Thu ngân, Quản lý kho
+    VAITRO NVARCHAR(20),  -- Admin, Nhân viên bán hàng, Quản lý kho
 	TRANGTHAI NVARCHAR(20) DEFAULT N'Hoạt động',
 	NGAYTAO DATE,
     CONSTRAINT PK_TAIKHOAN PRIMARY KEY(TENDANGNHAP),
@@ -328,31 +332,23 @@ VALUES
 ---------------------------------------------------------------
 -- 9. CHI TIẾT GIÀY
 ---------------------------------------------------------------
-INSERT INTO CHITIETGIAY VALUES
-('G001','MS01','S40',50),
-('G002','MS02','S42',60), ('G003','MS04','S39',80),
-('G004','MS04','S38',30), ('G005','MS03','S41',55),
-('G006','MS08','S42',70), ('G007','MS05','S43',40),
-('G008','MS03','S40',65), ('G009','MS06','S39',90),
-('G010','MS10','S41',50), ('G011','MS07','S42',35),
-('G012','MS01','S40',80), ('G013','MS08','S39',45),
-('G014','MS05','S41',70), ('G015','MS09','S42',60),
-('G016','MS06','S43',50), ('G017','MS10','S40',75),
-('G018','MS07','S41',65), ('G019','MS04','S42',55),
-('G020','MS02','S39',40)
-
 INSERT INTO CHITIETGIAY (MAGIAY, MAMAU, MASIZE, SOLUONGTON)
-VALUES
--- Sandal (LG04)
-('G021','MS03','S38',45),
-('G022','MS05','S40',35),
-('G023','MS06','S39',50),
-
--- Boot (LG05)
-('G024','MS07','S42',40),
-('G025','MS08','S41',55),
-('G026','MS09','S43',30)
-
+SELECT TOP 20 PERCENT 
+    G.MAGIAY, 
+    M.MAMAU, 
+    K.MASIZE, 
+    ABS(CHECKSUM(NEWID()) % 50) + 10 -- Random số lượng tồn
+FROM GIAY G
+CROSS JOIN MAUSAC M
+CROSS JOIN KICHCO K
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM CHITIETGIAY CT 
+    WHERE CT.MAGIAY = G.MAGIAY 
+      AND CT.MAMAU = M.MAMAU 
+      AND CT.MASIZE = K.MASIZE
+)
+ORDER BY NEWID();
 ---------------------------------------------------------------
 -- 10. KHUYẾN MÃI
 ---------------------------------------------------------------
@@ -382,38 +378,37 @@ VALUES
 ---------------------------------------------------------------
 -- 12. CHI TIẾT HÓA ĐƠN
 ---------------------------------------------------------------
-INSERT INTO CTHOADON (MAHD, MAGIAY, MAKM, SOLUONG, DONGIA, PHUONGTHUCTHANHTOAN)
+INSERT INTO CTHOADON (MAHD, MAGIAY, MASIZE, MAMAU, MAKM, SOLUONG, DONGIA, THANHTIEN, PHUONGTHUCTHANHTOAN)
 VALUES
-('HD001', 'G001', 'KM01', 2, 3200000, N'Tiền mặt'),
-('HD001', 'G002', NULL, 1, 2400000, N'Tiền mặt'),
+('HD001', 'G001', 'S40', 'MS01', 'KM01', 2, 3200000, 5440000, N'Tiền mặt'), 
+('HD001', 'G002', 'S42', 'MS02', NULL,   1, 2400000, 2400000, N'Tiền mặt'),
 
-('HD002', 'G005', 'KM02', 1, 2950000, N'Chuyển khoản'),
-('HD002', 'G006', NULL, 2, 2600000, N'Chuyển khoản'),
+('HD002', 'G005', 'S41', 'MS03', 'KM02', 1, 2950000, 2360000, N'Chuyển khoản'),
+('HD002', 'G006', 'S42', 'MS08', NULL,   2, 2600000, 5200000, N'Chuyển khoản'),
 
-('HD003', 'G009', NULL, 3, 950000, N'Tiền mặt'),
-('HD003', 'G010', NULL, 1, 1200000, N'Tiền mặt'),
+('HD003', 'G009', 'S39', 'MS06', NULL,   3, 950000,  2850000, N'Tiền mặt'),
+('HD003', 'G010', 'S41', 'MS10', NULL,   1, 1200000, 1200000, N'Tiền mặt'),
 
-('HD004', 'G013', 'KM03', 1, 2100000, N'Chuyển khoản'),
-('HD004', 'G014', NULL, 2, 1850000, N'Tiền mặt'),
+('HD004', 'G013', 'S39', 'MS08', 'KM03', 1, 2100000, 1890000, N'Chuyển khoản'),
+('HD004', 'G014', 'S41', 'MS05', NULL,   2, 1850000, 3700000, N'Tiền mặt'),
 
-('HD005', 'G017', NULL, 2, 1700000, N'Tiền mặt'),
-('HD005', 'G018', 'KM02', 1, 1600000, N'Tiền mặt'),
+('HD005', 'G017', 'S40', 'MS10', NULL,   2, 1700000, 3400000, N'Tiền mặt'),
+('HD005', 'G018', 'S41', 'MS07', 'KM02', 1, 1600000, 1280000, N'Tiền mặt'),
 
-('HD006', 'G019', NULL, 1, 1850000, N'Chuyển khoản'),
-('HD006', 'G020', 'KM01', 2, 1550000, N'Chuyển khoản'),
+('HD006', 'G019', 'S42', 'MS04', NULL,   1, 1850000, 1850000, N'Chuyển khoản'),
+('HD006', 'G020', 'S39', 'MS02', 'KM01', 2, 1550000, 2635000, N'Chuyển khoản'),
 
-('HD007', 'G003', 'KM03', 1, 2300000, N'Tiền mặt'),
-('HD007', 'G004', NULL, 1, 2100000, N'Tiền mặt'),
+('HD007', 'G003', 'S39', 'MS04', 'KM03', 1, 2300000, 2070000, N'Tiền mặt'),
+('HD007', 'G004', 'S38', 'MS04', NULL,   1, 2100000, 2100000, N'Tiền mặt'),
 
-('HD008', 'G007', NULL, 2, 1900000, N'Chuyển khoản'),
-('HD008', 'G008', 'KM02', 1, 2700000, N'Tiền mặt'),
+('HD008', 'G007', 'S43', 'MS05', NULL,   2, 1900000, 3800000, N'Chuyển khoản'),
+('HD008', 'G008', 'S40', 'MS03', 'KM02', 1, 2700000, 2160000, N'Tiền mặt'),
 
-('HD009', 'G011', NULL, 1, 750000, N'Tiền mặt'),
-('HD009', 'G012', NULL, 2, 1150000, N'Tiền mặt'),
+('HD009', 'G011', 'S42', 'MS07', NULL,   1, 750000,  750000,  N'Tiền mặt'),
+('HD009', 'G012', 'S40', 'MS01', NULL,   2, 1150000, 2300000, N'Tiền mặt'),
 
-('HD010', 'G015', 'KM03', 1, 2500000, N'Chuyển khoản'),
-('HD010', 'G016', NULL, 1, 2300000, N'Tiền mặt')
-
+('HD010', 'G015', 'S42', 'MS09', 'KM03', 1, 2500000, 2250000, N'Chuyển khoản'),
+('HD010', 'G016', 'S43', 'MS06', NULL,   1, 2300000, 2300000, N'Tiền mặt')
 ---------------------------------------------------------------
 -- 13. PHIẾU NHẬP
 ---------------------------------------------------------------
@@ -455,11 +450,15 @@ VALUES
 INSERT INTO TAIKHOAN (TENDANGNHAP, MATKHAU, MANV, VAITRO, TRANGTHAI, NGAYTAO)
 VALUES
 ('admin', '123456', 'NV001', N'Admin', N'Hoạt động', GETDATE()),
-('thungan1', '123456', 'NV002', N'Thu ngân', N'Hoạt động', GETDATE()),
-('thungan2', '123456', 'NV003', N'Thu ngân', N'Hoạt động', GETDATE()),
+('nvbh1', '123456', 'NV002', N'Nhân viên bán hàng', N'Hoạt động', GETDATE()),
+('nvbh2', '123456', 'NV003', N'Nhân viên bán hàng', N'Hoạt động', GETDATE()),
 ('quanlykho1', '123456', 'NV004', N'Quản lý kho', N'Hoạt động', GETDATE()),
 ('quanlykho2', '123456', 'NV005', N'Quản lý kho', N'Hoạt động', GETDATE())
-GO
+
+UPDATE KHACHHANG
+SET NGAYTAO = '2025-10-17' 
+WHERE NGAYTAO IS NULL
+
 UPDATE HOADON
 SET TONGTIEN = (
     SELECT SUM(THANHTIEN)
@@ -474,8 +473,3 @@ SET TONGTIEN = (
     WHERE c.MAPN = PHIEUNHAP.MAPN
 )
 
-ALTER TABLE CTHOADON ADD MASIZE VARCHAR(10);
-ALTER TABLE CTHOADON ADD MAMAU VARCHAR(10);
-
-ALTER TABLE CTHOADON ADD CONSTRAINT FK_CTHOADON_KICHCO FOREIGN KEY(MASIZE) REFERENCES KICHCO(MASIZE);
-ALTER TABLE CTHOADON ADD CONSTRAINT FK_CTHOADON_MAUSAC FOREIGN KEY(MAMAU) REFERENCES MAUSAC(MAMAU);
