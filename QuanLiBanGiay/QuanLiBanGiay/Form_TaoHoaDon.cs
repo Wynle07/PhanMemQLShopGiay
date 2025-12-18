@@ -666,7 +666,7 @@ namespace QuanLiBanGiay
                 if (string.IsNullOrEmpty(maHD))
                     maHD = "HD_Default";
 
-                string path = $@"D:\DoAn\HoaDon_{maHD}.pdf";
+                string path = $@"D:\HoaDon_{maHD}.pdf";
 
                 Document doc = new Document(PageSize.A4, 30, 30, 30, 30);
                 PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));

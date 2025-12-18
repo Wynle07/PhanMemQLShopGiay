@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_SanPham));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.grpDanhSach = new System.Windows.Forms.GroupBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -529,51 +531,61 @@
             // 
             // clMaSP
             // 
-            this.clMaSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clMaSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.clMaSP.DataPropertyName = "MAGIAY";
+            dataGridViewCellStyle1.NullValue = null;
+            this.clMaSP.DefaultCellStyle = dataGridViewCellStyle1;
             this.clMaSP.HeaderText = "Mã SP";
             this.clMaSP.MinimumWidth = 6;
             this.clMaSP.Name = "clMaSP";
+            this.clMaSP.Width = 107;
             // 
             // clTenSP
             // 
-            this.clTenSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clTenSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.clTenSP.DataPropertyName = "TENGIAY";
             this.clTenSP.HeaderText = "Tên SP";
             this.clTenSP.MinimumWidth = 6;
             this.clTenSP.Name = "clTenSP";
+            this.clTenSP.Width = 112;
             // 
             // clLoaiSP
             // 
-            this.clLoaiSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clLoaiSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.clLoaiSP.DataPropertyName = "TENLOAI";
             this.clLoaiSP.HeaderText = "Loại SP";
             this.clLoaiSP.MinimumWidth = 6;
             this.clLoaiSP.Name = "clLoaiSP";
+            this.clLoaiSP.Width = 117;
             // 
             // clKichCo
             // 
-            this.clKichCo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clKichCo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.clKichCo.DataPropertyName = "KICHCO";
             this.clKichCo.HeaderText = "Kích cỡ";
             this.clKichCo.MinimumWidth = 6;
             this.clKichCo.Name = "clKichCo";
+            this.clKichCo.Width = 117;
             // 
             // clMauSac
             // 
-            this.clMauSac.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clMauSac.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.clMauSac.DataPropertyName = "TENMAU";
             this.clMauSac.HeaderText = "Màu Sắc";
             this.clMauSac.MinimumWidth = 6;
             this.clMauSac.Name = "clMauSac";
+            this.clMauSac.Width = 126;
             // 
             // clGiaBan
             // 
-            this.clGiaBan.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.clGiaBan.DataPropertyName = "GIABAN";
-            this.clGiaBan.HeaderText = "Giá Bán";
-            this.clGiaBan.MinimumWidth = 6;
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.clGiaBan.DefaultCellStyle = dataGridViewCellStyle2;
+            this.clGiaBan.HeaderText = "Giá bán";
+            this.clGiaBan.MinimumWidth = 8;
             this.clGiaBan.Name = "clGiaBan";
+            this.clGiaBan.Width = 150;
             // 
             // clSlton
             // 
@@ -585,11 +597,12 @@
             // 
             // clMaNCC
             // 
-            this.clMaNCC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clMaNCC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.clMaNCC.DataPropertyName = "TENNCC";
             this.clMaNCC.HeaderText = "Tên nhà cung cấp";
             this.clMaNCC.MinimumWidth = 6;
             this.clMaNCC.Name = "clMaNCC";
+            this.clMaNCC.Width = 157;
             // 
             // clTH
             // 
@@ -606,6 +619,7 @@
             this.HINHANHSP.HeaderText = "Hình ảnh";
             this.HINHANHSP.MinimumWidth = 8;
             this.HINHANHSP.Name = "HINHANHSP";
+            this.HINHANHSP.Visible = false;
             // 
             // Form_SanPham
             // 

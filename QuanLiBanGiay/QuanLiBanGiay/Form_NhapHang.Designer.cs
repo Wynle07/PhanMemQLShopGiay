@@ -38,23 +38,25 @@
             this.cboNCC = new System.Windows.Forms.ComboBox();
             this.txtTongTien = new System.Windows.Forms.TextBox();
             this.txtNgayNhap = new System.Windows.Forms.TextBox();
+            this.btnInPN = new System.Windows.Forms.Button();
             this.txtMaPhieuNhap = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.grpCTPhieuNhap = new System.Windows.Forms.GroupBox();
+            this.btnSuaSP = new System.Windows.Forms.Button();
             this.cboMauSac = new System.Windows.Forms.ComboBox();
             this.cboKichCo = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.txtThanhTien = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnInPN = new System.Windows.Forms.Button();
             this.btnThemSP = new System.Windows.Forms.Button();
             this.dgvCTPN = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.xóaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sửaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtSoLuong = new System.Windows.Forms.TextBox();
             this.txtDonGia = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -80,8 +82,6 @@
             this.SoLuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DonGia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ThanhTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sửaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSuaSP = new System.Windows.Forms.Button();
             this.grpPhieuNhap.SuspendLayout();
             this.grpCTPhieuNhap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCTPN)).BeginInit();
@@ -194,6 +194,23 @@
             this.txtNgayNhap.TabIndex = 5;
             this.txtNgayNhap.TextChanged += new System.EventHandler(this.txtNgayNhap_TextChanged);
             // 
+            // btnInPN
+            // 
+            this.btnInPN.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnInPN.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInPN.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnInPN.Image = ((System.Drawing.Image)(resources.GetObject("btnInPN.Image")));
+            this.btnInPN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnInPN.Location = new System.Drawing.Point(873, 84);
+            this.btnInPN.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnInPN.Name = "btnInPN";
+            this.btnInPN.Size = new System.Drawing.Size(204, 50);
+            this.btnInPN.TabIndex = 95;
+            this.btnInPN.Text = "In phiếu nhập";
+            this.btnInPN.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnInPN.UseVisualStyleBackColor = false;
+            this.btnInPN.Click += new System.EventHandler(this.btnInPN_Click);
+            // 
             // txtMaPhieuNhap
             // 
             this.txtMaPhieuNhap.Location = new System.Drawing.Point(98, 34);
@@ -271,6 +288,23 @@
             this.grpCTPhieuNhap.TabStop = false;
             this.grpCTPhieuNhap.Text = "Chi tiết phiếu nhập";
             // 
+            // btnSuaSP
+            // 
+            this.btnSuaSP.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnSuaSP.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSuaSP.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnSuaSP.Image = global::QuanLiBanGiay.Properties.Resources.update_icon;
+            this.btnSuaSP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSuaSP.Location = new System.Drawing.Point(1204, 82);
+            this.btnSuaSP.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnSuaSP.Name = "btnSuaSP";
+            this.btnSuaSP.Size = new System.Drawing.Size(204, 50);
+            this.btnSuaSP.TabIndex = 111;
+            this.btnSuaSP.Text = "Sửa sản phẩm";
+            this.btnSuaSP.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSuaSP.UseVisualStyleBackColor = false;
+            this.btnSuaSP.Click += new System.EventHandler(this.btnSuaSP_Click);
+            // 
             // cboMauSac
             // 
             this.cboMauSac.FormattingEnabled = true;
@@ -325,23 +359,6 @@
             this.label5.Size = new System.Drawing.Size(100, 23);
             this.label5.TabIndex = 105;
             this.label5.Text = "Thành tiền";
-            // 
-            // btnInPN
-            // 
-            this.btnInPN.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnInPN.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInPN.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnInPN.Image = ((System.Drawing.Image)(resources.GetObject("btnInPN.Image")));
-            this.btnInPN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnInPN.Location = new System.Drawing.Point(873, 84);
-            this.btnInPN.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnInPN.Name = "btnInPN";
-            this.btnInPN.Size = new System.Drawing.Size(204, 50);
-            this.btnInPN.TabIndex = 95;
-            this.btnInPN.Text = "In phiếu nhập";
-            this.btnInPN.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnInPN.UseVisualStyleBackColor = false;
-            this.btnInPN.Click += new System.EventHandler(this.btnInPN_Click);
             // 
             // btnThemSP
             // 
@@ -399,6 +416,13 @@
             this.xóaToolStripMenuItem.Size = new System.Drawing.Size(115, 32);
             this.xóaToolStripMenuItem.Text = "Xóa";
             this.xóaToolStripMenuItem.Click += new System.EventHandler(this.xóaToolStripMenuItem_Click);
+            // 
+            // sửaToolStripMenuItem
+            // 
+            this.sửaToolStripMenuItem.Name = "sửaToolStripMenuItem";
+            this.sửaToolStripMenuItem.Size = new System.Drawing.Size(115, 32);
+            this.sửaToolStripMenuItem.Text = "Sửa";
+            this.sửaToolStripMenuItem.Click += new System.EventHandler(this.sửaToolStripMenuItem_Click);
             // 
             // txtSoLuong
             // 
@@ -504,11 +528,12 @@
             // 
             // TENNV
             // 
-            this.TENNV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TENNV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.TENNV.DataPropertyName = "TENNV";
             this.TENNV.HeaderText = "Tên NV";
             this.TENNV.MinimumWidth = 8;
             this.TENNV.Name = "TENNV";
+            this.TENNV.Width = 119;
             // 
             // MANCC
             // 
@@ -520,27 +545,30 @@
             // 
             // TENNCC
             // 
-            this.TENNCC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TENNCC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.TENNCC.DataPropertyName = "TENNCC";
             this.TENNCC.HeaderText = "Tên NCC";
             this.TENNCC.MinimumWidth = 8;
             this.TENNCC.Name = "TENNCC";
+            this.TENNCC.Width = 134;
             // 
             // NGAYNHAP
             // 
-            this.NGAYNHAP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.NGAYNHAP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.NGAYNHAP.DataPropertyName = "NGAYNHAP";
             this.NGAYNHAP.HeaderText = "Ngày nhập";
             this.NGAYNHAP.MinimumWidth = 8;
             this.NGAYNHAP.Name = "NGAYNHAP";
+            this.NGAYNHAP.Width = 142;
             // 
             // TONGTIEN
             // 
-            this.TONGTIEN.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TONGTIEN.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.TONGTIEN.DataPropertyName = "TONGTIEN";
             this.TONGTIEN.HeaderText = "Tổng tiền";
             this.TONGTIEN.MinimumWidth = 8;
             this.TONGTIEN.Name = "TONGTIEN";
+            this.TONGTIEN.Width = 131;
             // 
             // MaSP
             // 
@@ -561,11 +589,12 @@
             // 
             // TenSP
             // 
-            this.TenSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TenSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.TenSP.DataPropertyName = "TenSP";
             this.TenSP.HeaderText = "Tên SP";
             this.TenSP.MinimumWidth = 8;
             this.TenSP.Name = "TenSP";
+            this.TenSP.Width = 112;
             // 
             // MaSize
             // 
@@ -611,43 +640,21 @@
             // 
             // DonGia
             // 
-            this.DonGia.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.DonGia.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.DonGia.DataPropertyName = "DonGia";
             this.DonGia.HeaderText = "Đơn giá";
             this.DonGia.MinimumWidth = 8;
             this.DonGia.Name = "DonGia";
+            this.DonGia.Width = 118;
             // 
             // ThanhTien
             // 
-            this.ThanhTien.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ThanhTien.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ThanhTien.DataPropertyName = "ThanhTien";
             this.ThanhTien.HeaderText = "Thành tiền";
             this.ThanhTien.MinimumWidth = 8;
             this.ThanhTien.Name = "ThanhTien";
-            // 
-            // sửaToolStripMenuItem
-            // 
-            this.sửaToolStripMenuItem.Name = "sửaToolStripMenuItem";
-            this.sửaToolStripMenuItem.Size = new System.Drawing.Size(115, 32);
-            this.sửaToolStripMenuItem.Text = "Sửa";
-            this.sửaToolStripMenuItem.Click += new System.EventHandler(this.sửaToolStripMenuItem_Click);
-            // 
-            // btnSuaSP
-            // 
-            this.btnSuaSP.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnSuaSP.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSuaSP.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSuaSP.Image = global::QuanLiBanGiay.Properties.Resources.update_icon;
-            this.btnSuaSP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSuaSP.Location = new System.Drawing.Point(1204, 82);
-            this.btnSuaSP.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnSuaSP.Name = "btnSuaSP";
-            this.btnSuaSP.Size = new System.Drawing.Size(204, 50);
-            this.btnSuaSP.TabIndex = 111;
-            this.btnSuaSP.Text = "Sửa sản phẩm";
-            this.btnSuaSP.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSuaSP.UseVisualStyleBackColor = false;
-            this.btnSuaSP.Click += new System.EventHandler(this.btnSuaSP_Click);
+            this.ThanhTien.Width = 140;
             // 
             // Form__NhapHang
             // 
@@ -707,13 +714,8 @@
         private System.Windows.Forms.ToolStripMenuItem xóaToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgvPhieuNhap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MAPN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MANV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TENNV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MANCC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TENNCC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NGAYNHAP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TONGTIEN;
+        private System.Windows.Forms.ToolStripMenuItem sửaToolStripMenuItem;
+        private System.Windows.Forms.Button btnSuaSP;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaSP;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaPhieuNhap;
         private System.Windows.Forms.DataGridViewTextBoxColumn TenSP;
@@ -724,7 +726,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SoLuong;
         private System.Windows.Forms.DataGridViewTextBoxColumn DonGia;
         private System.Windows.Forms.DataGridViewTextBoxColumn ThanhTien;
-        private System.Windows.Forms.ToolStripMenuItem sửaToolStripMenuItem;
-        private System.Windows.Forms.Button btnSuaSP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MAPN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MANV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TENNV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MANCC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TENNCC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NGAYNHAP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TONGTIEN;
     }
 }

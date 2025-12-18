@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
-
+using System.Text.RegularExpressions;   
 namespace QuanLiBanGiay
 {
     public partial class Form_KhachHang : Form
@@ -28,6 +28,18 @@ namespace QuanLiBanGiay
             btnLuu.Enabled = false;  
             btnSua.Enabled = true;   
 
+        }
+        private bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email)) return false;
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern);
+        }
+
+        // Kiểm tra số điện thoại đúng 10 chữ số
+        private bool IsValidPhone(string phone)
+        {
+            return Regex.IsMatch(phone, @"^\d{10}$");
         }
 
         private void LoadKH()
@@ -135,6 +147,21 @@ namespace QuanLiBanGiay
                     string.IsNullOrEmpty(sdt) || string.IsNullOrEmpty(email))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                    return;
+                }
+                if (!IsValidPhone(sdt))
+                {
+                    MessageBox.Show("Số điện thoại phải gồm đúng 10 chữ số!",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSDT.Focus();
+                    return;
+                }
+
+                if (!IsValidEmail(email))
+                {
+                    MessageBox.Show("Email không hợp lệ!",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEmail.Focus();
                     return;
                 }
                 if (!int.TryParse(diemText, out int diemTL) || diemTL < 0)
@@ -396,6 +423,21 @@ namespace QuanLiBanGiay
                 if (string.IsNullOrEmpty(tenkh) || string.IsNullOrEmpty(sdt) || string.IsNullOrEmpty(email))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (!IsValidPhone(sdt))
+                {
+                    MessageBox.Show("Số điện thoại phải gồm đúng 10 chữ số!",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSDT.Focus();
+                    return;
+                }
+
+                if (!IsValidEmail(email))
+                {
+                    MessageBox.Show("Email không hợp lệ!",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEmail.Focus();
                     return;
                 }
 

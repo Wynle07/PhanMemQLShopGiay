@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Text.RegularExpressions;
 namespace QuanLiBanGiay
 {
     public partial class Form_NhaCungCap : Form
@@ -66,6 +67,18 @@ namespace QuanLiBanGiay
             LoadTeNCCC();
             txtMaNCC.Enabled = false;
             ResetForm();
+        }
+        private bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email)) return false;
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern);
+        }
+
+        // Kiểm tra số điện thoại đúng 10 chữ số
+        private bool IsValidPhone(string phone)
+        {
+            return Regex.IsMatch(phone, @"^\d{10}$");
         }
         private void LoadNhaCungCap(string search = "")
         {
@@ -338,13 +351,28 @@ namespace QuanLiBanGiay
                 txtHotline.Focus();
                 return;
             }
+           
             string ma = txtMaNCC.Text.Trim();
             string ten = cbTenNCC.Text.Trim();
             string sdt = txtHotline.Text.Trim();
             string email = txtEmail.Text.Trim();
             string diachi = txtDiaChi.Text.Trim();
             string trangthai = string.IsNullOrEmpty(cboTrangThai.Text) ? "Đang hợp tác" : cboTrangThai.Text;
+            if (!IsValidPhone(sdt))
+            {
+                MessageBox.Show("Hotline phải gồm đúng 10 chữ số!",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtHotline.Focus();
+                return;
+            }
 
+            if (!string.IsNullOrWhiteSpace(email) && !IsValidEmail(email))
+            {
+                MessageBox.Show("Email không hợp lệ!",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return;
+            }
             try
             {
                 if (conn.State == ConnectionState.Closed) conn.Open();

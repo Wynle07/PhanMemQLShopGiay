@@ -48,6 +48,7 @@
             this.lblMaNV = new System.Windows.Forms.Label();
             this.cbGioiTinh = new System.Windows.Forms.ComboBox();
             this.panel = new System.Windows.Forms.Panel();
+            this.btnXuatExcel = new System.Windows.Forms.Button();
             this.grpNhanVien = new System.Windows.Forms.GroupBox();
             this.btnTimKiem = new System.Windows.Forms.Button();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
@@ -65,7 +66,6 @@
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
-            this.btnXuatExcel = new System.Windows.Forms.Button();
             this.MANV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TENNV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NGAYSINH = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -275,6 +275,23 @@
             this.panel.TabIndex = 94;
             this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // btnXuatExcel
+            // 
+            this.btnXuatExcel.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnXuatExcel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXuatExcel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnXuatExcel.Image = global::QuanLiBanGiay.Properties.Resources.icons8_export_16;
+            this.btnXuatExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnXuatExcel.Location = new System.Drawing.Point(435, 9);
+            this.btnXuatExcel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnXuatExcel.Name = "btnXuatExcel";
+            this.btnXuatExcel.Size = new System.Drawing.Size(156, 52);
+            this.btnXuatExcel.TabIndex = 103;
+            this.btnXuatExcel.Text = "Xuất Excel";
+            this.btnXuatExcel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnXuatExcel.UseVisualStyleBackColor = false;
+            this.btnXuatExcel.Click += new System.EventHandler(this.btnXuatExcel_Click);
+            // 
             // grpNhanVien
             // 
             this.grpNhanVien.Controls.Add(this.btnTimKiem);
@@ -481,23 +498,6 @@
             this.btnThem.UseVisualStyleBackColor = false;
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
-            // btnXuatExcel
-            // 
-            this.btnXuatExcel.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnXuatExcel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnXuatExcel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnXuatExcel.Image = global::QuanLiBanGiay.Properties.Resources.icons8_export_16;
-            this.btnXuatExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnXuatExcel.Location = new System.Drawing.Point(435, 9);
-            this.btnXuatExcel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnXuatExcel.Name = "btnXuatExcel";
-            this.btnXuatExcel.Size = new System.Drawing.Size(156, 52);
-            this.btnXuatExcel.TabIndex = 103;
-            this.btnXuatExcel.Text = "Xuất Excel";
-            this.btnXuatExcel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnXuatExcel.UseVisualStyleBackColor = false;
-            this.btnXuatExcel.Click += new System.EventHandler(this.btnXuatExcel_Click);
-            // 
             // MANV
             // 
             this.MANV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -508,11 +508,12 @@
             // 
             // TENNV
             // 
-            this.TENNV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TENNV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.TENNV.DataPropertyName = "TENNV";
             this.TENNV.HeaderText = "Tên NV";
             this.TENNV.MinimumWidth = 8;
             this.TENNV.Name = "TENNV";
+            this.TENNV.Width = 119;
             // 
             // NGAYSINH
             // 

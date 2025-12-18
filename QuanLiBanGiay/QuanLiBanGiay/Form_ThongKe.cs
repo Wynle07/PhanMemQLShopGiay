@@ -112,11 +112,16 @@ namespace QuanLiBanGiay
         }
         private void FormatGrid()
         {
-            if (dgvSanPham.Columns["TONGTIEN"] != null)
-                dgvSanPham.Columns["TONGTIEN"].DefaultCellStyle.Format = "N0";
+            if (dgvSanPham.Columns.Count == 0) return;
 
-            if (dgvSanPham.Columns["NGAYLAP"] != null)
-                dgvSanPham.Columns["NGAYLAP"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
+            dgvSanPham.Columns["MAHD"].HeaderText = "Mã hóa đơn";
+            dgvSanPham.Columns["NGAYLAP"].HeaderText = "Ngày lập";
+            dgvSanPham.Columns["NhanVien"].HeaderText = "Nhân viên";
+            dgvSanPham.Columns["KhachHang"].HeaderText = "Khách hàng";
+            dgvSanPham.Columns["TONGTIEN"].HeaderText = "Tổng tiền";
+
+            dgvSanPham.Columns["TONGTIEN"].DefaultCellStyle.Format = "N0";
+            dgvSanPham.Columns["NGAYLAP"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
 
             dgvSanPham.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvSanPham.RowHeadersVisible = false;
@@ -212,6 +217,12 @@ namespace QuanLiBanGiay
                     dt.Columns.Add("STT", typeof(int));
                     for (int i = 0; i < dt.Rows.Count; i++) dt.Rows[i]["STT"] = i + 1;
                     data_top5sp.DataSource = dt;
+                    data_top5sp.Columns["STT"].HeaderText = "STT";
+                    data_top5sp.Columns["TENGIAY"].HeaderText = "Tên giày";
+                    data_top5sp.Columns["TENGIAY"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    data_top5sp.Columns["SoLuongBan"].HeaderText = "Số lượng bán";
+
+                    data_top5sp.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 }
             }
             catch (Exception ex) { MessageBox.Show("Lỗi Top 5: " + ex.Message); }

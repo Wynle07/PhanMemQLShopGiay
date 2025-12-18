@@ -51,7 +51,7 @@ namespace QuanLiBanGiay
 
             cboVaiTro.Items.Clear();
             cboVaiTro.Items.Add("Admin");
-            cboVaiTro.Items.Add("Thu ngân");
+            cboVaiTro.Items.Add("Nhân viên bán hàng");
             cboVaiTro.Items.Add("Quản lý kho");
 
             cboTrangThai.Items.Clear();
