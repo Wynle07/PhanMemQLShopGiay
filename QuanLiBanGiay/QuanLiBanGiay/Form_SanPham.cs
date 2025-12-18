@@ -176,16 +176,16 @@ namespace QuanLiBanGiay
 
                 txtMaSP.Text = drv["MAGIAY"]?.ToString() ?? "";
                 txtTenSP.Text = drv["TENGIAY"]?.ToString() ?? "";
-                //txtGiaBan.Text = drv["GIABAN"]?.ToString() ?? "";
-                if (decimal.TryParse(drv["GIABAN"]?.ToString(), out decimal giaBan))
-                {
-                    // "N0" là định dạng số, có dấu phân cách ngàn, không có số thập phân
-                    txtGiaBan.Text = giaBan.ToString("N0");
-                }
-                else
-                {
-                    txtGiaBan.Text = "0";
-                }
+                txtGiaBan.Text = drv["GIABAN"]?.ToString() ?? "";
+                //if (decimal.TryParse(drv["GIABAN"]?.ToString(), out decimal giaBan))
+                //{
+                //    // "N0" là định dạng số, có dấu phân cách ngàn, không có số thập phân
+                //    txtGiaBan.Text = giaBan.ToString("N0");
+                //}
+                //else
+                //{
+                //    txtGiaBan.Text = "0";
+                //}
                 txtSoLuongTon.Text = drv["SOLUONGTON"]?.ToString() ?? "";
                 cbMaLoai.Text = drv["TENLOAI"]?.ToString() ?? "";
                 cboNCC.Text = drv["TENNCC"]?.ToString() ?? "";

@@ -27,16 +27,16 @@ namespace QuanLiBanGiay
         {
             string maHD = txtTimkiem.Text.Trim();
             string query = @"
-        SELECT 
-            hd.MAHD,
-            hd.NGAYLAP,
-            nv.TENNV AS NhanVien,
-            kh.TENKH AS KhachHang,
-            hd.TONGTIEN
-        FROM HOADON hd
-        LEFT JOIN NHANVIEN nv ON hd.MANV = nv.MANV
-        LEFT JOIN KHACHHANG kh ON hd.MAKH = kh.MAKH
-        WHERE 1=1 ";
+                            SELECT 
+                                hd.MAHD,
+                                hd.NGAYLAP,
+                                nv.TENNV AS NhanVien,
+                                kh.TENKH AS KhachHang,
+                                hd.TONGTIEN
+                            FROM HOADON hd
+                            LEFT JOIN NHANVIEN nv ON hd.MANV = nv.MANV
+                            LEFT JOIN KHACHHANG kh ON hd.MAKH = kh.MAKH
+                            WHERE 1=1 ";
             if (string.IsNullOrEmpty(maHD))
             {
                 if (rdoTheoNgay.Checked)
@@ -138,7 +138,7 @@ namespace QuanLiBanGiay
         }
         private void Form_ThongKe_Load(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Maximized; 
             LoadDataComboBox();
             rdoTheoNgay.Checked = true;
             dtpNgay.Value = DateTime.Now;
@@ -353,6 +353,20 @@ namespace QuanLiBanGiay
 
         private void btnXem_Click(object sender, EventArgs e)
         {
+            if (rdoKhoangTG.Checked) 
+            {
+                DateTime tuNgay = dtpTuNgay.Value.Date;
+                DateTime denNgay = dtpDenNgay.Value.Date;
+
+                if (tuNgay > denNgay)
+                {
+                    MessageBox.Show("Ngày bắt đầu không được lớn hơn ngày kết thúc!\nVui lòng chọn lại khoảng thời gian hợp lệ.",
+                                    "Cảnh báo",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                    return; 
+                }
+            }
             LoadHoaDon();
             LoadTop5SanPham();
         }

@@ -89,11 +89,14 @@ namespace QuanLiBanGiay
             txtTenKH.Clear(); txtSDT.Clear(); txtDiaChi.Clear(); txtDiemTL.Clear();
             txtMaLoai.Clear(); txtSoLuongMua.Clear();
 
+            // --- THÊM MỚI: Mở khóa các ô text (ReadOnly = false) ---
+            ThietLapTrangThaiOText(false);
+
             // 2. Xóa danh sách sản phẩm (giỏ hàng)
             dtSanPham.Rows.Clear();
             dgvSanPham.DataSource = dtSanPham;
 
-            // 3. SINH MÃ MỚI TỰ ĐỘNG (Điểm quan trọng nhất)
+            // 3. SINH MÃ MỚI TỰ ĐỘNG
             txtMaDH.Text = SinhMaHoaDonTuDong();
 
             // 4. Cập nhật ngày giờ hiện tại
@@ -124,16 +127,34 @@ namespace QuanLiBanGiay
             }
         }
 
-
+        private void ThietLapTrangThaiOText(bool isReadOnly)
+        {
+            txtTenKH.ReadOnly = isReadOnly;
+            txtSDT.ReadOnly = isReadOnly;
+            txtDiaChi.ReadOnly = isReadOnly;
+            txtDiemTL.ReadOnly = isReadOnly;
+        }
         private void cboMaKH_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboMaKH.SelectedIndex == -1) return;
+            // Trường hợp 1: Chưa chọn hoặc bỏ chọn khách hàng
+            if (cboMaKH.SelectedIndex == -1)
+            {
+                // Mở khóa lại để có thể nhập liệu thủ công (nếu cần)
+                ThietLapTrangThaiOText(false);
+                return;
+            }
+
+            // Trường hợp 2: Đã chọn khách hàng từ danh sách
             DataRowView r = cboMaKH.SelectedItem as DataRowView;
 
             txtTenKH.Text = r["TENKH"].ToString();
             txtSDT.Text = r["SDT"].ToString();
             txtDiaChi.Text = r["DIACHI"].ToString();
             txtDiemTL.Text = r["DIEMTICHLUY"].ToString();
+
+            // --- THÊM MỚI: Khóa các ô text lại thành ReadOnly ---
+            ThietLapTrangThaiOText(true);
+
         }
         private void LoadSanPham()
         {
